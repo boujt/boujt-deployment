@@ -1,34 +1,41 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+![Logo We Know IT](https://code.weknowit.se/logo.png)
 
-## Getting Started
+# Projektnamn
+*boujt är ett projekt åt den statliga organisationen för döva ungdomar, sidan är skriven i NextJS och använder sig av wordpres graphql plugin för att hämta data*
 
-First, run the development server:
+|||
+| --- | --- |
+| **Projekttyp** | Hemsida |
+| **Kund** | BOUJT |
+| **Kontaktperson** | TODO |
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+### Projektidentitet
+| Roll | Namn | Kontakt |
+| --- | --- | --- |
+| Projektledare | Hassan Mustafa | [hassan.mustafa@weknowit.se](mailto:hassan.mustafa@weknowit.se) |
+| Utvecklare | Jakob Karlstrand | [jakob.karlstrand@weknowit.se](mailto:jakob.karlstrand@weknowit.se) |
+| Utvecklare | David Styrbjörn | [david.styrbjorn@weknowit.se](mailto:david.styrbjorn@weknowit.se) |
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+[Länk till projektmapp](https://drive.google.com/drive/folders/1Xm0UfjGxjlzC_T4LDVzYVtYv1pdZjgob)
+___
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Teknisk specifikation
+* *NextJS*
+* *Typescript*
+* *WPGraphql Plugin*
+* *Wordpress för extern data från boujt*
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Projekt setup
+*Kör `yarn` i roten av projektet*
+*Andra nödvändiga kommandon står i package.json*
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Deployment
+TODO
 
-## Learn More
+## Kodstandard
+TODO
 
-To learn more about Next.js, take a look at the following resources:
+___
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Beskriv andra relevanta punkter för projektet
+TODO
