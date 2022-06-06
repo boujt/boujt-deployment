@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "bloggs",
+  "info": {
+    "singularName": "blogg",
+    "pluralName": "bloggs",
+    "displayName": "Blogg"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    }
+  }
+}
