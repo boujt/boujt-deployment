@@ -4,7 +4,8 @@
   "info": {
     "singularName": "sju-till-fjorton",
     "pluralName": "sju-till-fjortons",
-    "displayName": "sju_till_fjorton"
+    "displayName": "sju_till_fjorton",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -12,17 +13,21 @@
   "pluginOptions": {},
   "attributes": {
     "video": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
     },
     "text": {
       "type": "richtext"
+    },
+    "title": {
+      "type": "string"
     }
   }
 }
