@@ -1,3 +1,5 @@
+
+
 ############################
 # OS X
 ############################
@@ -112,3 +114,6 @@ exports
 *.cache
 build
 .strapi-updater.json
+
+# ADDED
+app.yaml
