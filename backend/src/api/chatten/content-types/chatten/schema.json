@@ -1,0 +1,32 @@
+{
+  "kind": "singleType",
+  "collectionName": "chattens",
+  "info": {
+    "singularName": "chatten",
+    "pluralName": "chattens",
+    "displayName": "Chatten",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "open_time": {
+      "type": "time"
+    },
+    "close_time": {
+      "type": "time"
+    },
+    "info_videos": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": true
+    }
+  }
+}
