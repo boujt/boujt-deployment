@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "sju_till_fjortons",
+  "info": {
+    "singularName": "sju-till-fjorton",
+    "pluralName": "sju-till-fjortons",
+    "displayName": "sju_till_fjorton"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "video": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": true
+    },
+    "text": {
+      "type": "richtext"
+    }
+  }
+}

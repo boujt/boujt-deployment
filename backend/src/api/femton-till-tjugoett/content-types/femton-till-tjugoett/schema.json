@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "femton_till_tjugoetts",
+  "info": {
+    "singularName": "femton-till-tjugoett",
+    "pluralName": "femton-till-tjugoetts",
+    "displayName": "femton_till_tjugoett"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "video": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": true
+    },
+    "text": {
+      "type": "richtext"
+    }
+  }
+}
