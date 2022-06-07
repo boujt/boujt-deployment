@@ -4,7 +4,8 @@
   "info": {
     "singularName": "femton-till-tjugoett",
     "pluralName": "femton-till-tjugoetts",
-    "displayName": "femton_till_tjugoett"
+    "displayName": "femton_till_tjugoett",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -12,17 +13,21 @@
   "pluginOptions": {},
   "attributes": {
     "video": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
     },
     "text": {
       "type": "richtext"
+    },
+    "title": {
+      "type": "string"
     }
   }
 }
