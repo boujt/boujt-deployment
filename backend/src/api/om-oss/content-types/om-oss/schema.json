@@ -1,0 +1,22 @@
+{
+  "kind": "singleType",
+  "collectionName": "om_osses",
+  "info": {
+    "singularName": "om-oss",
+    "pluralName": "om-osses",
+    "displayName": "Om oss",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "kontaktinformation": {
+      "displayName": "Kontakt",
+      "type": "component",
+      "repeatable": false,
+      "component": "information.kontakt"
+    }
+  }
+}

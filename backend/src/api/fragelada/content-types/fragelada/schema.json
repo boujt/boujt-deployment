@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "frageladas",
+  "info": {
+    "singularName": "fragelada",
+    "pluralName": "frageladas",
+    "displayName": "Frågelåda"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "question": {
+      "type": "richtext"
+    },
+    "answer": {
+      "type": "richtext"
+    },
+    "visible": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    }
+  }
+}

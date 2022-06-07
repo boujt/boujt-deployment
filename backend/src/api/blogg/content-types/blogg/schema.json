@@ -4,7 +4,8 @@
   "info": {
     "singularName": "blogg",
     "pluralName": "bloggs",
-    "displayName": "Blogg"
+    "displayName": "Blogg",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -13,6 +14,42 @@
   "attributes": {
     "title": {
       "type": "string"
+    },
+    "text": {
+      "type": "richtext",
+      "required": true
+    },
+    "omslagsbild": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "bilder": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "videos": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "videos"
+      ]
+    },
+    "syssnare": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::syssnare.syssnare"
+    },
+    "views": {
+      "type": "integer"
     }
   }
 }

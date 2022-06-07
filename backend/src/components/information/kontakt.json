@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_information_kontakts",
+  "info": {
+    "displayName": "Kontakt",
+    "icon": "address-card",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "email": {
+      "type": "email"
+    },
+    "adress": {
+      "type": "string"
+    },
+    "telefonnummer": {
+      "type": "string"
+    }
+  }
+}
