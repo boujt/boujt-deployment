@@ -4,6 +4,7 @@ import DailyIframe from "@daily-co/daily-js";
 import { useEffect, useState } from "react";
 import { AuthProvider } from "../auth/auth";
 import { ChakraProvider } from "@chakra-ui/react";
+import { theme } from "../src/theme";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [co, setCo] = useState();
@@ -18,7 +19,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   // ChakraProvider lets us use theme functionality throughout the context tree
   // TODO: Explain other provider wrappers
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <AuthProvider>
         <DailyProvider callObject={co}>
           <Component {...pageProps} />

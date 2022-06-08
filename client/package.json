@@ -14,6 +14,7 @@
     "@daily-co/daily-react-hooks": "^0.2.3",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
+    "@fontsource/quicksand": "^4.5.9",
     "axios": "^0.27.2",
     "framer-motion": "^6",
     "next": "12.1.6",
