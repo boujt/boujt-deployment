@@ -5,7 +5,7 @@ import { LiveChat } from "../components/LiveChat";
 
 export default function Chat() {
   const [url, setURL] = useState<string>(
-    "https://boujt.daily.co/RPSXsQLDE1U1BSnRBOtG"
+    "https://boujt.daily.co/v4TCIbtQxg0M8oNmwaIs"
   );
   const [name, setName] = useState<string>("");
   const [join, setJoin] = useState<boolean>(false);
