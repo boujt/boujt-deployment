@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { RoomResponse } from "../utils/types";
-import { useRoom } from "@daily-co/daily-react-hooks";
+import axios from "axios";
 export default function RoomTest() {
   const [room, setRoom] = useState<RoomResponse | null>(null);
 
   const createRoom = () => {
+<<<<<<< HEAD
     axios.post("/api/video_room/create").then((re) => {
+=======
+    axios.post("/api/room/create").then((re: any) => {
+>>>>>>> 2c0b310719538fca1d1e8bab5a17abe56527dbbf
       setRoom(re.data);
     });
   };

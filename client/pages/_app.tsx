@@ -1,10 +1,13 @@
-import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { DailyProvider } from "@daily-co/daily-react-hooks";
 import DailyIframe from "@daily-co/daily-js";
 import { useEffect, useState } from "react";
 import { AuthProvider } from "../auth/auth";
 import { ChakraProvider } from "@chakra-ui/react";
+<<<<<<< HEAD
+=======
+import { theme } from "../src/theme";
+>>>>>>> 2c0b310719538fca1d1e8bab5a17abe56527dbbf
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [co, setCo] = useState();
@@ -16,7 +19,10 @@ function MyApp({ Component, pageProps }: AppProps) {
     return null;
   }
 
+  // ChakraProvider lets us use theme functionality throughout the context tree
+  // TODO: Explain other provider wrappers
   return (
+<<<<<<< HEAD
     <AuthProvider>
       <ChakraProvider>
         <DailyProvider callObject={co}>
@@ -24,6 +30,15 @@ function MyApp({ Component, pageProps }: AppProps) {
         </DailyProvider>
       </ChakraProvider>
     </AuthProvider>
+=======
+    <ChakraProvider theme={theme}>
+      <AuthProvider>
+        <DailyProvider callObject={co}>
+          <Component {...pageProps} />
+        </DailyProvider>
+      </AuthProvider>
+    </ChakraProvider>
+>>>>>>> 2c0b310719538fca1d1e8bab5a17abe56527dbbf
   );
 }
 
