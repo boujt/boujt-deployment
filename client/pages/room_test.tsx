@@ -6,7 +6,7 @@ export default function RoomTest() {
   const [room, setRoom] = useState<RoomResponse | null>(null);
 
   const createRoom = () => {
-    axios.post("/api/room/create").then((re) => {
+    axios.post("/api/video_room/create").then((re) => {
       setRoom(re.data);
     });
   };

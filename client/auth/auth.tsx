@@ -6,14 +6,26 @@ import React, {
   Provider,
 } from "react";
 
-import Strapi from "strapi-sdk-js";
+import Strapi, { StrapiUser } from "strapi-sdk-js";
+import { Userdata } from "../components/LoginForm";
+import { ErrorStrapiUser } from "../utils/types";
 
 interface StrapiContext {
-  strapi: Object;
+  strapi: Strapi | null;
+  user: StrapiUser | null;
+  loading: boolean;
+  login: (data: Userdata) => boolean;
+  logout: () => void;
+  error: ErrorStrapiUser;
 }
 
 const defaultSettings: StrapiContext = {
-  strapi: {},
+  strapi: null,
+  user: null,
+  loading: false,
+  login: () => false,
+  logout: () => console.error("Strapi not initiated"),
+  error: {},
 };
 
 const authContext = createContext<StrapiContext>(defaultSettings);
@@ -28,20 +40,65 @@ export const useStrapi = () => {
 };
 
 function useProvideAuth() {
-  const [strapi, setStrapi] = useState(
-    new Strapi({
-      url: "https://shark-app-md2sm.ondigitalocean.app/",
-      prefix: "/api",
-      store: {
-        key: "strapi_jwt",
-        useLocalStorage: false,
-        cookieOptions: { path: "/" },
-      },
-      axiosOptions: {},
-    })
-  );
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<ErrorStrapiUser>({});
+  const strapi = new Strapi({
+    url: "https://shark-app-md2sm.ondigitalocean.app/",
+    prefix: "/api",
+    store: {
+      key: "strapi_jwt",
+      useLocalStorage: false,
+      cookieOptions: { path: "/" },
+    },
+    axiosOptions: {},
+  });
+
+  const [user, setUser] = useState<StrapiUser | null>(null);
+
+  const login = (data: Userdata) => {
+    console.log(data);
+    setLoading(true);
+    setError({});
+    strapi
+      ?.login({ identifier: data.uid, password: data.pw })
+      .then((res) => {
+        setUser(strapi.user);
+        setLoading(false);
+      })
+      .catch((er) => {
+        console.error(er);
+        setError((prev) => {
+          return { ...prev, invalid_credentials: true };
+        });
+        setLoading(false);
+      });
+  };
+
+  const logout = () => {
+    strapi.logout();
+    setUser(null);
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    strapi
+      .fetchUser()
+      .then((res) => {
+        setLoading(false);
+        setUser(res);
+      })
+      .catch((er) => {
+        setLoading(false);
+      });
+    console.log(strapi);
+  }, []);
 
   return {
     strapi,
+    loading,
+    user,
+    login,
+    logout,
+    error,
   };
 }

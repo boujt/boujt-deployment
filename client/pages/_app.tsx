@@ -4,6 +4,7 @@ import { DailyProvider } from "@daily-co/daily-react-hooks";
 import DailyIframe from "@daily-co/daily-js";
 import { useEffect, useState } from "react";
 import { AuthProvider } from "../auth/auth";
+import { ChakraProvider } from "@chakra-ui/react";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [co, setCo] = useState();
@@ -17,9 +18,11 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <AuthProvider>
-      <DailyProvider callObject={co}>
-        <Component {...pageProps} />
-      </DailyProvider>
+      <ChakraProvider>
+        <DailyProvider callObject={co}>
+          <Component {...pageProps} />
+        </DailyProvider>
+      </ChakraProvider>
     </AuthProvider>
   );
 }

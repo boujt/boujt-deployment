@@ -7,3 +7,7 @@ export type RoomResponse = {
   url?: string;
   privacy?: string;
 };
+
+export type ErrorStrapiUser = {
+  invalid_credentials?: boolean;
+};

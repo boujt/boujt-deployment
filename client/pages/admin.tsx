@@ -1,23 +1,19 @@
 import React from "react";
 import Strapi from "strapi-sdk-js";
-import { useAuth, useStrapi } from "../auth/auth";
+import { useStrapi } from "../auth/auth";
+import LoginForm from "../components/LoginForm";
 export default function Admin() {
-  const { strapi } = useStrapi();
-  console.log(strapi);
-
+  const { strapi, user, logout, loading } = useStrapi();
+  console.log(user);
   return (
     <div>
-      <button
-        onClick={() =>
-          strapi.login({
-            identifier: "jakka150@email.com",
-            password: "Jakka150!",
-          })
-        }
-      >
-        Login
-      </button>
-      <button onClick={() => strapi.logout()}>Log out</button>
+      {!user && <LoginForm />}
+      {user && (
+        <>
+          <button onClick={logout}>logout</button>
+          <p>INLOGGAD SOM ADMIN</p>
+        </>
+      )}
     </div>
   );
 }
