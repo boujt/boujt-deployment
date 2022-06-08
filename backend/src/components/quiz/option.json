@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_quiz_options",
+  "info": {
+    "displayName": "Option",
+    "icon": "bars"
+  },
+  "options": {},
+  "attributes": {
+    "prompt": {
+      "type": "string",
+      "default": "alternativ 1",
+      "required": true
+    }
+  }
+}

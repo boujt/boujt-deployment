@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_quiz_questions",
+  "info": {
+    "displayName": "Question",
+    "icon": "dot-circle",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "prompt": {
+      "type": "string"
+    },
+    "options": {
+      "displayName": "Option",
+      "type": "component",
+      "repeatable": true,
+      "component": "quiz.option"
+    },
+    "video": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}
