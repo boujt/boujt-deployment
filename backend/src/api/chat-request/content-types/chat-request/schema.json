@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "chat_requests",
+  "info": {
+    "singularName": "chat-request",
+    "pluralName": "chat-requests",
+    "displayName": "Chat Request"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "token": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "syssnare": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "is_video": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    }
+  }
+}

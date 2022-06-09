@@ -4,7 +4,8 @@
   "info": {
     "singularName": "video-chat",
     "pluralName": "video-chats",
-    "displayName": "Video Chat"
+    "displayName": "Video Chat",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -18,6 +19,11 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
+    },
+    "token": {
+      "type": "string",
+      "required": true,
+      "unique": true
     }
   }
 }
