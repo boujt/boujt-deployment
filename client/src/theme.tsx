@@ -36,6 +36,15 @@ const theme = extendTheme({
                     textShadow: '0px 0px 20px #FDE30F'
                 }
             }
+        },
+        Button: {
+            variants: {
+                'default': {
+                    backgroundColor: 'red',
+                    color: 'white',
+                    borderRadius: '100px'
+                }
+            }
         }
     },
     // ...
