@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * syssnare router.
+ * textchat router.
  */
 
 const { createCoreRouter } = require('@strapi/strapi').factories;
 
-module.exports = createCoreRouter('api::syssnare.syssnare');
+module.exports = createCoreRouter('api::textchat.textchat');

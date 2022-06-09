@@ -1,4 +1,8 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
   Box,
   Button,
   Divider,
@@ -16,18 +20,40 @@ interface MessageProps {
   message: string;
   displayName: string;
   senderIsMe: boolean;
+  isInfo: boolean;
 }
 
 const ChatMessage: React.FC<MessageProps> = ({
   message,
   displayName,
   senderIsMe,
+  isInfo,
 }) => {
   const AlwaysScrollToBottom = () => {
     const elementRef = useRef();
     useEffect(() => elementRef.current.scrollIntoView());
     return <div ref={elementRef} />;
   };
+
+  if (isInfo) {
+    return (
+      <Flex w="100%" justify={"center"}>
+        <Flex
+          borderRadius={"4"}
+          color={"black"}
+          minW="100px"
+          maxW="350px"
+          my="1"
+          p="3"
+        >
+          <Flex flexDirection={"column"}>
+            <Text>{message}</Text>
+          </Flex>
+        </Flex>
+        <AlwaysScrollToBottom />
+      </Flex>
+    );
+  }
   return (
     <Flex w="100%" justify={senderIsMe ? "flex-end" : "unset"}>
       <Flex
@@ -61,6 +87,7 @@ export const LiveChat: React.FC<LiveChatProps> = ({ roomID, displayName }) => {
   const [inputValue, setInputValue] = useState<string>("");
   const [roomIsValid, setRoomIsValid] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     if (!callObject) {
@@ -78,31 +105,50 @@ export const LiveChat: React.FC<LiveChatProps> = ({ roomID, displayName }) => {
         {
           sender: name,
           message: event.data.message,
+          isInfo: false,
         },
       ]);
       // Make other icons light up
     }
 
-    console.log("ALONE IN CHAT", aloneInChat);
-    console.log(callObject.participants());
-
     callObject.on("app-message", handleAppMessage);
     callObject.on("participant-joined", handleParticipantJoined);
+    callObject.on("participant-left", handleParticipantLeft);
 
     return function cleanup() {
       callObject.off("app-message", handleAppMessage);
       callObject.off("participant-joined", handleParticipantJoined);
+      callObject.on("participant-left", handleParticipantLeft);
     };
   }, [callObject, chatHistory]);
 
+  const handleParticipantLeft = (event) => {
+    console.log(event);
+    setChatHistory([
+      ...chatHistory,
+      {
+        sender: event.participant.user_name,
+        message: event.participant.user_name + " har lämnat chattten",
+        isInfo: true,
+      },
+    ]);
+  };
+
   const handleParticipantJoined = (event) => {
-    console.log(callObject?.participants());
-    console.log(Object.keys(callObject?.participants()).length);
+    console.log(event);
     if (Object.keys(callObject?.participants()).length > 1) {
       setAloneInChat(false);
     } else {
       setAloneInChat(true);
     }
+    setChatHistory([
+      ...chatHistory,
+      {
+        sender: event.participant.user_name,
+        message: event.participant.user_name + " har anslutit till chatten",
+        isInfo: true,
+      },
+    ]);
   };
 
   const sendMessage = () => {
@@ -114,6 +160,7 @@ export const LiveChat: React.FC<LiveChatProps> = ({ roomID, displayName }) => {
       {
         sender: displayName,
         message: inputValue,
+        isInfo: false,
       },
     ]);
     setInputValue("");
@@ -121,6 +168,7 @@ export const LiveChat: React.FC<LiveChatProps> = ({ roomID, displayName }) => {
 
   const joinRoom = () => {
     setLoading(true);
+    setError("");
     callObject
       ?.join({ url: roomID, userName: displayName })
       .then((res) => {
@@ -128,6 +176,7 @@ export const LiveChat: React.FC<LiveChatProps> = ({ roomID, displayName }) => {
         setLoading(false);
       })
       .catch((err) => {
+        setError("Detta rummet är tyvärr inte längre aktivt");
         setHasJoined(false);
         setLoading(false);
         console.log(err);
@@ -152,18 +201,40 @@ export const LiveChat: React.FC<LiveChatProps> = ({ roomID, displayName }) => {
         minHeight={500}
         overflowY={"scroll"}
         flexDirection={"column"}
+        justifyContent="flex-end"
         paddingBottom={30}
         paddingLeft={5}
         paddingRight={5}
       >
-        {aloneInChat && (
+        {error.trim() !== "" && (
+          <>
+            <Alert status="error">
+              <AlertIcon />
+
+              <AlertDescription>
+                Detta rum är tyvärr inte längre aktivt!
+              </AlertDescription>
+            </Alert>
+            <Button>Gå tillbaka</Button>
+          </>
+        )}
+        {!error && aloneInChat && (
           <Flex
             justifyContent={"center"}
             alignItems="center"
             flexDirection={"column"}
+            height="100%"
           >
-            <Spinner />
-            <Text>Väntar på att X ska ansluta till chatten...</Text>
+            <Spinner
+              thickness="4px"
+              speed="2s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="xl"
+            />
+            <Text marginTop={5} fontStyle={"italic"}>
+              Inväntar alla deltagare
+            </Text>
           </Flex>
         )}
         {chatHistory.map((item, id) => {
@@ -173,6 +244,7 @@ export const LiveChat: React.FC<LiveChatProps> = ({ roomID, displayName }) => {
               message={item.message}
               displayName={item.sender}
               senderIsMe={item.sender === displayName}
+              isInfo={item.isInfo}
             />
           );
         })}
@@ -188,12 +260,14 @@ export const LiveChat: React.FC<LiveChatProps> = ({ roomID, displayName }) => {
           value={inputValue}
           placeholder="Skriv ditt meddelande här..."
           onChange={(e) => setInputValue(e.target.value)}
+          disabled={aloneInChat}
         />
         <Button
           bg={"transparent"}
           borderRadius={"0"}
           onClick={() => sendMessage()}
           leftIcon={<FaPaperPlane color="#00CCEE" />}
+          disabled={aloneInChat}
         >
           Skicka
         </Button>

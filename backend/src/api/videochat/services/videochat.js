@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * syssnare service.
+ * videochat service.
  */
 
 const { createCoreService } = require('@strapi/strapi').factories;
 
-module.exports = createCoreService('api::syssnare.syssnare');
+module.exports = createCoreService('api::videochat.videochat');

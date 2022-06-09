@@ -5,7 +5,7 @@ import { LiveChat } from "../components/LiveChat";
 
 export default function Chat() {
   const [url, setURL] = useState<string>(
-    "https://boujt.daily.co/RPSXsQLDE1U1BSnRBOtG"
+    "https://boujt.daily.co/v4TCIbtQxg0M8oNmwaIs"
   );
   const [name, setName] = useState<string>("");
   const [join, setJoin] = useState<boolean>(false);
@@ -14,6 +14,7 @@ export default function Chat() {
       .post("/api/chat_room/create")
       .then((res) => {
         setURL(res.data.url);
+        console.log(res);
       })
       .catch((er) => {
         console.log(er);

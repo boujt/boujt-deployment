@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- *  syssnare controller
+ *  videochat controller
  */
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
-module.exports = createCoreController('api::syssnare.syssnare');
+module.exports = createCoreController('api::videochat.videochat');

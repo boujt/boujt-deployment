@@ -8,7 +8,7 @@ import React, {
 
 import Strapi, { StrapiUser } from "strapi-sdk-js";
 import { Userdata } from "../components/LoginForm";
-import { ErrorStrapiUser } from "../utils/types";
+import { ErrorStrapiUser } from "../../utils/types";
 
 interface StrapiContext {
   strapi: Strapi | null;
