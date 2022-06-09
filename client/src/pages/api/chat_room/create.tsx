@@ -22,6 +22,7 @@ export default async function handler(req, res) {
           eject_at_room_exp: true,
           start_video_off: true,
           start_audio_off: true,
+          max_participants: 2,
         },
       }),
     };

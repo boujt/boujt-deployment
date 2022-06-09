@@ -30,7 +30,7 @@ export type Userdata = {
   pw: string;
 };
 
-const App = () => {
+const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [userData, setUserData] = useState<Userdata>({ uid: "", pw: "" });
   const { strapi, user, login, logout, loading, error } = useStrapi();
@@ -136,4 +136,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default LoginForm;
