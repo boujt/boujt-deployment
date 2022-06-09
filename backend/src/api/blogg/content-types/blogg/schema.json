@@ -43,6 +43,11 @@
         "videos"
       ]
     },
+    "syssnare": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::syssnare.syssnare"
+    },
     "views": {
       "type": "integer"
     }

@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "syssnares",
+  "info": {
+    "singularName": "syssnare",
+    "pluralName": "syssnares",
+    "displayName": "Syssnare"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "namn": {
+      "type": "string",
+      "required": true
+    },
+    "foto": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    },
+    "favorit_djur": {
+      "type": "string"
+    },
+    "favorit_glass": {
+      "type": "string"
+    }
+  }
+}
