@@ -1,5 +1,12 @@
 {
   "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/_error": "pages/_error.js"
+<<<<<<< Updated upstream
+  "/_error": "pages/_error.js",
+  "/api/chat_room/create": "pages/api/chat_room/create.js",
+  "/admin": "pages/admin.js"
+=======
+  "/": "pages/index.js"
+>>>>>>> Stashed changes
 }
