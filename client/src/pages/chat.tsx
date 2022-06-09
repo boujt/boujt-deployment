@@ -1,6 +1,7 @@
 import { Button, Input, Text } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useState } from "react";
+import { generateToken } from "../../utils/helperFunctions";
 import { LiveChat } from "../components/LiveChat";
 
 export default function Chat() {
@@ -21,12 +22,30 @@ export default function Chat() {
       });
   };
 
+  const createChatRequest = () => {
+    const data = {
+      token: generateToken(),
+      is_video: false,
+      syssnare: 2,
+    };
+    axios
+      .post("/api/chat-request/create", data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((er) => {
+        console.log(er);
+      });
+  };
+
   return (
     <div>
       <Button onClick={() => createChatRoom()}>Create room</Button>
       {url !== "" && <Text>{url}</Text>}
       <Input value={name} onChange={(e) => setName(e.target.value)} />
       <Button onClick={() => setJoin(true)}>Join chat</Button>
+      <Button onClick={() => createChatRequest()}>Skicka förfrågan</Button>
+      <Button onClick={() => console.log(generateToken())}>Token</Button>
 
       {join && url !== "" && name.trim() !== "" && (
         <LiveChat roomID={url} displayName={name} />

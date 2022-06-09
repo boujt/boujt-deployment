@@ -24,6 +24,7 @@ interface ProfileMenuProps {
 
 export const ProfileMenu: React.FC<ProfileMenuProps> = ({ name }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { logout } = useStrapi();
   return (
     <Flex>
       {/*TODO: Lägg till Avatar*/}
@@ -46,10 +47,7 @@ export const ProfileMenu: React.FC<ProfileMenuProps> = ({ name }) => {
               as={Button}
             ></MenuButton>
             <MenuList>
-              <MenuItem
-                icon={<FaDoorOpen />}
-                onClick={() => alert("Kagebunshin")}
-              >
+              <MenuItem icon={<FaDoorOpen />} onClick={() => logout()}>
                 Logga ut
               </MenuItem>
             </MenuList>

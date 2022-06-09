@@ -11,8 +11,6 @@ export default function Admin() {
       {!user && <LoginForm />}
       {user && (
         <>
-          <button onClick={logout}>logout</button>
-          <p>INLOGGAD SOM ADMIN</p>
           <AdminPanel />
         </>
       )}

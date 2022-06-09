@@ -11,3 +11,7 @@ export type RoomResponse = {
 export type ErrorStrapiUser = {
   invalid_credentials?: boolean;
 };
+
+// API
+
+// Create chat request
