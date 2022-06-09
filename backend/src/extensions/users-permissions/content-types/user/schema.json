@@ -63,24 +63,32 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "name": {
-      "type": "string"
+    "first_name": {
+      "type": "string",
+      "required": true,
+      "default": "Ex. Klara"
     },
-    "profile_image": {
+    "favorite_animal": {
+      "type": "string",
+      "required": true,
+      "default": "Ex. Elefant"
+    },
+    "favorite_ice_cream": {
+      "type": "string",
+      "required": true,
+      "default": "Ex. Choklad"
+    },
+    "available_for_chat": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "img": {
       "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
+        "images"
       ],
       "type": "media",
       "multiple": false
-    },
-    "favorite_icecream": {
-      "type": "string"
-    },
-    "favorite_animal": {
-      "type": "string"
     }
   }
 }

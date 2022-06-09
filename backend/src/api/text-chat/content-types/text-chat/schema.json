@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "text_chats",
+  "info": {
+    "singularName": "text-chat",
+    "pluralName": "text-chats",
+    "displayName": "Text Chat",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "room_id": {
+      "type": "string",
+      "required": true
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "token": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    }
+  }
+}
