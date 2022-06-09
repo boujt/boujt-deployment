@@ -14,6 +14,7 @@ export default function Chat() {
       .post("/api/chat_room/create")
       .then((res) => {
         setURL(res.data.url);
+        console.log(res);
       })
       .catch((er) => {
         console.log(er);

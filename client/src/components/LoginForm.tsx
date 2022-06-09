@@ -44,6 +44,7 @@ const App = () => {
     login({ uid: userData.uid, pw: userData.pw });
   };
 
+  console.log(user);
   const updateUsername = (e: any) => {
     setUserData((prev: Userdata) => {
       return { uid: e.target.value, pw: prev.pw };
