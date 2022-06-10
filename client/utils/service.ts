@@ -1,5 +1,6 @@
 import axios from "axios";
 import Strapi from "strapi-sdk-js";
+import { ChatRoom } from "./types";
 
 export type CreateChatRequest = {
   strapi: Strapi;
@@ -18,10 +19,13 @@ export const doCreateChatRoom = async (data: CreateChatRequest) => {
     user: data.syssnare,
   });
 
-  return {
+  const response: ChatRoom = {
     room_url: room.data.url,
+    syssnare: data.syssnare,
     token: data.token,
+    is_video: data.is_video,
   };
+  return response;
 };
 
 export type DeleteChatRequest = {
@@ -30,13 +34,10 @@ export type DeleteChatRequest = {
 };
 
 export const doDeleteChatRoom = async (data: DeleteChatRequest) => {
-  let video_ids: number[] = [];
-  let text_ids: number[] = [];
-  console.log("DATA:", data);
   const video_rooms = await data.strapi.find("videochats");
   const text_rooms = await data.strapi.find("textchats");
   const requests = await data.strapi.find("request-chats");
-  console.log(requests);
+
   requests.data.forEach(async (element) => {
     if (element.attributes.token == data.token) {
       data.strapi.delete("request-chats", element.id);
@@ -77,7 +78,6 @@ export const doGetActiveRooms = async (strapi: Strapi, syssnare: number) => {
   });
 
   const filtered_video = video.data.filter((element) => {
-    console.log(element.attributes.user.data.id);
     if (element.attributes.user.data.id === syssnare) {
       return true;
     }

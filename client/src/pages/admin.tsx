@@ -2,7 +2,7 @@ import { Flex, Spinner, Text } from "@chakra-ui/react";
 import React from "react";
 import Strapi from "strapi-sdk-js";
 import { useStrapi } from "../auth/auth";
-import { AdminPanel } from "../components/AdminPanel";
+import { AdminPanel } from "../components/Adminpanel/AdminPanel";
 import LoginForm from "../components/LoginForm";
 export default function Admin() {
   const { strapi, user, logout, loading } = useStrapi();

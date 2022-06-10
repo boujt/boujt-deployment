@@ -2,7 +2,7 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
-  "/api/chat-request/create": "pages/api/chat-request/create.js",
+  "/admin": "pages/admin.js",
   "/api/video_room/create": "pages/api/video_room/create.js",
   "/api/chat_room/delete/[id]": "pages/api/chat_room/delete/[id].js"
 }
