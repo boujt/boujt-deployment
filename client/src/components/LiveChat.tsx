@@ -15,7 +15,8 @@ import {
 import { useDaily } from "@daily-co/daily-react-hooks";
 import React, { useEffect, useRef, useState } from "react";
 import { FaPaperclip, FaPaperPlane } from "react-icons/fa";
-
+import { BounceLoader, PuffLoader } from "react-spinners";
+import styles from "../style/livechat.module.scss";
 interface MessageProps {
   message: string;
   displayName: string;
@@ -34,7 +35,6 @@ const ChatMessage: React.FC<MessageProps> = ({
     useEffect(() => elementRef.current.scrollIntoView());
     return <div ref={elementRef} />;
   };
-
   if (isInfo) {
     return (
       <Flex w="100%" justify={"center"}>
@@ -50,36 +50,42 @@ const ChatMessage: React.FC<MessageProps> = ({
             <Text>{message}</Text>
           </Flex>
         </Flex>
-        <AlwaysScrollToBottom />
       </Flex>
     );
   }
   return (
-    <Flex w="100%" justify={senderIsMe ? "flex-end" : "unset"}>
-      <Flex
-        borderRadius={"4"}
-        bg={senderIsMe ? "#00CCEE" : "#e3f4ff"}
-        color={senderIsMe ? "white" : "black"}
-        minW="100px"
-        maxW="350px"
-        my="1"
-        p="3"
-      >
-        <Flex flexDirection={"column"}>
-          <Text fontSize={"xs"}>{displayName}</Text>
-          <Text>{message}</Text>
+    <>
+      <Flex w="100%" justify={senderIsMe ? "flex-end" : "unset"}>
+        <Flex
+          borderRadius={"4"}
+          bg={senderIsMe ? "#00CCEE" : "#e3f4ff"}
+          color={senderIsMe ? "white" : "black"}
+          minW="100px"
+          maxW="350px"
+          my="1"
+          p="3"
+        >
+          <Flex flexDirection={"column"}>
+            <Text fontSize={"xs"}>{displayName}</Text>
+            <Text>{message}</Text>
+          </Flex>
         </Flex>
       </Flex>
       <AlwaysScrollToBottom />
-    </Flex>
+    </>
   );
 };
 interface LiveChatProps {
   roomID: string;
   displayName: string;
+  onLeave: Function;
 }
 
-export const LiveChat: React.FC<LiveChatProps> = ({ roomID, displayName }) => {
+export const LiveChat: React.FC<LiveChatProps> = ({
+  roomID,
+  displayName,
+  onLeave,
+}) => {
   const [aloneInChat, setAloneInChat] = useState<boolean>(true);
   const callObject = useDaily();
   const [chatHistory, setChatHistory] = useState<any[]>([]);
@@ -88,6 +94,9 @@ export const LiveChat: React.FC<LiveChatProps> = ({ roomID, displayName }) => {
   const [roomIsValid, setRoomIsValid] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
+  const myFormRef = useRef(null);
+
+  console.log("ROOM", roomID);
 
   useEffect(() => {
     if (!callObject) {
@@ -184,22 +193,51 @@ export const LiveChat: React.FC<LiveChatProps> = ({ roomID, displayName }) => {
   };
 
   useEffect(() => {
+    if (!callObject) {
+      return;
+    }
     joinRoom();
-  }, []);
+  }, [callObject]);
+
+  const onEnterPress = (e) => {
+    if (e.keyCode == 13 && e.shiftKey == false) {
+      e.preventDefault();
+      sendMessage();
+    }
+  };
   return (
-    <Flex height={500} minHeight={500} maxW={500} flexDirection={"column"}>
+    <Flex
+      minHeight={500}
+      minWidth={300}
+      width={"40vw"}
+      justifyContent="stretch"
+      alignItems={"stretch"}
+      maxW={800}
+      flexDirection={"column"}
+      boxShadow="0px 0px 20px -13px"
+    >
       <Flex
-        padding={"1rem 0"}
+        padding="1rem 2rem"
         backgroundColor={"#f5f5f5"}
-        justifyContent="center"
+        justifyContent="space-between"
+        alignItems={"center"}
       >
+        <BounceLoader
+          size={20}
+          color={aloneInChat ? "transparent" : "#68D391"}
+        />
         <Text>Live-chatt</Text>
+        <Button
+          onClick={() => onLeave()}
+          backgroundColor={"red"}
+          color={"white"}
+        >
+          Lämna chatt
+        </Button>
       </Flex>
 
       <Flex
-        height={500}
-        minHeight={500}
-        overflowY={"scroll"}
+        height={300}
         flexDirection={"column"}
         justifyContent="flex-end"
         paddingBottom={30}
@@ -215,7 +253,7 @@ export const LiveChat: React.FC<LiveChatProps> = ({ roomID, displayName }) => {
                 Detta rum är tyvärr inte längre aktivt!
               </AlertDescription>
             </Alert>
-            <Button>Gå tillbaka</Button>
+            <Button onClick={() => onLeave()}>Gå tillbaka</Button>
           </>
         )}
         {!error && aloneInChat && (
@@ -237,17 +275,19 @@ export const LiveChat: React.FC<LiveChatProps> = ({ roomID, displayName }) => {
             </Text>
           </Flex>
         )}
-        {chatHistory.map((item, id) => {
-          return (
-            <ChatMessage
-              key={id}
-              message={item.message}
-              displayName={item.sender}
-              senderIsMe={item.sender === displayName}
-              isInfo={item.isInfo}
-            />
-          );
-        })}
+        <Box overflowY={"scroll"}>
+          {chatHistory.map((item, id) => {
+            return (
+              <ChatMessage
+                key={id}
+                message={item.message}
+                displayName={item.sender}
+                senderIsMe={item.sender === displayName}
+                isInfo={item.isInfo}
+              />
+            );
+          })}
+        </Box>
       </Flex>
       <Flex
         backgroundColor={"#f5f5f5"}
@@ -255,15 +295,19 @@ export const LiveChat: React.FC<LiveChatProps> = ({ roomID, displayName }) => {
         justifyContent={"center"}
       >
         <Textarea
-          rows={1}
+          focusBorderColor="unset"
+          backgroundColor={"white"}
+          rows={4}
+          resize="none"
           size="sm"
           value={inputValue}
           placeholder="Skriv ditt meddelande här..."
           onChange={(e) => setInputValue(e.target.value)}
           disabled={aloneInChat}
+          onKeyDown={(e) => onEnterPress(e)}
         />
         <Button
-          bg={"transparent"}
+          bg={"#f5f5f5"}
           borderRadius={"0"}
           onClick={() => sendMessage()}
           leftIcon={<FaPaperPlane color="#00CCEE" />}

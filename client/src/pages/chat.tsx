@@ -6,7 +6,7 @@ import { LiveChat } from "../components/LiveChat";
 
 export default function Chat() {
   const [url, setURL] = useState<string>(
-    "https://boujt.daily.co/v4TCIbtQxg0M8oNmwaIs"
+    "https://boujt.daily.co/dUoR44TTaqchbF3svlKc"
   );
   const [name, setName] = useState<string>("");
   const [join, setJoin] = useState<boolean>(false);
@@ -25,8 +25,8 @@ export default function Chat() {
   const createChatRequest = () => {
     const data = {
       token: generateToken(),
-      is_video: false,
-      syssnare: 2,
+      is_video: true,
+      syssnare: 1,
     };
     axios
       .post("/api/chat-request/create", data)
@@ -43,7 +43,14 @@ export default function Chat() {
       <Button onClick={() => createChatRoom()}>Create room</Button>
       {url !== "" && <Text>{url}</Text>}
       <Input value={name} onChange={(e) => setName(e.target.value)} />
-      <Button onClick={() => setJoin(true)}>Join chat</Button>
+      <Button
+        backgroundColor={"turquoise"}
+        variant={"solid"}
+        colorScheme={"turquoise"}
+        onClick={() => setJoin(true)}
+      >
+        Join chat
+      </Button>
       <Button onClick={() => createChatRequest()}>Skicka förfrågan</Button>
       <Button onClick={() => console.log(generateToken())}>Token</Button>
 

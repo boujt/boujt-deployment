@@ -1,6 +1,18 @@
 import axios from "axios";
+import Strapi from "strapi-sdk-js";
 
 export default async function handler(req, res) {
+  const strapi = new Strapi({
+    url: "https://shark-app-md2sm.ondigitalocean.app/",
+    prefix: "/api",
+    store: {
+      key: "strapi_jwt",
+      useLocalStorage: false,
+      cookieOptions: { path: "/" },
+    },
+    axiosOptions: {},
+  });
+
   if (req.method === "POST") {
     const options = {
       method: "POST",

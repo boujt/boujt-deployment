@@ -16,8 +16,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  console.log(req.body.token, req.body.is_video, req.body.syssnare);
-
   const data: ChatRequest = {
     token: req.body.token,
     is_video: req.body.is_video,
