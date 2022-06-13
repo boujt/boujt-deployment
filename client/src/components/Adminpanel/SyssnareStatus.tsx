@@ -1,34 +1,42 @@
 import { Flex, Text } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import { SYSSNARE_STATUS } from "../../../utils/constants";
+import { useStrapi } from "../../auth/auth";
 
-interface SyssnareStatusProps {
-  status: string;
-}
+interface SyssnareStatusProps {}
 
-export const SyssnareStatus: React.FC<SyssnareStatusProps> = ({ status }) => {
-  const getColorFromStatus = () => {
-    if (status === SYSSNARE_STATUS.ONLINE) {
-      return "red";
-    }
-    if (status === SYSSNARE_STATUS.IN_CALL) {
-      return "orange";
-    }
-    if (status === SYSSNARE_STATUS.AVAILABLE) {
-      return "green";
-    }
-  };
-  const getTextFromStatus = () => {
-    if (status === SYSSNARE_STATUS.ONLINE) {
-      return "Tar ej emot samtal";
-    }
-    if (status === SYSSNARE_STATUS.IN_CALL) {
-      return "I samtal";
-    }
-    if (status === SYSSNARE_STATUS.AVAILABLE) {
-      return "Redo för samtal";
-    }
-  };
+export const getColorFromStatus = (status: string) => {
+  if (status === SYSSNARE_STATUS.ONLINE) {
+    return "red";
+  }
+  if (status === SYSSNARE_STATUS.IN_CALL) {
+    return "orange";
+  }
+  if (status === SYSSNARE_STATUS.AVAILABLE) {
+    return "green";
+  }
+  if (status === SYSSNARE_STATUS.OFFLINE) {
+    return "gray";
+  }
+};
+
+export const getTextFromStatus = (status) => {
+  if (status === SYSSNARE_STATUS.ONLINE) {
+    return "Tar ej emot samtal";
+  }
+  if (status === SYSSNARE_STATUS.IN_CALL) {
+    return "I samtal";
+  }
+  if (status === SYSSNARE_STATUS.AVAILABLE) {
+    return "Redo för samtal";
+  }
+  if (status === SYSSNARE_STATUS.OFFLINE) {
+    return "Offline";
+  }
+};
+
+export const SyssnareStatus: React.FC<SyssnareStatusProps> = ({}) => {
+  const { user } = useStrapi();
 
   return (
     <Flex
@@ -37,10 +45,11 @@ export const SyssnareStatus: React.FC<SyssnareStatusProps> = ({ status }) => {
       marginTop={4}
       justifyContent={"center"}
       alignItems="center"
-      backgroundColor={getColorFromStatus()}
+      backgroundColor={getColorFromStatus(user.status)}
       borderRadius={4}
+      marginBottom={10}
     >
-      <Text color="white">{getTextFromStatus()}</Text>
+      <Text color="white">{getTextFromStatus(user.status)}</Text>
     </Flex>
   );
 };

@@ -15,7 +15,7 @@ import {
 import { ChatRoom } from "../../../utils/types";
 import { useStrapi } from "../../auth/auth";
 import { ChatRequest } from "./ChatRequest";
-import { ProfileMenu } from "../ProfileMenu";
+import { ProfileMenu } from "./ProfileMenu";
 import { SyssnareStatus } from "./SyssnareStatus";
 import { ListChatRequests } from "./ListChatRequests";
 
@@ -23,16 +23,14 @@ interface ChatRoomControllerProps {
   activeRoom: ChatRoom;
   setActiveRoom: Function;
   onChatEnter: Function;
-  syssnareStatus: string;
 }
 
 export const ChatRoomController: React.FC<ChatRoomControllerProps> = ({
   activeRoom,
   setActiveRoom,
   onChatEnter,
-  syssnareStatus,
 }) => {
-  const { strapi, user } = useStrapi();
+  const { strapi, user, setSyssnareStatus } = useStrapi();
 
   const [loading, setLoading] = useState<string>(LOADING_STATE.NONE);
 
@@ -49,13 +47,14 @@ export const ChatRoomController: React.FC<ChatRoomControllerProps> = ({
         console.log("DELETING-END");
         setLoading(LOADING_STATE.NONE);
         setActiveRoom(null);
+        setSyssnareStatus(SYSSNARE_STATUS.AVAILABLE);
       })
       .catch((er) => {
         console.log(er);
       });
   };
 
-  if (syssnareStatus === SYSSNARE_STATUS.ONLINE) {
+  if (user.status === SYSSNARE_STATUS.ONLINE) {
     return (
       <Flex
         justifyContent={"center"}
@@ -72,12 +71,9 @@ export const ChatRoomController: React.FC<ChatRoomControllerProps> = ({
       </Flex>
     );
   }
-  if (!activeRoom && syssnareStatus === SYSSNARE_STATUS.AVAILABLE) {
+  if (!activeRoom && user.status === SYSSNARE_STATUS.AVAILABLE) {
     return (
-      <ListChatRequests
-        setActiveRoom={(e: ChatRoom) => setActiveRoom(e)}
-        status={syssnareStatus}
-      />
+      <ListChatRequests setActiveRoom={(e: ChatRoom) => setActiveRoom(e)} />
     );
   }
 

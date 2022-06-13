@@ -8,12 +8,10 @@ import { useStrapi } from "../../auth/auth";
 import { ChatRequest } from "./ChatRequest";
 
 interface ListChatRequestsProps {
-  status: string;
   setActiveRoom: Function;
 }
 
 export const ListChatRequests: React.FC<ListChatRequestsProps> = ({
-  status,
   setActiveRoom,
 }) => {
   const { strapi, user } = useStrapi();
@@ -42,7 +40,6 @@ export const ListChatRequests: React.FC<ListChatRequestsProps> = ({
     if (!strapi) return;
     Promise.all([doGetActiveRooms(strapi, user.id), fetchRequests()]).then(
       (values) => {
-        console.log("VALUES", values);
         if (values[0]) {
           const aR: ChatRoom = {
             syssnare: user.id,

@@ -19,6 +19,14 @@ export type ChatRoom = {
   is_video: boolean;
 };
 
+export type Syssnare = {
+  id: number;
+  name: string;
+  status: string;
+  favorite_animal: string;
+  favorite_icecream: string;
+};
+
 // API
 
 // Create chat request

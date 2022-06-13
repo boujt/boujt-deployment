@@ -2,10 +2,10 @@ import { Button, Flex, Spinner, Text } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { FaComment, FaVideo } from "react-icons/fa";
-import { LOADING_STATE } from "../../../utils/constants";
+import { LOADING_STATE, SYSSNARE_STATUS } from "../../../utils/constants";
 import { CreateChatRequest, doCreateChatRoom } from "../../../utils/service";
 import { useStrapi } from "../../auth/auth";
-import { ProfileMenu } from "../ProfileMenu";
+import { ProfileMenu } from "./ProfileMenu";
 import { SyssnareStatus } from "./SyssnareStatus";
 
 interface ChatRequestProps {
@@ -29,7 +29,7 @@ export const ChatRequest: React.FC<ChatRequestProps> = ({
   request_id,
   onCreateRoom,
 }) => {
-  const { strapi, user } = useStrapi();
+  const { strapi, user, setSyssnareStatus } = useStrapi();
   const [loading, setLoading] = useState<string>(LOADING_STATE.NONE);
 
   const handleAccept = async () => {
@@ -42,6 +42,7 @@ export const ChatRequest: React.FC<ChatRequestProps> = ({
     };
 
     onCreateRoom(await doCreateChatRoom(data));
+    setSyssnareStatus(SYSSNARE_STATUS.IN_CALL);
   };
 
   const handleDecline = () => {

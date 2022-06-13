@@ -1,5 +1,6 @@
 import axios from "axios";
 import Strapi from "strapi-sdk-js";
+import { SYSSNARE_STATUS } from "./constants";
 import { ChatRoom } from "./types";
 
 export type CreateChatRequest = {
@@ -61,6 +62,15 @@ export const doDeleteChatRoom = async (data: DeleteChatRequest) => {
   });
 };
 
+export const doSetStatusSyssnare = async (
+  status: typeof SYSSNARE_STATUS,
+  id: number
+) => {
+  return await axios.post(`/api/syssnare-status/${id}`, {
+    status: status,
+  });
+};
+
 export const doGetActiveRooms = async (strapi: Strapi, syssnare: number) => {
   const video = await strapi?.find("videochats", {
     populate: {
@@ -97,18 +107,10 @@ export const doGetActiveRooms = async (strapi: Strapi, syssnare: number) => {
   return null;
 };
 
-const doGetAvailableSyssnare = () => {
-  axios.get("");
+export const doGetAllSyssnare = async () => {
+  return await axios.get("/api/syssnare");
 };
 
-export const loginServiceAccount = async () => {
-  const { data } = await axios.post(
-    `${process.env.STRAPI_API_BASE_URL}api/auth/local`,
-    {
-      identifier: "jakka150",
-      password: "Jakka150!",
-    }
-  );
-
-  return data.jwt;
+export const doGetChatRoomFromToken = async (token: string) => {
+  return await axios.get(`/api/chat-room-from-token/${token}`);
 };

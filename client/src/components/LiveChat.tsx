@@ -96,8 +96,6 @@ export const LiveChat: React.FC<LiveChatProps> = ({
   const [error, setError] = useState<string>("");
   const myFormRef = useRef(null);
 
-  console.log("ROOM", roomID);
-
   useEffect(() => {
     if (!callObject) {
       return;
@@ -132,7 +130,6 @@ export const LiveChat: React.FC<LiveChatProps> = ({
   }, [callObject, chatHistory]);
 
   const handleParticipantLeft = (event) => {
-    console.log(event);
     setChatHistory([
       ...chatHistory,
       {
@@ -144,7 +141,6 @@ export const LiveChat: React.FC<LiveChatProps> = ({
   };
 
   const handleParticipantJoined = (event) => {
-    console.log(event);
     if (Object.keys(callObject?.participants()).length > 1) {
       setAloneInChat(false);
     } else {
@@ -178,6 +174,8 @@ export const LiveChat: React.FC<LiveChatProps> = ({
   const joinRoom = () => {
     setLoading(true);
     setError("");
+    console.log(roomID);
+    console.log(roomID);
     callObject
       ?.join({ url: roomID, userName: displayName })
       .then((res) => {
