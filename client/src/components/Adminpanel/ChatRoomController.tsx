@@ -99,7 +99,7 @@ export const ChatRoomController: React.FC<ChatRoomControllerProps> = ({
               leftIcon={<FaVideo />}
               as="a"
               target="_blank"
-              href={DAILY_MEETING_BASE_URL + activeRoom.room_url}
+              href={activeRoom.room_url}
             >
               {loading === LOADING_STATE.ACCEPTING ? (
                 <Spinner />

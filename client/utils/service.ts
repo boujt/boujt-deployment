@@ -100,3 +100,15 @@ export const doGetActiveRooms = async (strapi: Strapi, syssnare: number) => {
 const doGetAvailableSyssnare = () => {
   axios.get("");
 };
+
+export const loginServiceAccount = async () => {
+  const { data } = await axios.post(
+    `${process.env.STRAPI_API_BASE_URL}api/auth/local`,
+    {
+      identifier: "jakka150",
+      password: "Jakka150!",
+    }
+  );
+
+  return data.jwt;
+};
