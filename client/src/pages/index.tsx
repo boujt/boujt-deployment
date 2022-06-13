@@ -2,14 +2,14 @@ import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
 import { CSSProperties } from "@emotion/serialize";
 import type { NextPage } from "next";
 import Image from "next/image";
-import Navbar from "../components/navbar";
-import { css_gradient, gradient } from "../theme";
+import { css_gradient } from "../theme";
 import starLeft from '../../public/images/star_left.png';
 import starRight from '../../public/images/star_right.png';
 import stars from '../../public/images/stars.png';
 import BlogPreview from "../components/Blog/BlogPreview";
 import CircleChart from "../components/CircleChart/CircleChart";
 import Footer from "../components/Footer";
+import Navbar from "../components/navbar";
 
 const content: CSSProperties = {
   width: '100%',
@@ -67,14 +67,13 @@ const Home: NextPage = () => {
 	const getBlogSection = () => {
 		return (
 			<Flex 
-				width="100vw" height={700} 
-				maxW={'100%'} 
+				width="100vw" maxW={'100%'} 
 				alignItems={'center'} 
-				padding={'100px 0 0 0'}
+				padding={'0 0 0 0'}
 				flexDirection={'column'}
-				justifyContent={'space-around'}
+				justifyContent={'space-evenly'}
 			>
-				<Heading>
+				<Heading paddingTop={'50px'}>
 					Det senaste från bloggen
 				</Heading>
 				
@@ -95,8 +94,7 @@ const Home: NextPage = () => {
 		return (
 			<Flex 
 				flexDir={"column"} 
-				height={400} maxW={'100%'} width={'100vw'} 
-				// bgGradient={gradient} 
+				maxW={'100%'} width={'100vw'} 
 				bgImage={`url(${stars.src}), ${css_gradient}`}
 				alignItems={'center'} justifyContent={'space-evenly'}
 			>

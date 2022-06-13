@@ -1,6 +1,5 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Image, Text } from "@chakra-ui/react";
 import { NextPage } from "next";
-import Image from "next/image";
 import Link from "next/link";
 
 type NavbarItemProps = {
@@ -10,7 +9,8 @@ type NavbarItemProps = {
 const NavbarItem: NextPage<NavbarItemProps> = (props: NavbarItemProps) => {
     return (
         <Link href={props.route}>
-            <Text 
+            <Text  
+                noOfLines={1}
                 marginTop={'auto'} 
                 marginBottom={'auto'} 
                 variant='link' 
@@ -34,9 +34,9 @@ const Navbar: NextPage = () => {
             p={8}
         >
             <Image
+                width={'171px'}
+                height={'47px'}
                 src="/images/icon.png"
-                width={"150%"}
-                height={47}
                 alt="boujt logo"
             />
             <Flex>

@@ -10,24 +10,28 @@ import {
 } from '@chakra-ui/react';
 import blogPreview from '../../../public/images/blog-preview.png';
 
+// TODO PROPS
+
 const BlogPreview: React.FC = () => {
 	return (
-		<Center py={6}>
+		<Center px={'10px'}>
 			<Box
-				maxW={'445px'}
+				maxW={'400px'}
 				w={'full'}
 				bg={'white'}
-				boxShadow={'2xl'}
+				boxShadow={'xl'}
 				rounded={'md'}
 				p={6}
-				overflow={'hidden'}>
+				overflow={'hidden'}
+			>
 				<Box
 					h={'210px'}
 					bg={'gray.100'}
-					mt={-6}
-					mx={-6}
+					py={6}
+					px={6}
 					mb={6}
-					pos={'relative'}>
+					pos={'relative'}
+				>
 					<Image
 						src={blogPreview}
 						layout={'fill'}
@@ -38,12 +42,14 @@ const BlogPreview: React.FC = () => {
 						color={'gray'}
 						fontWeight={'thin'}
 						fontSize={'sm'}
-						letterSpacing={1.1}>
+						letterSpacing={1.1}
+					>
 						Nyheter
 					</Text>
 					<Heading
 						fontSize={'2xl'}
-						fontFamily={'body'}>
+						fontFamily={'body'}
+					>
 						Bjout firar 5-årsjubileum!
 					</Heading>
 				</Stack>
