@@ -25,6 +25,7 @@ export type Syssnare = {
   status: string;
   favorite_animal: string;
   favorite_icecream: string;
+  img: string;
 };
 
 // API

@@ -4,15 +4,15 @@ import Strapi from "strapi-sdk-js";
 export default async function handler(req, res) {
   if (req.method === "GET") {
     const in_call = await axios.get(
-      `${process.env.STRAPI_API_BASE_URL}api/videochats?populate=*`
+      `${process.env.STRAPI_API_BASE_URL}/api/videochats?populate=*`
     );
 
     const in_chat = await axios.get(
-      `${process.env.STRAPI_API_BASE_URL}api/textchats?populate=*`
+      `${process.env.STRAPI_API_BASE_URL}/api/textchats?populate=*`
     );
 
     const all_syssnare = await axios.get(
-      `${process.env.STRAPI_API_BASE_URL}api/users`
+      `${process.env.STRAPI_API_BASE_URL}/api/users`
     );
 
     const busy_video: number[] = in_call.data.data.map((el) => {

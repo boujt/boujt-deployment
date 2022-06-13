@@ -9,23 +9,14 @@ export default async function handler(
 ) {
   // Get a cookie
 
-  if (req.method !== "POST") {
+  const { token } = req.query;
+  if (req.method !== "GET") {
     res.status(400).json({ message: "Bad request" });
     return;
   }
 
-  const { id } = req.query;
-
-  if (!req.body.status) {
-    res.status(400).json({ message: "Bad request" });
-    return;
-  }
-  console.log(req.body.status);
-  const { data } = await axios.put(
-    `${process.env.STRAPI_API_BASE_URL}/api/users/${id}`,
-    {
-      status: req.body.status,
-    },
+  let requests = await axios.get(
+    `${process.env.STRAPI_API_BASE_URL}/api/request-chats/`,
     {
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_SERVICE_ACCOUNT_JWT}`,
@@ -33,5 +24,18 @@ export default async function handler(
     }
   );
 
-  res.status(200).json(data);
+  const request_filter = requests.data.data.filter(
+    (t) => t.attributes.token === token
+  );
+
+  if (request_filter.length > 0) {
+    res.status(200).json({
+      data: {
+        token: token,
+      },
+    });
+    return;
+  }
+
+  res.status(404).json({ message: "Request not found" });
 }

@@ -16,7 +16,7 @@ export default async function handler(
   }
 
   const video_res = await axios.get(
-    `${process.env.STRAPI_API_BASE_URL}api/videochats/`,
+    `${process.env.STRAPI_API_BASE_URL}/api/videochats/`,
     {
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_SERVICE_ACCOUNT_JWT}`,
@@ -25,7 +25,7 @@ export default async function handler(
   );
 
   const text_res = await axios.get(
-    `${process.env.STRAPI_API_BASE_URL}api/textchats/`,
+    `${process.env.STRAPI_API_BASE_URL}/api/textchats/`,
     {
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_SERVICE_ACCOUNT_JWT}`,
@@ -35,8 +35,6 @@ export default async function handler(
 
   const text = text_res.data.data;
   const video = video_res.data.data;
-
-  console.log(video, text);
 
   const text_filter = text.filter((t) => t.attributes.session_id === token);
   const video_filter = video.filter((v) => v.attributes.session_id === token);

@@ -1,6 +1,7 @@
 import axios from "axios";
 import Strapi from "strapi-sdk-js";
-import { SYSSNARE_STATUS } from "./constants";
+import { ERRORS, SYSSNARE_STATUS } from "./constants";
+import { generateToken } from "./helperFunctions";
 import { ChatRoom } from "./types";
 
 export type CreateChatRequest = {
@@ -113,4 +114,30 @@ export const doGetAllSyssnare = async () => {
 
 export const doGetChatRoomFromToken = async (token: string) => {
   return await axios.get(`/api/chat-room-from-token/${token}`);
+};
+
+export const doGetRequestByToken = (token: string) => {
+  return axios.get(`/api/chat-request/${token}`);
+};
+
+export const doCreateChatRequest = async (
+  syssnareID: number,
+  isVideo: boolean
+) => {
+  const token = generateToken();
+  const data = {
+    token: token,
+    is_video: isVideo,
+    syssnare: syssnareID,
+  };
+  const syssnare = await doGetAllSyssnare();
+  const sys = syssnare.data.filter((sys) => sys.id === syssnareID);
+  if (sys.length === 0) return { error: ERRORS.NOT_FOUND };
+
+  if (sys[0].status === SYSSNARE_STATUS.AVAILABLE) {
+    await axios.post("/api/chat-request/create", data);
+    return { token };
+  }
+
+  return { error: ERRORS.BUSY };
 };

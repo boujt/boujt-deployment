@@ -13,3 +13,8 @@ export const SYSSNARE_STATUS = {
   OFFLINE: "offline",
   ONLINE: "online",
 };
+
+export const ERRORS = {
+  NOT_FOUND: "not-found",
+  BUSY: "busy",
+};

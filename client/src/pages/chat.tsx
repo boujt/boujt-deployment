@@ -1,15 +1,27 @@
 import { Button, Flex, Input, Text } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { FaComment, FaVideo } from "react-icons/fa";
+import { PuffLoader } from "react-spinners";
 import { SYSSNARE_STATUS } from "../../utils/constants";
 import { generateToken } from "../../utils/helperFunctions";
-import { doGetAllSyssnare, doGetChatRoomFromToken } from "../../utils/service";
+import {
+  doCreateChatRequest,
+  doGetAllSyssnare,
+  doGetChatRoomFromToken,
+  doGetRequestByToken,
+} from "../../utils/service";
 import { Syssnare } from "../../utils/types";
 import { LiveChat } from "../components/LiveChat";
+import { SyssnareItem } from "../components/SyssnareItem";
+import { WaitForRequest } from "../components/WaitForRequest";
 
 export default function Chat() {
   const [url, setURL] = useState<string>("");
-  const [token, setToken] = useState<string>("");
+  const [requestData, setRequestData] = useState<{
+    token: string | null;
+    syssnare: Syssnare | null;
+  }>({ token: null, syssnare: null });
   const [name, setName] = useState<string>("Gustaf");
   const [join, setJoin] = useState<boolean>(false);
   const [syssnare, setSyssnare] = useState<Syssnare[]>([]);
@@ -18,62 +30,67 @@ export default function Chat() {
     doGetAllSyssnare().then((res) => {
       setSyssnare(res.data);
     });
-  }, []);
 
-  const createChatRequest = (syssnareID: number, isVideo: boolean) => {
-    const token = generateToken();
-    const data = {
-      token: token,
-      is_video: isVideo,
-      syssnare: syssnareID,
-    };
-    axios
-      .post("/api/chat-request/create", data)
-      .then((res) => {
-        console.log(res);
-        setToken(token);
-      })
-      .catch((er) => {
-        console.log(er);
-      });
-  };
+    if (localStorage.getItem("request_data")) {
+      const reqdata = JSON.parse(localStorage.getItem("request_data"));
+      doGetRequestByToken(reqdata.token)
+        .then((res) => {
+          setRequestData(reqdata);
+        })
+        .catch((er) => {
+          console.log(er);
+        });
+    }
+  }, []);
 
   useEffect(() => {
-    const myInterval = setInterval(async function () {
-      if (!token) return;
-      doGetChatRoomFromToken(token)
+    doGetAllSyssnare()
+      .then((res) => {
+        setSyssnare(res.data);
+      })
+      .catch((er) => console.log(er));
+    const myInterval1 = setInterval(async function () {
+      doGetAllSyssnare()
         .then((res) => {
-          console.log(res);
-          setURL(res.data.data.url);
+          setSyssnare(res.data);
         })
-        .catch((er) => {});
+        .catch((er) => console.error(er));
     }, 2000);
-    return () => clearInterval(myInterval);
+    return () => clearInterval(myInterval1);
   }, []);
+
+  const createChatRequest = (syssnare: Syssnare, isVideo: boolean) => {
+    doCreateChatRequest(syssnare.id, isVideo).then((res) => {
+      if (res.error) {
+        console.log(res.error);
+      } else {
+        console.log(res.token);
+        setRequestData({ token: res.token, syssnare: syssnare });
+        localStorage.setItem(
+          "request_data",
+          JSON.stringify({ token: res.token, syssnare: syssnare })
+        );
+      }
+    });
+  };
 
   return (
     <div>
-      {syssnare.map((sys) => {
-        if (sys.status === SYSSNARE_STATUS.OFFLINE) return null;
-        return (
-          <Flex key={sys.id}>
-            <Text>{sys.name}</Text>
-            <Button onClick={() => createChatRequest(sys.id, false)}>
-              Chatt
-            </Button>
-            <Button onClick={() => createChatRequest(sys.id, true)}>
-              Video
-            </Button>
-          </Flex>
-        );
-      })}
-      {url !== "" && <Button onClick={() => setJoin(true)}>Join room</Button>}
+      {!requestData.token &&
+        syssnare.map((sys) => {
+          return (
+            <SyssnareItem
+              key={sys.id}
+              syssnare={sys}
+              onCreateRequest={(sys, vid) => createChatRequest(sys, vid)}
+            />
+          );
+        })}
 
-      {join && url !== "" && name.trim() !== "" && (
-        <LiveChat
-          roomID={url}
-          displayName={name}
-          onLeave={() => setJoin(false)}
+      {requestData.token && (
+        <WaitForRequest
+          syssnare={requestData.syssnare}
+          token={requestData.token}
         />
       )}
     </div>

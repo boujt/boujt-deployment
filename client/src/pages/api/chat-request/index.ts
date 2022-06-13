@@ -28,7 +28,7 @@ export default async function handler(
   };
 
   axios
-    .post(`${process.env.STRAPI_API_BASE_URL}api/request-chats`, payload)
+    .post(`${process.env.STRAPI_API_BASE_URL}/api/request-chats`, payload)
     .then((response) => {
       res.status(200).json({ message: "Request sent", token: req.body.token });
     })
