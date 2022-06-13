@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@chakra-ui/react"
+import { Flex, Text } from "@chakra-ui/react";
 import { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -26,8 +26,9 @@ const NavbarItem: NextPage<NavbarItemProps> = (props: NavbarItemProps) => {
 const Navbar: NextPage = () => {
     return (
         <Flex 
+            maxW={'100%'}
             w="100vw" 
-            background={'black'}
+            background={'blackish'}
             justifyContent="space-evenly"
             wrap="wrap"
             p={8}

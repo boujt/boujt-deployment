@@ -2,6 +2,7 @@ import { extendTheme } from "@chakra-ui/react";
 
 // Gradient defined and used throughout
 const gradient = `linear(to-b, #34569A, #1D3D63)`;
+const css_gradient = 'linear-gradient(0deg, #34569A 0%, #1D3D63 100%);'
 
 // Define our font
 const fonts = {
@@ -21,7 +22,7 @@ const breakpoints = {
 const theme = extendTheme({
   /* color definitions, taken from figma */
   colors: {
-    black: "#181818",
+    blackish: "#181818",
     turquoise: "#00CCEE",
     yellow: "#FDE30F",
     orange: "#FAC20D",
@@ -56,4 +57,4 @@ const theme = extendTheme({
   fonts,
 });
 
-export { theme, gradient };
+export { theme, gradient, css_gradient };
