@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
+import { AbsoluteCenter, Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
 import { CSSProperties } from "@emotion/serialize";
 import type { NextPage } from "next";
 import Image from "next/image";
@@ -10,14 +10,25 @@ import BlogPreview from "../components/Blog/BlogPreview";
 import CircleChart from "../components/CircleChart/CircleChart";
 import Footer from "../components/Footer";
 import Navbar from "../components/navbar";
+import Starfield from "../components/Starfield";
 
 const content: CSSProperties = {
   width: '100%',
   height: '100%',
+  position: 'relative',
+  zIndex: 100,
+}
+
+const background: CSSProperties = {
+	position: 'absolute',
+	width: "100%",
+	height: "100%",
+	top: 0,
+	left: 0,
+	zIndex: -100
 }
 
 const Home: NextPage = () => {
-
 	const getChatSection = () => {
 		return (
 			<Flex justifyContent={'center'}>
@@ -115,14 +126,14 @@ const Home: NextPage = () => {
 			<Navbar />
 			{/* FIRST SECTION AT THE TOP */}
 			<Flex 
+				position={'relative'}
 				flexDir={"column"} 
 				height={620} maxW={'100%'} width={'100vw'} 
-				// bgGradient={gradient} 
 				alignItems={'center'} 
 				padding={'100px 150px 0 150px'}
-				bgImage={`url(${stars.src}), ${css_gradient}`}
+				// bgImage={`url(${stars.src}), ${css_gradient}`}
 			>
-				<Box sx={content}>
+				<Box sx={content} >
 					{/* HEADING */}
 					<Flex width={'100%'} justifyContent={'space-evenly'}>
 						<Image src={starLeft}/>
@@ -132,6 +143,9 @@ const Home: NextPage = () => {
 						<Image src={starRight}/>
 					</Flex>
 					{getChatSection()}
+				</Box>
+				<Box sx={background}>
+					<Starfield/>
 				</Box>
 			</Flex>
 			{getBlogSection()}

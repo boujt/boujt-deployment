@@ -33,12 +33,14 @@ const Navbar: NextPage = () => {
             wrap="wrap"
             p={8}
         >
-            <Image
-                width={'171px'}
-                height={'47px'}
-                src="/images/icon.png"
-                alt="boujt logo"
-            />
+            <Link href={'/'}>
+                <Image
+                    width={'171px'}
+                    height={'47px'}
+                    src="/images/icon.png"
+                    alt="boujt logo"
+                />
+            </Link>
             <Flex>
                 <NavbarItem text="Känslor och rättigheter" route="/kor"/>
                 <NavbarItem text="Frågelådan" route="/question-box"/>

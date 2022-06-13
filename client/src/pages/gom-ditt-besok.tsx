@@ -1,10 +1,17 @@
-import { Box, Flex, Heading, Select, Text } from "@chakra-ui/react";
+import { Box, Center, Circle, Flex, Heading, Select, Text } from "@chakra-ui/react";
 import { NextPage } from "next";
 import Footer from "../components/Footer";
 import Navbar from "../components/navbar";
 import { FaChrome, FaEdge, FaFirefox, FaFirefoxBrowser } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import detectBrowser from "../utility/detect-browser";
+
+const style: React.CSSProperties = {
+    borderRadius: '20px',
+    WebkitBorderRadius: '20px',
+    overflow: 'hidden',
+    position: 'relative'
+}
 
 const BrowserOptions = [
     {
@@ -72,13 +79,13 @@ const HideYourVisist: NextPage = () => {
                     Göm ditt besök
                 </Heading>
                 <Box 
-                    width={'50%'} minW={'300px'} 
+                    width={'40%'} minW={'300px'} 
                     py={'50px'}
                 >
                     <Heading size={'md'} pb={'30px'}>
                         VILL DU INTE ATT ANDRA SKA SE ATT DU BESÖKT OSS?
                     </Heading>
-                    <Text>
+                    <Text fontWeight={'medium'} fontSize={20}>
                         När du besöker en hemsida sparas det information om det i datorns ”Historik”. 
                         Det innebär att om andra går in på samma dator kan de trycka på ”Historik” 
                         och se vilka sidor som besökts. Om du inte vill att andra ska se att du besökt 
@@ -87,19 +94,32 @@ const HideYourVisist: NextPage = () => {
                         för att radera din historik:
                     </Text>
                     {/* TODO VIDEO */}
-                    <Select 
-                        width={'200px'}
-                        placeholder={'Välj din webbläsare'} 
-                        value={browser} onChange={onBrowserChange}
-                    >
-                        <option value='chrome'>Chrome</option>
-                        <option value='firefox'>Firefox</option>
-                        <option value='microsoft edge'>Microsoft Edge</option>
-                    </Select>
+                    <Center borderRadius={'15px'} py={'50px'} flexDir={'column'}>
+                        <Box sx={style}>
+                            <iframe 
+                                id="player" width="640" height="390"
+                                src="http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1&origin=http://example.com"
+                            />
+                        </Box>
+                    </Center>
+                    <Center>
+                        <Select 
+                            width={'200px'}
+                            placeholder={'Välj din webbläsare'} 
+                            value={browser} onChange={onBrowserChange}
+                            iconColor={'white'} iconSize={'32px'}
+                            bg={'red'} borderColor={'red'}  
+                            color={'white'}
+                            borderRadius={'15px'}
+                        >
+                            {BrowserOptions.map(b => {
+                                return <option value={b.value}>{b.label}</option>
+                            })}
+                        </Select>
+                    </Center>
                 </Box>
             </Flex>
             {/* BROWSER INSTRUCTIONS SECTION */}
-            
             <Footer/>
         </Box>
     )
