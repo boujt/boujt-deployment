@@ -69,14 +69,12 @@ const Home: NextPage = () => {
 			<Flex 
 				width="100vw" maxW={'100%'} 
 				alignItems={'center'} 
-				padding={'0 0 0 0'}
 				flexDirection={'column'}
 				justifyContent={'space-evenly'}
 			>
 				<Heading paddingTop={'50px'}>
 					Det senaste från bloggen
 				</Heading>
-				
 				{/* Blog posts */}
 				<Flex justifyContent={'space-around'} flexWrap={'wrap'}>
 					<BlogPreview/>
@@ -113,7 +111,7 @@ const Home: NextPage = () => {
 	}
 
 	return (
-		<Flex flexDir={"column"}>
+		<Box>
 			<Navbar />
 			{/* FIRST SECTION AT THE TOP */}
 			<Flex 
@@ -139,7 +137,7 @@ const Home: NextPage = () => {
 			{getBlogSection()}
 			{getWhatWeLikeSection()}
 			<Footer/>
-		</Flex>
+		</Box>
 	);
 };
 
