@@ -61,7 +61,7 @@ const Navbar: NextPage = () => {
         </VideoTooltip>
 
         <VideoTooltip src={Kontakt.src}>
-          <NavbarItem text="Kontakta oss" route="/contact" />
+          <NavbarItem text="Kontakta oss" route="/kontakta-oss" />
         </VideoTooltip>
 
         <VideoTooltip src={GomBesok.src}>

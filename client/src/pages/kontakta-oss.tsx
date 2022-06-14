@@ -1,11 +1,13 @@
-import { Box, Button, Center, Heading, Text } from "@chakra-ui/react";
+import { Box, Button, Center, Flex, Heading, Text } from "@chakra-ui/react";
 import { NextPage } from "next";
 import Footer from "../components/Footer";
+import EmailForm from "../components/Form/EmailForm";
 import Navbar from "../components/navbar";
+import Video from "../components/Video";
 
 const HideYourVisist: NextPage = () => {
     return (
-        <Box>
+        <Flex flexDir={'column'} alignItems={'center'}>
             <Navbar/>
             <Center flexDir={'column'} pb={'100px'}>
                 <Heading 
@@ -21,14 +23,20 @@ const HideYourVisist: NextPage = () => {
                     <Text fontWeight={'light'}>Ta mig dit</Text>
                 </Button>
             </Center>
-            <Center>
+            <Center flexDir={'column'} width={'50%'} minW={'400px'}>
                 <Heading color={'blackish'}>
                     Maila oss
                 </Heading>
-                
+                <Video
+                    style={{marginTop: '20px', marginBottom: '20px'}}
+                    url={'http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1&origin=http://example.com'}
+                    width={500}
+                    height={300}
+                />
+                <EmailForm/>
             </Center>
             <Footer/>
-        </Box>
+        </Flex>
     )
 }
 
