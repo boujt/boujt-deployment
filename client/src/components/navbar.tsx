@@ -46,7 +46,7 @@ const Navbar: NextPage = () => {
                 <NavbarItem text="Frågelådan" route="/question-box"/>
                 <NavbarItem text="Få stöd" route="/get-support"/>
                 <NavbarItem text="Om oss" route="/about"/>
-                <NavbarItem text="Kontakta oss" route="/contact"/>
+                <NavbarItem text="Kontakta oss" route="/kontakta-oss"/>
                 <NavbarItem text="Göm ditt besök" route="/gom-ditt-besok"/>
             </Flex>
         </Flex>
