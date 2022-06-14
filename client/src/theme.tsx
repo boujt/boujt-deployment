@@ -1,4 +1,5 @@
 import { extendTheme } from "@chakra-ui/react";
+import "@fontsource/quicksand"; // Defaults to weight 400.
 
 // Gradient defined and used throughout
 const chakra_gradient = `linear(to-b, #34569A, #1D3D63)`;
