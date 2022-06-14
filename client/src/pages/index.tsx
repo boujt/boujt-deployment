@@ -1,4 +1,11 @@
-import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
+import {
+  AbsoluteCenter,
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Text,
+} from "@chakra-ui/react";
 import { CSSProperties } from "@emotion/serialize";
 import type { NextPage } from "next";
 import Image from "next/image";
@@ -10,6 +17,7 @@ import BlogPreview from "../components/Blog/BlogPreview";
 import CircleChart from "../components/CircleChart/CircleChart";
 import Footer from "../components/Footer";
 import Navbar from "../components/navbar";
+import Starfield from "../components/Starfield";
 
 const content: CSSProperties = {
   width: "100%",
