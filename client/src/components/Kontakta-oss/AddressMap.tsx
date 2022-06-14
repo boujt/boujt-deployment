@@ -1,11 +1,11 @@
 import { Flex, Heading, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Map, Marker, Overlay } from "pigeon-maps";
-const ContactInfo: React.FC = () => {
+const AddressMap: React.FC = () => {
   const [center, setCenter] = useState<[number, number]>([59.37277, 17.93477]);
   const [zoom, setZoom] = useState(11);
   return (
-    <Flex width={"800px"} borderRadius={30}>
+    <Flex width={"100%"} borderRadius={30}>
       <Map
         height={300}
         defaultCenter={center}
@@ -32,4 +32,4 @@ const ContactInfo: React.FC = () => {
   );
 };
 
-export default ContactInfo;
+export default AddressMap;

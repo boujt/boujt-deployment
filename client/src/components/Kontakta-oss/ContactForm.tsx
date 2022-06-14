@@ -26,14 +26,14 @@ const ContactForm: React.FC = () => {
         <Input
           id="name"
           type="text"
-          value={email}
+          value={name}
           onChange={(t) => setName(t.target.value)}
         />
         <FormLabel htmlFor="email">Email</FormLabel>
         <Input
           id="email"
           type="email"
-          value={name}
+          value={email}
           onChange={(t) => setEmail(t.target.value)}
         />
         <FormLabel htmlFor="text">Meddelande</FormLabel>
@@ -45,13 +45,15 @@ const ContactForm: React.FC = () => {
         <Flex gap={5}>
           <Button
             mt={4}
-            colorScheme="teal"
+            backgroundColor="yellow"
+            color="black"
+            variant={"default"}
             isLoading={isSubmitting}
             type="submit"
           >
             Skicka
           </Button>
-          <Button mt={4} color="teal">
+          <Button variant="defualt" mt={4} color="black">
             Ladda upp bilaga
           </Button>
         </Flex>
