@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { AuthProvider } from "../auth/auth";
 import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "../theme";
+import "../style/videotooltip.scss";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [co, setCo] = useState();
