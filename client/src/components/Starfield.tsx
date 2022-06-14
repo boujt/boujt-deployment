@@ -8,8 +8,9 @@ type Star = {
     decay: number
 }
 
-const MAX_TIME_ALIVE = 90;
+const MAX_TIME_ALIVE = 110;
 const DECAY_RANGE = 1;
+const SIZE = 4;
 
 const makeStars = (count: number, width: number, height: number): Star[] => {
     const out: Star[] = [];
@@ -48,7 +49,7 @@ const Starfield: React.FC = () => {
 
             // z-distance squared is alpha of our star
             const b = 1 - (star.timeAlive / MAX_TIME_ALIVE);
-            putPixel(x, y, b < 0 ? 0 : b);
+            putPixel(star, b < 0 ? 0 : b);
         }
     }
 
@@ -93,15 +94,19 @@ const Starfield: React.FC = () => {
         c!.fillRect(0, 0, myCanvas.current!.width, myCanvas.current!.height);
     }
 
-    const putPixel = (x: number, y: number, brightness: number) => {
+    const putPixel = (star: Star, brightness: number) => {
         if(!myCanvas.current) return;
 
         const intensity = 255;
         const rgba = "rgba(" + intensity + "," + intensity + "," + intensity + "," + brightness + ")";
         const c = myCanvas.current.getContext('2d');
 
+        const size = SIZE;
+        c!.beginPath();
         c!.fillStyle = rgba;
-        c!.fillRect(x, y, 3, 3);
+        c!.arc(star.x, star.y, size, 0, 2*Math.PI);
+        c!.fill();
+
     };
 
     useEffect(() =>  {
