@@ -18,3 +18,13 @@ export const ERRORS = {
   NOT_FOUND: "not-found",
   BUSY: "busy",
 };
+
+export const ROUTES = {
+  KONTAKTA_OSS: "/kontakta-oss",
+  FRAGELADA: "/fragelada",
+  ADMIN: "/admin",
+  GOM_BESOK: "/gom-ditt-besok",
+  FA_STOD: "/fa-stod",
+  OM_OSS: "/om-oss",
+  KROPPEN: "/kroppen-och-rattigheter",
+};

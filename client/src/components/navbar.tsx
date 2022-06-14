@@ -8,6 +8,7 @@ import Kontakt from "../../public/tecken-video/kontakta_oss.gif";
 import GomBesok from "../../public/tecken-video/gom_ditt_besok.gif";
 import OmOss from "../../public/tecken-video/om_oss.gif";
 import { VideoTooltip } from "./VideoTooltip";
+import { ROUTES } from "../../utils/constants";
 type NavbarItemProps = {
   text: string;
   route: string;
@@ -51,21 +52,21 @@ const Navbar: NextPage = () => {
         </VideoTooltip>
 
         <VideoTooltip src={Frageladan.src}>
-          <NavbarItem text="Frågelådan" route="/question-box" />
+          <NavbarItem text="Frågelådan" route={ROUTES.FRAGELADA} />
         </VideoTooltip>
         <VideoTooltip src={Stod.src}>
-          <NavbarItem text="Få stöd" route="/get-support" />
+          <NavbarItem text="Få stöd" route={ROUTES.FA_STOD} />
         </VideoTooltip>
         <VideoTooltip src={OmOss.src}>
-          <NavbarItem text="Om oss" route="/about" />
+          <NavbarItem text="Om oss" route={ROUTES.OM_OSS} />
         </VideoTooltip>
 
         <VideoTooltip src={Kontakt.src}>
-          <NavbarItem text="Kontakta oss" route="/contact" />
+          <NavbarItem text="Kontakta oss" route={ROUTES.KONTAKTA_OSS} />
         </VideoTooltip>
 
         <VideoTooltip src={GomBesok.src}>
-          <NavbarItem text="Göm ditt besök" route="/gom-ditt-besok" />
+          <NavbarItem text="Göm ditt besök" route={ROUTES.GOM_BESOK} />
         </VideoTooltip>
       </Flex>
     </Flex>

@@ -72,7 +72,7 @@ export const ListChatRequests: React.FC<ListChatRequestsProps> = ({
   }
   if (loading === LOADING_STATE.NONE && requests.length !== 0) {
     return (
-      <Flex>
+      <Flex flexDirection={"column"}>
         {requests.map((req) => {
           const miliSeconds = Date.now() - new Date(req.attributes.createdAt);
           return (

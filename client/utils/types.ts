@@ -28,6 +28,25 @@ export type Syssnare = {
   img: string;
 };
 
+export type BlogPost = {
+  id: number;
+  published_at: string;
+  title: string;
+  text: string;
+  views: number;
+  cover_image: string;
+  images: string[];
+  videos: string[];
+};
+
+export type Fragelada = {
+  id: number;
+  published_at: string;
+  question: string;
+  answer: string;
+  visible: boolean;
+};
+
 // API
 
 // Create chat request

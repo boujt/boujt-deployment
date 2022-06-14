@@ -1,20 +1,3 @@
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
-  Avatar,
-  Badge,
-  Box,
-  Button,
-  Divider,
-  Flex,
-  Input,
-  Spinner,
-  Text,
-  Textarea,
-} from "@chakra-ui/react";
-
 import React, { useEffect, useRef, useState } from "react";
 import styles from "../style/videotooltip.module.scss";
 
