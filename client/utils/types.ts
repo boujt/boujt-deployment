@@ -45,6 +45,7 @@ export type Fragelada = {
   question: string;
   answer: string;
   visible: boolean;
+  categories: string[];
 };
 
 // API

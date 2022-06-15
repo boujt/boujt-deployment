@@ -73,10 +73,15 @@ const KontaktaOss: NextPage = () => {
         // bgImage={`url(${stars.src}), ${css_gradient}`}
       >
         <Box sx={content} display="flex" flexDirection={"row"}>
-          <Flex justifyContent="center" width={"33%"}>
+          <Flex
+            justifyContent="center"
+            alignText="center"
+            width={"40%"}
+            alignItems="center"
+          >
             <Heading color="white">Sveriges Dövas Ungdomsförbund</Heading>
           </Flex>
-          <Flex justifyContent="center" width={"33%"}>
+          <Flex justifyContent="center" width={"20%"}>
             <div
               style={{
                 width: "2px",
@@ -85,7 +90,12 @@ const KontaktaOss: NextPage = () => {
               }}
             ></div>
           </Flex>
-          <Flex width={"33%"} justifyContent="center" flexDirection={"column"}>
+          <Flex
+            width={"40%"}
+            gap={10}
+            justifyContent="center"
+            flexDirection={"column"}
+          >
             <Flex gap={10}>
               <Box>
                 <FaMapPin size={"3rem"} color="white" />

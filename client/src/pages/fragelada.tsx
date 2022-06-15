@@ -10,6 +10,7 @@ import {
   GridItem,
   Heading,
   Input,
+  Select,
   Text,
   Textarea,
 } from "@chakra-ui/react";
@@ -50,6 +51,7 @@ const Fragelada: NextPage = () => {
   const [questionsAndAnswers, setQuestionsAndAnswers] = useState<Fragelada[]>(
     []
   );
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
 
   useEffect(() => {
     axios
@@ -61,6 +63,17 @@ const Fragelada: NextPage = () => {
         console.error(er);
       });
   }, []);
+
+  const getCategories = () => {
+    const categories = new Set();
+    questionsAndAnswers.forEach((qa) => {
+      qa.categories.forEach((c) => {
+        categories.add(c);
+      });
+    });
+    return Array.from(categories);
+  };
+
   const submitQuestion = () => {
     if (message.trim() === "") {
       setSubmitState("error");
@@ -87,9 +100,7 @@ const Fragelada: NextPage = () => {
           <Video
             width={"100%"}
             height={200}
-            url={
-              "http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1&origin=http://example.com"
-            }
+            url={"https://www.youtube.com/embed/pT1o_Wwnc2U"}
           />
         </Box>
         <Box width={"50%"}>
@@ -142,13 +153,37 @@ const Fragelada: NextPage = () => {
 
       <Flex flexDirection={"column"}>
         <Heading>Tidigare frågor och svar</Heading>
-        <Grid templateColumns="repeat(2, 1fr)" gap={5}>
+        <Flex flexDirection={"column"} marginTop="1rem" padding="1rem 0">
+          <Text>Välj kategori</Text>
+          <Select
+            onChange={(t) => setSelectedCategory(t.target.value)}
+            width={280}
+            placeholder="Alla"
+          >
+            {getCategories().map((cat) => {
+              return (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              );
+            })}
+          </Select>
+        </Flex>
+
+        <Grid templateColumns="repeat(auto-fill, minmax(300px,1fr))" gap={5}>
           {questionsAndAnswers.map((qa) => {
-            return (
-              <GridItem height={"100%"} key={qa.id}>
-                <QuestionAnswer answer={qa.answer} question={qa.question} />
-              </GridItem>
-            );
+            if (
+              selectedCategory === "" ||
+              qa.categories.includes(selectedCategory)
+            ) {
+              return (
+                <GridItem key={qa.id}>
+                  <QuestionAnswer fragelada={qa} />
+                </GridItem>
+              );
+            } else {
+              return null;
+            }
           })}
         </Grid>
       </Flex>

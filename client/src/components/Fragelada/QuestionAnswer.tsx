@@ -1,4 +1,6 @@
 import {
+  Badge,
+  Box,
   Button,
   Center,
   Flex,
@@ -13,16 +15,13 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
+import { Fragelada } from "../../../utils/types";
 import { css_gradient } from "../../theme";
 interface QuestionAnswerProps {
-  question: string;
-  answer: string;
+  fragelada: Fragelada;
 }
 
-const QuestionAnswer: React.FC<QuestionAnswerProps> = ({
-  answer,
-  question,
-}) => {
+const QuestionAnswer: React.FC<QuestionAnswerProps> = ({ fragelada }) => {
   const [showAnswer, setShowAnswer] = useState<boolean>(false);
 
   return (
@@ -35,9 +34,18 @@ const QuestionAnswer: React.FC<QuestionAnswerProps> = ({
       alignItems={"center"}
       gap={5}
     >
+      <Flex gap={2} width={"100%"} justifyContent={"flex-start"}>
+        {fragelada.categories.map((cat) => {
+          return (
+            <Badge color="white" variant={"outline"} key={cat}>
+              <Text fontStyle={"italic"}># {cat}</Text>
+            </Badge>
+          );
+        })}
+      </Flex>
       <Flex>
         <Text fontSize={20} color="white">
-          {question}
+          {fragelada.question}
         </Text>
       </Flex>
       {showAnswer && (
@@ -49,7 +57,7 @@ const QuestionAnswer: React.FC<QuestionAnswerProps> = ({
           backgroundColor={"white"}
           gap={4}
         >
-          <ReactMarkdown>{answer}</ReactMarkdown>
+          <ReactMarkdown>{fragelada.answer}</ReactMarkdown>
         </Flex>
       )}
       <Button

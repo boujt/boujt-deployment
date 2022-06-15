@@ -9,8 +9,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // Get a cookie
-  console.log(req.method === "POST");
   if (req.method === "GET") {
     const { data } = await axios.get(
       `${process.env.STRAPI_API_BASE_URL}/api/frageladas?populate=*`,
@@ -22,12 +20,16 @@ export default async function handler(
     );
 
     const fragor: Fragelada[] = data.data.map((fraga) => {
+      const cats = fraga.attributes.kategorier.data.map(
+        (cat) => cat.attributes.kategori
+      );
       return {
         id: fraga.id,
         published_at: fraga.attributes.publishedAt,
         question: fraga.attributes.question,
         answer: fraga.attributes.answer,
         visible: fraga.attributes.visible,
+        categories: cats.length === 0 ? ["Övrigt"] : cats,
       };
     });
 
