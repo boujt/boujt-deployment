@@ -1,16 +1,9 @@
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, AspectRatio, Box, Center, Flex, Heading, Icon, Select, Text } from "@chakra-ui/react";
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Center, Flex, Heading, Icon, Text } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { IconType } from "react-icons";
 import { FaChrome, FaEdge, FaFirefoxBrowser } from "react-icons/fa";
-import Footer from "../components/Footer";
-import Navbar from "../components/navbar";
+import BoujtTemplate from "../components/BoujtTemplate";
 import Video from "../components/Video";
-
-const style: React.CSSProperties = {
-    borderRadius: '20px',
-    WebkitBorderRadius: '20px',
-    overflow: 'hidden',
-}
 
 type Browser = {
     value: string,
@@ -38,18 +31,22 @@ const BrowserOptions: Browser[] = [
         label: "Firefox",
         icon: FaFirefoxBrowser,
         instructions: [
-            'TODO',
+            'Klicka på menyknappen uppe till höger',
+            'Välj historik',
+            `Klicka på "Rensa ut tidigare historik"`
         ],
-        description: 'TODO'
+        description: ''
     },
     {
         value: "edge",
         label: "Microfosft Edge",
         icon: FaEdge,
         instructions: [
-            'TODO',
+            'Klicka på menyknappen uppe till höger',
+            'Välj historia och klicka på menyknappen uppe till höger',
+            'Och välja valet med soptunnan'
         ],
-        description: 'TODO'
+        description: ''
     },
 ]
 
@@ -95,15 +92,13 @@ const HideYourVisist: NextPage = () => {
     }
 
     return (
-        <Box>
-            <Navbar/>
+        <BoujtTemplate>
             {/* MAIN CONTENT */}
             <Flex pt={'100px'} alignItems={'center'} flexDir={'column'}>
                 <Heading bgGradient={'linear(to-b, #34569A, #1D3D63)'} bgClip='text'>
                     Göm ditt besök
                 </Heading>
                 <Box 
-                    width={'40%'} minW={'300px'} 
                     py={'50px'}
                 >
                     <Heading size={'md'} pb={'30px'}>
@@ -128,7 +123,7 @@ const HideYourVisist: NextPage = () => {
             </Flex>
             {/* BROWSER INSTRUCTIONS SECTION */}
             <Center pb={'50px'}>
-            <Box width="80%">
+            <Box width={'100%'}>
                 <Accordion allowToggle>
                     {
                         BrowserOptions.map(br => {
@@ -138,8 +133,7 @@ const HideYourVisist: NextPage = () => {
                 </Accordion>
             </Box>
             </Center>
-            <Footer/>
-        </Box>
+        </BoujtTemplate>
     )
 }
 
