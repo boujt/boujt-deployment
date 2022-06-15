@@ -38,8 +38,15 @@ const KontaktaOss: NextPage = () => {
   return (
     <BoujtTemplate gap={100}>
       <Heading>Kontakta oss</Heading>
-      <Flex gap={40}>
-        <Box width={"50%"} display={"flex"} flexDirection="column" gap={4}>
+      <Flex gap={20}>
+        <Box width={"60%"} display={"flex"} flexDirection="column" gap={4}>
+          <Text>
+            Vill du få stöd via mejl? Det går också bra! Du kan skicka in ett
+            textmejl eller en film på svenskt teckenspråk. Du bestämmer själv
+            hur vi ska svara - i text eller på teckenspråk. Du får mejla oss om
+            vad du vill. Det kan vara ett problem, en fråga eller något helt
+            annat.
+          </Text>
           <Video
             width={"100%"}
             height={200}
@@ -47,13 +54,8 @@ const KontaktaOss: NextPage = () => {
               "http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1&origin=http://example.com"
             }
           />
-
-          <Text>
-            Här kan du maila oss om du har en fråga. Bla bla . Maila gärna oss
-            när du har en fråga
-          </Text>
         </Box>
-        <Box width={"50%"}>
+        <Box width={"40%"}>
           <Text fontWeight={700} fontSize={25}>
             Maila oss
           </Text>

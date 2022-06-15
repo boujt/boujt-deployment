@@ -141,3 +141,7 @@ export const doCreateChatRequest = async (
 
   return { error: ERRORS.BUSY };
 };
+
+export const doSubmitQuestionToFragelada = async (question: string) => {
+  return await axios.post("/api/fragelada", { question });
+};
