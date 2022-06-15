@@ -6,10 +6,12 @@ import { AuthProvider } from "../auth/auth";
 import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "../theme";
 import "../style/videotooltip.scss";
+import "../style/global.scss";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [co, setCo] = useState();
   useEffect(() => {
+    //@ts-ignore
     setCo(DailyIframe.createCallObject({ url: "gyovDfpFyZnUKWIoeU2r" }));
   }, []);
 

@@ -5,12 +5,6 @@ import { FaChrome, FaEdge, FaFirefoxBrowser } from "react-icons/fa";
 import BoujtTemplate from "../components/BoujtTemplate";
 import Video from "../components/Video";
 
-const style: React.CSSProperties = {
-    borderRadius: '20px',
-    WebkitBorderRadius: '20px',
-    overflow: 'hidden',
-}
-
 type Browser = {
     value: string,
     label: string,

@@ -9,10 +9,12 @@ import GomBesok from "../../public/tecken-video/gom_ditt_besok.gif";
 import OmOss from "../../public/tecken-video/om_oss.gif";
 import { VideoTooltip } from "./VideoTooltip";
 import { ROUTES } from "../../utils/constants";
+
 type NavbarItemProps = {
 	text: string;
 	route: string;
 };
+
 const NavbarItem: NextPage<NavbarItemProps> = (props: NavbarItemProps) => {
 	return (
 		<Link href={props.route}>
@@ -30,15 +32,20 @@ const NavbarItem: NextPage<NavbarItemProps> = (props: NavbarItemProps) => {
 	);
 };
 
-const Navbar: NextPage = () => {
+type Props = {
+	transparent?: boolean
+}
+
+const Navbar: NextPage<Props> = ({transparent}) => {
 	return (
 		<Flex
 			maxW={"100%"}
 			w="100vw"
-			background={"blackish"}
+			background={transparent ? "transparent" : "blackish"}
 			justifyContent="space-evenly"
 			wrap="wrap"
 			p={8}
+			zIndex={100}
 		>
 			<Link href="/">
 				<Image
@@ -50,7 +57,7 @@ const Navbar: NextPage = () => {
 			</Link>
 			<Flex>
 				<VideoTooltip src={Kroppen.src}>
-					<NavbarItem text="Känslor och rättigheter" route="/kor" />
+					<NavbarItem text="Känslor och rättigheter" route="/kanslor-och-rattigheter" />
 				</VideoTooltip>
 
 				<VideoTooltip src={Frageladan.src}>
