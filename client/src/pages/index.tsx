@@ -1,18 +1,12 @@
 import {
-	AbsoluteCenter,
 	Box,
 	Button,
 	Flex,
 	Heading,
-	Text,
+	Text
 } from "@chakra-ui/react";
 import { CSSProperties } from "@emotion/serialize";
 import type { NextPage } from "next";
-import Image from "next/image";
-import { css_gradient } from "../theme";
-import starLeft from "../../public/images/star_left.png";
-import starRight from "../../public/images/star_right.png";
-import stars from "../../public/images/stars.png";
 import BlogPreview from "../components/Blog/BlogPreview";
 import CircleChart from "../components/CircleChart/CircleChart";
 import Footer from "../components/Footer";
@@ -37,7 +31,7 @@ const background: CSSProperties = {
 const Home: NextPage = () => {
 	const getChatSection = () => {
 		return (
-			<Flex justifyContent={"center"}>
+			<Flex>
 				<Flex width="50%" flexDir={"column"} minW={"360"}>
 					{/* CHAT WINDOW 1 */}
 					<Box paddingTop={"50px"}>
@@ -71,12 +65,6 @@ const Home: NextPage = () => {
 								Mellan klockan 18:30 till 20:30
 							</Text>
 						</Flex>
-					</Flex>
-					{/* BOTTOM BUTTON */}
-					<Flex marginLeft={"auto"} marginRight={"auto"} paddingTop={"60px"}>
-						<Button width="163px" height="45px" variant={"default"}>
-							<Text>Ta mig dit</Text>
-						</Button>
 					</Flex>
 				</Flex>
 			</Flex>
@@ -136,23 +124,25 @@ const Home: NextPage = () => {
 
 	return (
 		<Box>
-			<Navbar />
-			{/* FIRST SECTION AT THE TOP */}
-			<Flex
-				position={'relative'}
-				flexDir={"column"}
-				height={620}
-				maxW={"100%"}
-				width={"100vw"}
-				// bgGradient={gradient}
-				alignItems={"center"}
-				padding={"100px 150px 0 150px"}
-				// bgImage={`url(${stars.src}), ${css_gradient}`}
-			>
-				<Box sx={content}>
-					{/* HEADING */}
-					<Flex width={"100%"} justifyContent={"space-evenly"}>
-						<Image src={starLeft} />
+			<Box position={'relative'}>
+				<Navbar transparent />
+				{/* FIRST SECTION AT THE TOP */}
+				<Flex
+					// position={'relative'}
+					flexDir={"row"}
+					justifyContent={'center'}
+					minHeight={620}
+					maxW={"100%"}
+					width={"100vw"}
+					alignItems={"center"}
+					padding={"0 150px 0 150px"}
+				>
+					{/* LEFT SECTION */}
+					<Flex 
+						flex={1}
+						flexDir={'column'}
+						maxW={'650px'}
+					>
 						<Text
 							color={"white"}
 							fontWeight={"bold"}
@@ -160,16 +150,38 @@ const Home: NextPage = () => {
 							marginTop={"auto"}
 							marginBottom={"auto"}
 						>
-							Chatta med Boujt!
+							Chatta med <span style={{fontWeight: 'bolder', color: 'yellow'}}>Boujt</span>!
 						</Text>
-						<Image src={starRight} />
+						<Text
+							color={'white'}
+						>
+							I vår chatt kan du välja att prata om vad du vill! Har du
+							en fundering om kroppen? Har du bråkat med en 
+							kompis? Säger din kille att du inte får träffa dina 
+							vänner? Är du ledsen, glad eller ingenting alls? 
+							<br/><br/>
+							Du är varmt välkommen att chatta med en syssnare! Du 
+							kan själv välja mellan text- eller videosamtal.
+						</Text>
+						{/* BUTTONS */}
+						<Flex justifyContent={'center'} paddingTop={"60px"}>
+							<Button mx={'5px'} width="163px" height="45px" variant={"default"}>
+								<Text>Ta mig dit</Text>
+							</Button>
+							<Button mx={'5px'} width="163px" height="45px" variant={"information"}>
+								<Text>Om oss</Text>
+							</Button>
+						</Flex>
 					</Flex>
-					{getChatSection()}
-				</Box>
+					{/* RIGHT SECTION */}
+					<Flex flex={1} paddingLeft={'35px'} maxW={'650px'} justifyContent={'center'}>
+						{getChatSection()}
+					</Flex>
+				</Flex>
 				<Box sx={background}>
 					<Starfield/>
 				</Box>
-			</Flex>
+			</Box>
 			{getBlogSection()}
 			{getWhatWeLikeSection()}
 			<Footer />
