@@ -50,6 +50,12 @@ const theme = extendTheme({
           backgroundColor: "turquoise",
           color: "white",
         },
+        information: {
+          backgroundColor: 'white',
+          color: 'black',
+          borderRadius: "100px",
+
+        }
       },
     },
   },

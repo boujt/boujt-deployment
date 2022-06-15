@@ -50,3 +50,9 @@ export type Fragelada = {
 // API
 
 // Create chat request
+
+export type AImage = {
+  imageUrl: string,
+  width: number,
+  height: number
+}
