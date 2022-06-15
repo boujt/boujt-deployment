@@ -42,8 +42,8 @@ const theme = extendTheme({
     Button: {
       variants: {
         default: {
-          backgroundColor: "red",
-          color: "white",
+          backgroundColor: "yellow",
+          color: "black",
           borderRadius: "100px",
         },
         adminPrimary: {

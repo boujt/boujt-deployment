@@ -75,7 +75,7 @@ const Home: NextPage = () => {
 					{/* BOTTOM BUTTON */}
 					<Flex marginLeft={"auto"} marginRight={"auto"} paddingTop={"60px"}>
 						<Button width="163px" height="45px" variant={"default"}>
-							<Text fontWeight={"light"}>Ta mig dit</Text>
+							<Text>Ta mig dit</Text>
 						</Button>
 					</Flex>
 				</Flex>
@@ -101,7 +101,7 @@ const Home: NextPage = () => {
 					<BlogPreview />
 				</Flex>
 				<Button width="163px" height="45px" variant={"default"}>
-					<Text fontWeight={"light"}>Utforska bloggen</Text>
+					<Text>Utforska bloggen</Text>
 				</Button>
 			</Flex>
 		);
