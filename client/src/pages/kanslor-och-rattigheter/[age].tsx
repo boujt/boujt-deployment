@@ -42,7 +42,6 @@ const syssnareVideoList = [
     }        
 ]
 
-
 const MainContent: React.FC = () => {
     const [isSmallerThan600] = useMediaQuery('(max-width: 600px)')
 
@@ -61,7 +60,6 @@ const MainContent: React.FC = () => {
     /* 
         **PREPARE SOME COMPONENT DATA** 
     */
-
     const orangeCardText = age == '7' ? 
         'Vill du veta vad du kan göra om du är kär?' : 
         'Lär dig mer om våld och utsatthet'
