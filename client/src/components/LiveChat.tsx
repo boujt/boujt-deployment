@@ -17,6 +17,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { FaPaperclip, FaPaperPlane } from "react-icons/fa";
 import { BounceLoader, PuffLoader } from "react-spinners";
 import styles from "../style/livechat.module.scss";
+import DailyIframe from "@daily-co/daily-js";
+import {
+  MESSAGE_PREFIX_REQUEST_ACCEPT,
+  MESSAGE_PREFIX_REQUEST_CHANGE,
+  MESSAGE_PREFIX_REQUEST_DENY,
+  MESSAGE_REQUEST,
+} from "../../utils/constants";
 interface MessageProps {
   message: string;
   displayName: string;
@@ -76,18 +83,22 @@ const ChatMessage: React.FC<MessageProps> = ({
   );
 };
 interface LiveChatProps {
-  roomID: string;
+  dailyIframe: any;
   displayName: string;
-  onLeave: Function;
+  setSentRequestToChange: Function;
+  sentRequestToChange: string;
+  toggleTypeOfChat: Function;
 }
 
 export const LiveChat: React.FC<LiveChatProps> = ({
-  roomID,
+  dailyIframe,
   displayName,
-  onLeave,
+  setSentRequestToChange,
+  sentRequestToChange,
+  toggleTypeOfChat,
 }) => {
   const [aloneInChat, setAloneInChat] = useState<boolean>(true);
-  const callObject = useDaily();
+
   const [chatHistory, setChatHistory] = useState<any[]>([]);
   const [hasJoined, setHasJoined] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>("");
@@ -97,41 +108,57 @@ export const LiveChat: React.FC<LiveChatProps> = ({
   const myFormRef = useRef(null);
 
   useEffect(() => {
-    if (!callObject) {
+    if (!dailyIframe) {
       return;
     }
 
-    function handleAppMessage(event) {
-      const participants = callObject.participants();
-      const name = participants[event.fromId].user_name
-        ? participants[event.fromId].user_name
-        : "Anonym";
-      if (!event.data.message) return;
-      setChatHistory([
-        ...chatHistory,
-        {
-          sender: name,
-          message: event.data.message,
-          isInfo: false,
-        },
-      ]);
-      // Make other icons light up
-    }
-
-    callObject.on("app-message", handleAppMessage);
-    callObject.on("participant-joined", handleParticipantJoined);
-    callObject.on("participant-left", handleParticipantLeft);
+    dailyIframe.on("app-message", handleAppMessage);
+    dailyIframe.on("participant-joined", handleParticipantJoined);
+    dailyIframe.on("participant-left", handleParticipantLeft);
 
     return function cleanup() {
-      callObject.off("app-message", handleAppMessage);
-      callObject.off("participant-joined", handleParticipantJoined);
-      callObject.on("participant-left", handleParticipantLeft);
+      dailyIframe.off("app-message", handleAppMessage);
+      dailyIframe.off("participant-joined", handleParticipantJoined);
+      dailyIframe.on("participant-left", handleParticipantLeft);
     };
-  }, [callObject, chatHistory]);
+  }, [dailyIframe]);
+
+  const handleAppMessage = (event) => {
+    console.log("app");
+    const participants = dailyIframe.participants();
+    const name = participants[event.fromId].user_name
+      ? participants[event.fromId].user_name
+      : "Anonym";
+    if (!event.data.message) return;
+
+    if (event.data.message === MESSAGE_PREFIX_REQUEST_CHANGE) {
+      setSentRequestToChange(MESSAGE_REQUEST.RECIEVED);
+      return;
+    }
+    if (event.data.message === MESSAGE_PREFIX_REQUEST_DENY) {
+      setSentRequestToChange(MESSAGE_REQUEST.DENIED);
+      return;
+    }
+    if (event.data.message === MESSAGE_PREFIX_REQUEST_ACCEPT) {
+      setSentRequestToChange(MESSAGE_REQUEST.ACCPETED);
+      toggleTypeOfChat();
+
+      return;
+    }
+    setChatHistory((prev) => [
+      ...prev,
+      {
+        sender: name,
+        message: event.data.message,
+        isInfo: false,
+      },
+    ]);
+    // Make other icons light up
+  };
 
   const handleParticipantLeft = (event) => {
-    setChatHistory([
-      ...chatHistory,
+    setChatHistory((prev) => [
+      ...prev,
       {
         sender: event.participant.user_name,
         message: event.participant.user_name + " har lämnat chattten",
@@ -141,13 +168,13 @@ export const LiveChat: React.FC<LiveChatProps> = ({
   };
 
   const handleParticipantJoined = (event) => {
-    if (Object.keys(callObject?.participants()).length > 1) {
+    if (Object.keys(dailyIframe?.participants()).length > 1) {
       setAloneInChat(false);
     } else {
       setAloneInChat(true);
     }
-    setChatHistory([
-      ...chatHistory,
+    setChatHistory((prev) => [
+      ...prev,
       {
         sender: event.participant.user_name,
         message: event.participant.user_name + " har anslutit till chatten",
@@ -157,9 +184,9 @@ export const LiveChat: React.FC<LiveChatProps> = ({
   };
 
   const sendMessage = () => {
-    if (!callObject || inputValue.trim() === "") return;
+    if (!dailyIframe || inputValue.trim() === "") return;
 
-    callObject.sendAppMessage({ message: inputValue }, "*");
+    dailyIframe.sendAppMessage({ message: inputValue }, "*");
     setChatHistory([
       ...chatHistory,
       {
@@ -170,32 +197,6 @@ export const LiveChat: React.FC<LiveChatProps> = ({
     ]);
     setInputValue("");
   };
-
-  const joinRoom = () => {
-    setLoading(true);
-    setError("");
-    console.log(roomID);
-    console.log(roomID);
-    callObject
-      ?.join({ url: roomID, userName: displayName })
-      .then((res) => {
-        setHasJoined(true);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError("Detta rummet är tyvärr inte längre aktivt");
-        setHasJoined(false);
-        setLoading(false);
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    if (!callObject) {
-      return;
-    }
-    joinRoom();
-  }, [callObject]);
 
   const onEnterPress = (e) => {
     if (e.keyCode == 13 && e.shiftKey == false) {
@@ -225,13 +226,13 @@ export const LiveChat: React.FC<LiveChatProps> = ({
           color={aloneInChat ? "transparent" : "#68D391"}
         />
         <Text>Live-chatt</Text>
-        <Button
+        {/* <Button
           onClick={() => onLeave()}
           backgroundColor={"red"}
           color={"white"}
         >
           Lämna chatt
-        </Button>
+        </Button> */}
       </Flex>
 
       <Flex
@@ -242,7 +243,7 @@ export const LiveChat: React.FC<LiveChatProps> = ({
         paddingLeft={5}
         paddingRight={5}
       >
-        {error.trim() !== "" && (
+        {/* {error.trim() !== "" && (
           <>
             <Alert status="error">
               <AlertIcon />
@@ -253,7 +254,7 @@ export const LiveChat: React.FC<LiveChatProps> = ({
             </Alert>
             <Button onClick={() => onLeave()}>Gå tillbaka</Button>
           </>
-        )}
+        )} */}
         {!error && aloneInChat && (
           <Flex
             justifyContent={"center"}
