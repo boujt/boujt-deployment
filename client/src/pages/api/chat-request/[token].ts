@@ -14,7 +14,7 @@ export default async function handler(
   if (req.method !== "GET") {
     res.status(405).json({
       success: false,
-      error: { message: "Method not alloed", code: ERRORS.METHOD_NOT_ALLOWED },
+      error: { message: "Method not allowed", code: ERRORS.METHOD_NOT_ALLOWED },
     });
     return;
   }

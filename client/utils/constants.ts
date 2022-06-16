@@ -4,7 +4,23 @@ export const LOADING_STATE = {
   FETCHING: "fetching",
   DELETING: "deleting",
   ACCEPTING: "accepting",
+  JOINING: "joining",
+  CHANGING: "changing",
   NONE: "none",
+};
+
+export const MESSAGE_PREFIX_REQUEST_CHANGE =
+  "requestToChange-aASjjnwnAjnwla2123kalwadljkawdblakw-request";
+export const MESSAGE_PREFIX_REQUEST_ACCEPT =
+  "requestToChange-aASjjnwnAjnwla2123kalwadljkawdblakw-accept";
+export const MESSAGE_PREFIX_REQUEST_DENY =
+  "requestToChange-aASjjnwnAjnwla2123kalwadljkawdblakw-deny";
+
+export const MESSAGE_REQUEST = {
+  ACCPETED: "change-accepted",
+  DENIED: "change-denied",
+  SENT: "request-sent",
+  RECIEVED: "request-recieved",
 };
 
 export const SYSSNARE_STATUS = {
