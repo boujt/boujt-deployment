@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "chatrooms",
+  "info": {
+    "singularName": "chatroom",
+    "pluralName": "chatrooms",
+    "displayName": "Chatroom"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "token": {
+      "type": "string"
+    },
+    "room_url": {
+      "type": "string"
+    },
+    "is_video": {
+      "type": "boolean"
+    },
+    "syssnare": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    }
+  }
+}
