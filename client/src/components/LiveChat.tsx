@@ -88,6 +88,9 @@ interface LiveChatProps {
   setSentRequestToChange: Function;
   sentRequestToChange: string;
   toggleTypeOfChat: Function;
+  chatHistory: any[];
+  setChatHistory: Function;
+  aloneInChat: boolean;
 }
 
 export const LiveChat: React.FC<LiveChatProps> = ({
@@ -96,92 +99,13 @@ export const LiveChat: React.FC<LiveChatProps> = ({
   setSentRequestToChange,
   sentRequestToChange,
   toggleTypeOfChat,
+  chatHistory,
+  setChatHistory,
+  aloneInChat,
 }) => {
-  const [aloneInChat, setAloneInChat] = useState<boolean>(true);
-
-  const [chatHistory, setChatHistory] = useState<any[]>([]);
-  const [hasJoined, setHasJoined] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>("");
-  const [roomIsValid, setRoomIsValid] = useState<boolean>(true);
-  const [loading, setLoading] = useState<boolean>(true);
+
   const [error, setError] = useState<string>("");
-  const myFormRef = useRef(null);
-
-  useEffect(() => {
-    if (!dailyIframe) {
-      return;
-    }
-
-    dailyIframe.on("app-message", handleAppMessage);
-    dailyIframe.on("participant-joined", handleParticipantJoined);
-    dailyIframe.on("participant-left", handleParticipantLeft);
-
-    return function cleanup() {
-      dailyIframe.off("app-message", handleAppMessage);
-      dailyIframe.off("participant-joined", handleParticipantJoined);
-      dailyIframe.on("participant-left", handleParticipantLeft);
-    };
-  }, [dailyIframe]);
-
-  const handleAppMessage = (event) => {
-    console.log("app");
-    const participants = dailyIframe.participants();
-    const name = participants[event.fromId].user_name
-      ? participants[event.fromId].user_name
-      : "Anonym";
-    if (!event.data.message) return;
-
-    if (event.data.message === MESSAGE_PREFIX_REQUEST_CHANGE) {
-      setSentRequestToChange(MESSAGE_REQUEST.RECIEVED);
-      return;
-    }
-    if (event.data.message === MESSAGE_PREFIX_REQUEST_DENY) {
-      setSentRequestToChange(MESSAGE_REQUEST.DENIED);
-      return;
-    }
-    if (event.data.message === MESSAGE_PREFIX_REQUEST_ACCEPT) {
-      setSentRequestToChange(MESSAGE_REQUEST.ACCPETED);
-      toggleTypeOfChat();
-
-      return;
-    }
-    setChatHistory((prev) => [
-      ...prev,
-      {
-        sender: name,
-        message: event.data.message,
-        isInfo: false,
-      },
-    ]);
-    // Make other icons light up
-  };
-
-  const handleParticipantLeft = (event) => {
-    setChatHistory((prev) => [
-      ...prev,
-      {
-        sender: event.participant.user_name,
-        message: event.participant.user_name + " har lämnat chattten",
-        isInfo: true,
-      },
-    ]);
-  };
-
-  const handleParticipantJoined = (event) => {
-    if (Object.keys(dailyIframe?.participants()).length > 1) {
-      setAloneInChat(false);
-    } else {
-      setAloneInChat(true);
-    }
-    setChatHistory((prev) => [
-      ...prev,
-      {
-        sender: event.participant.user_name,
-        message: event.participant.user_name + " har anslutit till chatten",
-        isInfo: true,
-      },
-    ]);
-  };
 
   const sendMessage = () => {
     if (!dailyIframe || inputValue.trim() === "") return;

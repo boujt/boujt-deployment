@@ -56,6 +56,84 @@ export const ChatView: React.FC<ChatViewProps> = ({ room, displayName }) => {
   const [error, setError] = useState<string>("");
   const videoRef = useRef(null);
   const [sentRequestToChange, setSentRequestToChange] = useState<string>("");
+  const [chatHistory, setChatHistory] = useState<any[]>([]);
+  const [aloneInChat, setAloneInChat] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (da) {
+      da.on("app-message", handleAppMessage);
+      da.on("participant-joined", handleParticipantJoined);
+      da.on("participant-left", handleParticipantLeft);
+    }
+
+    return function cleanup() {
+      if (da) {
+        da.off("app-message", handleAppMessage);
+        da.off("participant-joined", handleParticipantJoined);
+        da.on("participant-left", handleParticipantLeft);
+      }
+    };
+  }, [da]);
+
+  const handleAppMessage = (event) => {
+    console.log("app");
+    const participants = da.participants();
+    const name = participants[event.fromId].user_name
+      ? participants[event.fromId].user_name
+      : "Anonym";
+    if (!event.data.message) return;
+
+    if (event.data.message === MESSAGE_PREFIX_REQUEST_CHANGE) {
+      setSentRequestToChange(MESSAGE_REQUEST.RECIEVED);
+      return;
+    }
+    if (event.data.message === MESSAGE_PREFIX_REQUEST_DENY) {
+      setSentRequestToChange(MESSAGE_REQUEST.DENIED);
+      return;
+    }
+    if (event.data.message === MESSAGE_PREFIX_REQUEST_ACCEPT) {
+      setSentRequestToChange(MESSAGE_REQUEST.ACCPETED);
+      toggleTypeOfChat();
+
+      return;
+    }
+    setChatHistory((prev) => [
+      ...prev,
+      {
+        sender: name,
+        message: event.data.message,
+        isInfo: false,
+      },
+    ]);
+    // Make other icons light up
+  };
+
+  const handleParticipantLeft = (event) => {
+    setChatHistory((prev) => [
+      ...prev,
+      {
+        sender: event.participant.user_name,
+        message: event.participant.user_name + " har lämnat chattten",
+        isInfo: true,
+      },
+    ]);
+  };
+
+  const handleParticipantJoined = (event) => {
+    if (Object.keys(da?.participants()).length > 1) {
+      setAloneInChat(false);
+    } else {
+      setAloneInChat(true);
+    }
+    setChatHistory((prev) => [
+      ...prev,
+      {
+        sender: event.participant.user_name,
+        message: event.participant.user_name + " har anslutit till chatten",
+        isInfo: true,
+      },
+    ]);
+  };
 
   useEffect(() => {
     if (!videoRef) return;
@@ -206,6 +284,9 @@ export const ChatView: React.FC<ChatViewProps> = ({ room, displayName }) => {
           displayName={displayName}
           dailyIframe={da}
           toggleTypeOfChat={toggleTypeOfChat}
+          chatHistory={chatHistory}
+          setChatHistory={setChatHistory}
+          aloneInChat={aloneInChat}
         />
       )}
       <iframe

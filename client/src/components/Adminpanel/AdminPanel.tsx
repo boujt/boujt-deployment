@@ -60,13 +60,6 @@ export const AdminPanel: React.FC = () => {
                 setActiveRoom={(room: ChatRoom) => setActiveRoom(room)}
               />
             )}
-            {openChat && activeRoom && !activeRoom.is_video && (
-              <LiveChat
-                onLeave={() => setOpenChat(false)}
-                roomID={activeRoom.room_url}
-                displayName={"Syssnare - " + user?.username}
-              />
-            )}
           </Flex>
           {!activeRoom && (
             <Flex marginTop={20} height={300} justifyContent="center">

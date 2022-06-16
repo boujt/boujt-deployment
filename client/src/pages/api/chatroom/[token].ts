@@ -68,12 +68,6 @@ export default async function handler(req, res) {
       if (rooms.data.data.length > 0) {
         const room = rooms.data.data[0];
 
-        console.log(
-          room.attributes.room_url.replace(
-            process.env.DAILY_REST_DOMAIN + "/",
-            ""
-          )
-        );
         try {
           await axios.delete(
             `${
