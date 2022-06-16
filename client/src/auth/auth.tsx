@@ -9,6 +9,8 @@ import React, {
 import Strapi, { StrapiUser } from "strapi-sdk-js";
 import { Userdata } from "../components/LoginForm";
 import { ErrorStrapiUser } from "../../utils/types";
+import { SYSSNARE_STATUS } from "../../utils/constants";
+import { doSetStatusSyssnare } from "../../utils/service";
 
 interface StrapiContext {
   strapi: Strapi | null;
@@ -17,6 +19,7 @@ interface StrapiContext {
   login: (data: Userdata) => boolean;
   logout: () => void;
   error: ErrorStrapiUser;
+  setSyssnareStatus: Function;
 }
 
 const defaultSettings: StrapiContext = {
@@ -25,6 +28,7 @@ const defaultSettings: StrapiContext = {
   loading: false,
   login: () => false,
   logout: () => console.error("Strapi not initiated"),
+  setSyssnareStatus: () => console.error("Strapi not initiated"),
   error: {},
 };
 
@@ -55,10 +59,19 @@ function useProvideAuth() {
 
   const [user, setUser] = useState<StrapiUser | null>(null);
 
-  const login = (data: Userdata) => {
+  const setSyssnareStatus = (status) => {
+    doSetStatusSyssnare(status, user.id).then((res) => {
+      const updated_user = res.data;
+      delete updated_user.role;
+      setUser(updated_user);
+    });
+  };
+
+  const login = async (data: Userdata) => {
     console.log(data);
     setLoading(true);
     setError({});
+
     strapi
       ?.login({ identifier: data.uid, password: data.pw })
       .then((res) => {
@@ -99,6 +112,7 @@ function useProvideAuth() {
     user,
     login,
     logout,
+    setSyssnareStatus,
     error,
   };
 }

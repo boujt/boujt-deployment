@@ -20,6 +20,7 @@ export default async function handler(req, res) {
           exp: Math.round(Date.now() / 1000) + 300,
           eject_at_room_exp: true,
           max_participants: 2,
+          start_audio_off: true,
         },
       }),
     };
