@@ -17,6 +17,9 @@ export const SYSSNARE_STATUS = {
 export const ERRORS = {
   NOT_FOUND: "not-found",
   BUSY: "busy",
+  BAD_REQUEST: "bad-request",
+  METHOD_NOT_ALLOWED: "method-not-allowed",
+  COULD_NOT_CREATE: "could-not-create-room",
 };
 
 export const ROUTES = {
