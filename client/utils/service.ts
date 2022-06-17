@@ -108,6 +108,10 @@ export const doCreateChatRequest = async (
   return { error: ERRORS.BUSY };
 };
 
+export const doCancelChatRequest = async (token: string) => {
+  return await axios.delete(`(/api/chat-request/${token}`);
+};
+
 export const doSubmitQuestionToFragelada = async (question: string) => {
   return await axios.post("/api/fragelada", { question });
 };

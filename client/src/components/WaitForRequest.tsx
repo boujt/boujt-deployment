@@ -62,7 +62,7 @@ export const WaitForRequest: React.FC<WaitForRequestProps> = ({
       alignItems="center"
       flexDirection={"column"}
     >
-      <Text marginBottom={10} fontSize={30}>
+      <Text marginBottom={10} fontSize={20}>
         Inväntar svar från {syssnare?.name}
       </Text>
       <PuffLoader color="#00CCEE" speedMultiplier={0.6} />

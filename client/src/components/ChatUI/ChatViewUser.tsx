@@ -54,7 +54,10 @@ export const ChatViewUser: React.FC<ChatViewUserProps> = ({ room }) => {
           maxWidth="500px"
         >
           <Text fontSize={20}>Namn</Text>
-          <Input placeholder="Anonym"></Input>
+          <Input
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Anonym"
+          ></Input>
 
           <Button
             marginTop={"1rem"}
@@ -68,5 +71,5 @@ export const ChatViewUser: React.FC<ChatViewUserProps> = ({ room }) => {
       </Flex>
     );
   }
-  return <ChatView room={room} displayName="Stödsökare" />;
+  return <ChatView room={room} displayName={name} />;
 };

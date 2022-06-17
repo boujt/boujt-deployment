@@ -50,21 +50,25 @@ export const SyssnareItem: React.FC<SyssnareItemProps> = ({
   return (
     <Flex
       flexDirection={"column"}
-      maxWidth={300}
+      maxWidth={400}
+      minWidth={280}
       padding="1rem 1rem"
       boxShadow="0px 0px 17px -7px rgba(0,0,0,0.75)"
       borderRadius={8}
     >
       <Flex justifyContent={"space-between"}>
         <Flex flexDirection={"column"}>
-          <Text fontSize={30}>{syssnare.name}</Text>
+          <Text marginBottom={0} fontSize={25}>
+            {syssnare.name}
+          </Text>
+          <Text>Syssnare</Text>
           <Badge fontSize={20} color={colorFromStatus()}>
             {syssnare.status === SYSSNARE_STATUS.AVAILABLE
               ? "LEDIG"
               : "I SAMTAL"}
           </Badge>
         </Flex>
-        <Avatar size="xl" src={syssnare.img}></Avatar>
+        <Avatar size="l" src={syssnare.img}></Avatar>
       </Flex>
       <Flex
         marginTop={5}

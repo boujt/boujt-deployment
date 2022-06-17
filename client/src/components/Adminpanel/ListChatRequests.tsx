@@ -45,9 +45,7 @@ export const ListChatRequests: React.FC<ListChatRequestsProps> = ({
             syssnare: user.id,
             room_url: values[0].attributes.room_url,
             token: values[0].attributes.token,
-            is_video: values[1].data.filter(
-              (a) => a.attributes.token === values[0].attributes.token
-            )[0].attributes.is_video,
+            is_video: values[0].is_video,
           };
           setActiveRoom(aR);
         } else {
