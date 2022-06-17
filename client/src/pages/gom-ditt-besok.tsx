@@ -123,15 +123,15 @@ const HideYourVisist: NextPage = () => {
             </Flex>
             {/* BROWSER INSTRUCTIONS SECTION */}
             <Center pb={'50px'}>
-            <Box width={'100%'}>
-                <Accordion allowToggle>
-                    {
-                        BrowserOptions.map((br, idx) => {
-                            return <BrowserView browser={br} key={idx}/>
-                        })
-                    }
-                </Accordion>
-            </Box>
+                <Box width={'100%'}>
+                    <Accordion allowToggle>
+                        {
+                            BrowserOptions.map((br, idx) => {
+                                return <BrowserView browser={br} key={idx}/>
+                            })
+                        }
+                    </Accordion>
+                </Box>
             </Center>
         </BoujtTemplate>
     )
