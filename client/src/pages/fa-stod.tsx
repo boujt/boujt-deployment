@@ -1,5 +1,6 @@
-import { Box, Button, Flex, Heading, Icon, Text } from "@chakra-ui/react";
+import { AspectRatio, Box, Button, Flex, Heading, Icon, Text } from "@chakra-ui/react";
 import { NextPage } from "next";
+import Image, { StaticImageData } from "next/image";
 import { CSSProperties } from "react";
 import { FaStar } from "react-icons/fa";
 import BoujtTemplate from "../components/BoujtTemplate"
@@ -16,6 +17,30 @@ const background: CSSProperties = {
     zIndex: -100,
 };
 
+type ExternalLink = {
+    imageUrl: string | StaticImageData,
+    link: string,
+    text: string
+}
+
+const externalLinksMockData: ExternalLink[] = [
+    {
+        imageUrl: 'https://www.unizonjourer.se/Assets/unizon-logga.png',
+        link: 'www.sduf.se',
+        text: 'Sveriges Dövas Ungdomsförbund erbjuder bland annat utbildningar, läger och möjligheter för dig som är ung att påverka i samhället. SDUF har nio anslutna ungdomsklubbar runtom i landet.',
+    },
+    {
+        imageUrl: 'https://www.unizonjourer.se/Assets/unizon-logga.png',
+        link: 'www.arvsfonden.se',
+        text: 'Arvsfonden delar ut stöd till mer än 400 projekt över hela landet.'
+    },
+    {
+        imageUrl: 'https://www.unizonjourer.se/Assets/unizon-logga.png',
+        link: 'www.unizon.se',
+        text: 'BRIS erbjuder stöd till barn och unga via webb och mobil.'
+    }
+]
+
 const WhiteTextContainer: React.FC<{text: string}> = ({text}) => {
     return (
         <Flex borderRadius={'20px'} backgroundColor={'white'} padding={'10px'}>
@@ -29,14 +54,23 @@ const WhiteTextContainer: React.FC<{text: string}> = ({text}) => {
     )
 }
 
-const ExternalLink: React.FC = () => {
+const ExternalLinkView: React.FC<{externalLink: ExternalLink}> = ({externalLink}) => {
     return (
         <Flex
             boxShadow={'0 0 15px #d3d3d3'} 
             borderRadius={'20px'} border={'none'} 
+            padding={'10px'}
         >
             {/* IMAGE */}
-            {/* TEXT */}
+            <AspectRatio minW={'75px'} width={'75px'} height={'100%'} ratio={1} mr={'20px'}>
+                <Image src={externalLink.imageUrl} layout={'fill'}/>
+            </AspectRatio>
+            {/* STYLED TEXT */}
+            <Text>
+                <span style={{color: 'turquoise'}}>{externalLink.link + " "}</span> 
+                - 
+                {" " + externalLink.text}
+            </Text>
         </Flex>
     )
 }
@@ -120,6 +154,7 @@ const FaStod: NextPage = () => {
                 gap={'20px'}       
                 wrap={'wrap'}
                 maxW={'880px'}
+                mb={'50px'}
             >   
                 {/* LEFT SIDE */}
                 <Flex flexDir={'column'} flex={3} gap={'20px'}>
@@ -152,7 +187,7 @@ const FaStod: NextPage = () => {
                         url={'http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1&origin=http://example.com'}
                     />
                     <WhiteTextContainer
-                        text='Kom ihåg att om du talar om vad du heter eller visar ditt ansikte i videochatten är du inte längre anonym. Här gäller samma regel som innan – vi berättar inte för någon att du kontaktat oss. Det finns endast ett undantag – om du berättar något som gör att vi blir riktigt oroliga för att du eller någon annan befinner sig i fara. Då kan det hända att vi kontaktar någon som kan hjälpa dig eller hen. Vi gör aldrig detta utan att prata med dig först, och detta gäller alltså endast om du själv valt att inte vara anonym.'
+                        text='Kom ihåg att om du talar om vad du heter eller visar ditt ansikte i videochatten är du inte längre anonym. Här gäller samma regel som innan - vi berättar inte för någon att du kontaktat oss. Det finns endast ett undantag - om du berättar något som gör att vi blir riktigt oroliga för att du eller någon annan befinner sig i fara. Då kan det hända att vi kontaktar någon som kan hjälpa dig eller hen. Vi gör aldrig detta utan att prata med dig först, och detta gäller alltså endast om du själv valt att inte vara anonym.'
                     />
                 </Flex>
                 {/* BACKGROUND */}
@@ -166,21 +201,31 @@ const FaStod: NextPage = () => {
                     />
                 </Box>
             </Flex>
-            {/* EXTERNAL LINKS */}
-            <Heading 
-                textAlign={'center'} 
-                color={'blackish'}
-                fontSize={'3xl'}
-            >
-                Externa länkar
-            </Heading>
-            <Heading 
-                fontSize={'2xl'} 
-                textAlign={'center'} 
-                color={'blackish'}
-            >
-                Nedan följer länkar för andra platser där du kan få stöd
-            </Heading>
+            <Flex flexDir={'column'} gap='50px'>
+                {/* EXTERNAL LINKS */}
+                <Heading 
+                    textAlign={'center'} 
+                    color={'blackish'}
+                    fontSize={'3xl'}
+                >
+                    Externa länkar
+                </Heading>
+                <Heading 
+                    fontSize={'2xl'} 
+                    textAlign={'center'} 
+                    color={'blackish'}
+                >
+                    Nedan följer länkar för andra platser där du kan få stöd
+                </Heading>
+                <Flex flexDir={'column'} gap={'15px'}>
+                    {/* MAP EACH EXTERNAL LINK TO EXTERNAL LINK VIEW */}
+                    {
+                        externalLinksMockData.map((el, idx) => {
+                            return <ExternalLinkView key={idx} externalLink={el}/>
+                        })
+                    }
+                </Flex>
+            </Flex>
         </BoujtTemplate>
     )
 }
