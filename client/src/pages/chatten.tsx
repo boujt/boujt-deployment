@@ -10,6 +10,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Spinner,
   Text,
 } from "@chakra-ui/react";
 import axios from "axios";
@@ -34,6 +35,7 @@ import { WaitForRequest } from "../components/WaitForRequest";
 
 export default function Chat() {
   const [url, setURL] = useState<string>("");
+  const [sentRequest, setSentRequest] = useState<boolean>(false);
   const [requestData, setRequestData] = useState<{
     token: string | null;
     syssnare: Syssnare | null;
@@ -75,6 +77,7 @@ export default function Chat() {
   }, []);
 
   const createChatRequest = (syssnare: Syssnare, isVideo: boolean) => {
+    setSentRequest(true);
     doCreateChatRequest(syssnare.id, isVideo).then((res) => {
       if (res.error) {
         console.log(res.error);
@@ -93,9 +96,11 @@ export default function Chat() {
     doCancelChatRequest(token)
       .then((res) => {
         setRequestData({ token: null, syssnare: null });
+        setSentRequest(false);
       })
       .catch((er) => {
         setRequestData({ token: null, syssnare: null });
+        setSentRequest(false);
       });
   };
 
@@ -119,22 +124,37 @@ export default function Chat() {
       />
 
       <Modal
-        isOpen={requestData.token !== null}
+        closeOnOverlayClick={false}
+        isOpen={sentRequest}
         onClose={() => cancelRequest(requestData.token)}
       >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Förfrågan skickat</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
-            <WaitForRequest
-              syssnare={requestData.syssnare}
-              token={requestData.token}
-            />
+          <ModalBody justifyContent={"center"}>
+            {requestData.token && (
+              <WaitForRequest
+                syssnare={requestData.syssnare}
+                token={requestData.token}
+              />
+            )}
+            {requestData.token === null && (
+              <Flex
+                flexDirection={"column"}
+                justifyContent="center"
+                alignItems={"center"}
+              >
+                <Text>Skickar förfrågan</Text>
+                <Spinner />
+              </Flex>
+            )}
           </ModalBody>
 
-          <ModalFooter>
+          <ModalFooter justifyContent={"center"}>
             <Button
+              marginRight={"0"}
+              marginLeft={"0"}
               backgroundColor="red"
               color="white"
               mr={3}

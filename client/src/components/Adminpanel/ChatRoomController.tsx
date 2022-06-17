@@ -87,7 +87,10 @@ export const ChatRoomController: React.FC<ChatRoomControllerProps> = ({
         <Flex gap={5}>
           <Link href={`/chatt/${activeRoom.token}`}>
             <a target="_blank" rel="noopener noreferrer">
-              <Button variant={"adminPrimary"} leftIcon={<FaVideo />}>
+              <Button
+                variant={"adminPrimary"}
+                leftIcon={activeRoom.is_video ? <FaVideo /> : <FaComment />}
+              >
                 {loading === LOADING_STATE.ACCEPTING ? (
                   <Spinner />
                 ) : (

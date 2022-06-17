@@ -15,6 +15,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { useDaily } from "@daily-co/daily-react-hooks";
+import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import { FaComment, FaPaperclip, FaPaperPlane, FaVideo } from "react-icons/fa";
 import { BounceLoader, PuffLoader } from "react-spinners";
@@ -37,13 +38,19 @@ export const WaitForRequest: React.FC<WaitForRequestProps> = ({
   token,
 }) => {
   const [url, setURL] = useState<string>("");
+  const router = useRouter();
 
   useEffect(() => {
     const myInterval = setInterval(async function () {
+      if (url !== "") {
+        clearInterval(myInterval);
+      }
       doGetChatRoomFromToken(token)
         .then((res) => {
-          console.log(res);
-          setURL(res.data.data.url);
+          if (res.data.room) {
+            console.log(res.data.room.attributes);
+            setURL(res.data.room.attributes.room_url);
+          }
         })
         .catch((er) => {
           console.log("No accepted yet");
@@ -53,7 +60,23 @@ export const WaitForRequest: React.FC<WaitForRequestProps> = ({
   }, []);
 
   if (url.trim() !== "") {
-    return <Button>Gå till rum</Button>;
+    return (
+      <Flex
+        gap={5}
+        flexDirection={"column"}
+        alignItems="center"
+        justifyContent={"center"}
+      >
+        <Text>{syssnare.name} har accepterat din förfrågan!</Text>
+        <Button
+          onClick={() => router.push(`/chatt/${token}`)}
+          variant={"default"}
+          backgroundColor="yellow"
+        >
+          Gå till chattrummet
+        </Button>
+      </Flex>
+    );
   }
 
   return (

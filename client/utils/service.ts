@@ -79,7 +79,7 @@ export const doGetAllSyssnare = async () => {
 };
 
 export const doGetChatRoomFromToken = async (token: string) => {
-  return await axios.get(`/api/chat-room-from-token/${token}`);
+  return await axios.get(`/api/chatroom/${token}`);
 };
 
 export const doGetRequestByToken = (token: string) => {

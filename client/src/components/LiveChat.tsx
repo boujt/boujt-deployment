@@ -78,7 +78,7 @@ const ChatMessage: React.FC<MessageProps> = ({
           </Flex>
         </Flex>
       </Flex>
-      <AlwaysScrollToBottom />
+      {/* <AlwaysScrollToBottom /> */}
     </>
   );
 };

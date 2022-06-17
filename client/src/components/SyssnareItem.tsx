@@ -35,7 +35,7 @@ export const SyssnareItem: React.FC<SyssnareItemProps> = ({
 }) => {
   const colorFromStatus = () => {
     if (syssnare.status === SYSSNARE_STATUS.AVAILABLE) {
-      return "green";
+      return "#75E89D";
     }
     if (syssnare.status === SYSSNARE_STATUS.IN_CALL) {
       return "orange";
@@ -62,13 +62,13 @@ export const SyssnareItem: React.FC<SyssnareItemProps> = ({
             {syssnare.name}
           </Text>
           <Text>Syssnare</Text>
-          <Badge fontSize={20} color={colorFromStatus()}>
+          <Text fontWeight={600} fontSize={20} color={colorFromStatus()}>
             {syssnare.status === SYSSNARE_STATUS.AVAILABLE
               ? "LEDIG"
               : "I SAMTAL"}
-          </Badge>
+          </Text>
         </Flex>
-        <Avatar size="l" src={syssnare.img}></Avatar>
+        <Avatar size="lg" src={syssnare.img}></Avatar>
       </Flex>
       <Flex
         marginTop={5}
@@ -79,10 +79,14 @@ export const SyssnareItem: React.FC<SyssnareItemProps> = ({
           disabled={syssnare.status !== SYSSNARE_STATUS.AVAILABLE}
           leftIcon={<FaComment />}
           onClick={() => onCreateRequest(syssnare, false)}
+          backgroundColor="#75E89D"
+          color="white"
         >
           Chatt
         </Button>
         <Button
+          backgroundColor="#76CEEA"
+          color="white"
           disabled={syssnare.status !== SYSSNARE_STATUS.AVAILABLE}
           leftIcon={<FaVideo />}
           onClick={() => onCreateRequest(syssnare, true)}
