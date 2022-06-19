@@ -5,7 +5,7 @@ import {
 	Text
 } from "@chakra-ui/react";
 import { NextPage } from "next";
-import { CSSProperties } from "react";
+import { CSSProperties, useState } from "react";
 import { FaEnvelope, FaMapPin } from "react-icons/fa";
 import BoujtTemplate from "../components/BoujtTemplate";
 import ContactInfo from "../components/Kontakta-oss/AddressMap";
@@ -29,6 +29,14 @@ const content: CSSProperties = {
 };
 
 const KontaktaOss: NextPage = () => {
+	const [name, setName] = useState<string>("");
+	const [email, setEmail] = useState<string>("");
+	const [message, setMessage] = useState<string>("");
+
+	const onEmailSubmit = () => {
+
+	}
+
 	return (
 		<BoujtTemplate gap={100}>
 			<Heading 
@@ -55,13 +63,18 @@ const KontaktaOss: NextPage = () => {
 				</Heading>
 				<Flex 
 					position={'relative'}
-					gap={20}
+					gap={'20px'}
 					padding={'20px'}
 				>
-					<Box width={"50%"}>
-						<ContactForm />
-					</Box>
-					<Flex width={"50%"} flexDirection="column" gap={4}>
+					<Flex flex={1}>
+						<ContactForm 
+							// onSubmit={onEmailSubmit}
+							nameState={[name, setName]}
+							emailState={[email, setEmail]}
+							messageState={[message, setMessage]} 
+						/>
+					</Flex>
+					<Flex flex={1} flexDirection="column" gap={4}>
 						<Video
 							width={"100%"}
 							height={220}
@@ -69,6 +82,22 @@ const KontaktaOss: NextPage = () => {
 								"http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1&origin=http://example.com"
 							}
 						/>
+						<Flex gap={5} justifyContent={'space-between'}>
+							<Button variant="information"  mt={4} color="black">
+								Ladda upp bilaga
+							</Button>
+							<Button
+								mt={4}
+								color="black"
+								variant={"default"}
+								type="submit"
+								onClick={() => {
+								
+								}}
+							>
+								Skicka
+							</Button>
+						</Flex>
 					</Flex>
 					<Box sx={background}>
 						<Starfield boxProps={{borderRadius: '12px'}} sx={{ borderRadius: "12px" }} />
