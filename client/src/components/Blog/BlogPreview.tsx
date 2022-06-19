@@ -1,20 +1,16 @@
-import Image from 'next/image';
 import {
 	Box,
 	Center,
-	Heading,
-	Text,
-	Stack,
-	Avatar,
-	useColorModeValue,
+	Heading, Stack, Text
 } from '@chakra-ui/react';
+import Image from 'next/image';
 import blogPreview from '../../../public/images/blog-preview.png';
-
-// TODO PROPS
 
 const BlogPreview: React.FC = () => {
 	return (
-		<Center px={'10px'}>
+		<Center 
+			px={'10px'}
+		>
 			<Box
 				maxW={'400px'}
 				w={'full'}
