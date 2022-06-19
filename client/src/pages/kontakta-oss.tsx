@@ -34,7 +34,7 @@ const KontaktaOss: NextPage = () => {
 	const [message, setMessage] = useState<string>("");
 
 	const onEmailSubmit = () => {
-
+		console.log("SKICKA MAIL!");
 	}
 
 	return (
@@ -91,9 +91,7 @@ const KontaktaOss: NextPage = () => {
 								color="black"
 								variant={"default"}
 								type="submit"
-								onClick={() => {
-								
-								}}
+								onClick={onEmailSubmit}
 							>
 								Skicka
 							</Button>
