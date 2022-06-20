@@ -115,7 +115,7 @@ const Navbar: NextPage<Props> = ({ transparent }) => {
         >
           <DrawerOverlay />
           <DrawerContent backgroundColor={"blackish"}>
-            <DrawerCloseButton />
+            <DrawerCloseButton size="lg" color="white" />
             <DrawerHeader>
               <Text color="white">Meny</Text>
             </DrawerHeader>
