@@ -52,6 +52,23 @@ export type Fragelada = {
 
 // Create chat request
 
+export type ContactUsData = {
+  adress: string,
+  email: string,
+  latitude: number,
+  longitude: number
+}
+
+export type FetchDataResponse<T> = {
+  data: T | undefined,
+  isLoading: boolean,
+  error: FetchDataError | undefined
+}
+
+export type FetchDataError = {
+  message: string,
+}
+
 export type AImage = {
   imageUrl: string,
   width: number,

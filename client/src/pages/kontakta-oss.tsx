@@ -5,14 +5,16 @@ import {
 	Text
 } from "@chakra-ui/react";
 import { NextPage } from "next";
-import { CSSProperties, useState } from "react";
+import { CSSProperties, useEffect, useState } from "react";
 import { FaEnvelope, FaMapPin } from "react-icons/fa";
+import { useKontaktaOss } from "../../utils/fetchData";
 import BoujtTemplate from "../components/BoujtTemplate";
-import ContactInfo from "../components/Kontakta-oss/AddressMap";
+import AddressMap from "../components/Kontakta-oss/AddressMap";
 import ContactForm from "../components/Kontakta-oss/ContactForm";
 import Starfield from "../components/Starfield";
 import Video from "../components/Video";
 import { chakra_gradient } from "../theme";
+
 const background: CSSProperties = {
 	position: "absolute",
 	left: 0,
@@ -29,6 +31,9 @@ const content: CSSProperties = {
 };
 
 const KontaktaOss: NextPage = () => {
+	// Static data
+	const {data, error, isLoading} = useKontaktaOss();
+
 	const [name, setName] = useState<string>("");
 	const [email, setEmail] = useState<string>("");
 	const [message, setMessage] = useState<string>("");
@@ -141,7 +146,7 @@ const KontaktaOss: NextPage = () => {
 								<Text color="white" fontWeight={800}>
 									Adress
 								</Text>
-								<Text color="white">Rissneleden 138 174 57 Sundbyberg</Text>
+								<Text color="white">{data?.adress}</Text>
 							</Box>
 						</Flex>
 						<Flex gap={10}>
@@ -152,7 +157,7 @@ const KontaktaOss: NextPage = () => {
 								<Text color="white" fontWeight={800}>
 									E-post
 								</Text>
-								<Text color="white">info@boujt.se</Text>
+								<Text color="white">{data?.email}</Text>
 							</Box>
 						</Flex>
 					</Flex>
@@ -161,7 +166,11 @@ const KontaktaOss: NextPage = () => {
 					<Starfield boxProps={{borderRadius: '12px'}} sx={{ borderRadius: "12px" }} />
 				</Box>
 			</Flex>
-			<ContactInfo />
+			<Box>
+				{data && (
+					<AddressMap latitude={data.latitude} longitude={data.longitude}/>
+				)}
+			</Box>
 		</BoujtTemplate>
 	);
 };
