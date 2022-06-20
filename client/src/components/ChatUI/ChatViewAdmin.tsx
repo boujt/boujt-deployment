@@ -29,5 +29,10 @@ interface ChatViewAdminProps {
 
 export const ChatViewAdmin: React.FC<ChatViewAdminProps> = ({ room }) => {
   const { strapi, user } = useStrapi();
-  return <ChatView room={room} displayName={user ? user.name : "Syssnare"} />;
+  return (
+    <ChatView
+      room={room}
+      displayName={user ? user.name + " - Syssnare" : "Syssnare"}
+    />
+  );
 };

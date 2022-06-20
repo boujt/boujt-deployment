@@ -26,8 +26,6 @@ export default async function handler(
       }
     );
 
-    console.log("hej");
-
     const requests = await axios.get(
       `${process.env.STRAPI_API_BASE_URL}/api/request-chats?${query}`,
       {

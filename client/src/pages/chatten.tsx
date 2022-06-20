@@ -135,6 +135,11 @@ export default function Chat() {
           <ModalBody justifyContent={"center"}>
             {requestData.token && (
               <WaitForRequest
+                currentStatus={
+                  syssnare.filter(
+                    (sys) => sys.id === requestData.syssnare.id
+                  )[0].status
+                }
                 syssnare={requestData.syssnare}
                 token={requestData.token}
               />

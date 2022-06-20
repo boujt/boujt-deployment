@@ -64,8 +64,9 @@ export const ChatViewUser: React.FC<ChatViewUserProps> = ({ room }) => {
             variant={"default"}
             backgroundColor="yellow"
             onClick={() => setProceed(true)}
+            leftIcon={room.is_video ? <FaVideo /> : <FaComment />}
           >
-            Anslut till mötet
+            {room.is_video ? "Anslut till videomötet" : "Anslut till chatten"}
           </Button>
         </Flex>
       </Flex>
