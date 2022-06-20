@@ -21,6 +21,7 @@ import {
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import { useStrapi } from "../auth/auth";
 import { useAnimationFrame } from "framer-motion";
+import { box_shadow_light } from "../theme";
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
@@ -78,7 +79,7 @@ const LoginForm = () => {
               spacing={4}
               p="1rem"
               backgroundColor="whiteAlpha.900"
-              boxShadow="md"
+              boxShadow={box_shadow_light}
             >
               <FormControl>
                 <InputGroup>

@@ -5,7 +5,7 @@ import BoujtTemplate from "../components/BoujtTemplate";
 import Starfield from "../components/Starfield";
 import Video from "../components/Video";
 import WorkerCard from "../components/WorkerCard";
-import { chakra_gradient } from "../theme";
+import { box_shadow_light, chakra_gradient } from "../theme";
 
 const background: CSSProperties = {
     position: "absolute",
@@ -154,7 +154,7 @@ const OmOss: NextPage = () => {
                     Vi som jobbar här
                 </Heading>
                 <Flex 
-                    boxShadow={'0 0 15px #d3d3d3'} 
+                    boxShadow={box_shadow_light} 
                     borderRadius={'20px'} border={'none'} 
                     justifyContent={'space-evenly'}
                     alignItems={'center'}
@@ -234,7 +234,7 @@ const OmOss: NextPage = () => {
                 </Heading>
                 <Flex 
                     gap={50}
-                    boxShadow={'0 0 15px #d3d3d3'} 
+                    boxShadow={box_shadow_light} 
                     borderRadius={'20px'} border={'none'} 
                     px={50}
                     py={25}
