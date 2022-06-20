@@ -16,65 +16,70 @@ import { box_shadow_dark } from "../../theme";
 
 type Props = {
   // Will be passed if the ContactForm is not controlled
-  onSubmit?: (name: string, email: string, message: string) => void
+  onSubmit?: (name: string, email: string, message: string) => void;
 
   // Will be passed if we are not in controll, we don't handle the state
-  nameState?: [string, Dispatch<SetStateAction<string>>],
-  emailState?: [string, Dispatch<SetStateAction<string>>],
-  messageState?: [string, Dispatch<SetStateAction<string>>],
-}
+  nameState?: [string, Dispatch<SetStateAction<string>>];
+  emailState?: [string, Dispatch<SetStateAction<string>>];
+  messageState?: [string, Dispatch<SetStateAction<string>>];
+};
 
 const ContactForm: React.FC<Props> = ({
-  onSubmit, nameState, emailState, messageState
+  onSubmit,
+  nameState,
+  emailState,
+  messageState,
 }) => {
   const [name, setName] = nameState != null ? nameState : useState<string>("");
-  const [email, setEmail] = emailState != null ? emailState : useState<string>("");
-  const [message, setMessage] = messageState != null ? messageState : useState<string>("");
+  const [email, setEmail] =
+    emailState != null ? emailState : useState<string>("");
+  const [message, setMessage] =
+    messageState != null ? messageState : useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  if(!onSubmit && !nameState) {
+  if (!onSubmit && !nameState) {
     console.error("ContactForm is used incorrectly!");
   }
 
   return (
-    <Flex maxWidth={800} minWidth={300} flexDir={'column'}>
+    <Flex maxWidth={800} minWidth={250} flexDir={"column"}>
       <FormControl maxWidth={"100%"}>
         <Input
-          my={'10px'}
-          backgroundColor={'white'}
-          borderRadius={'100px'}
-          border={'none'}
+          my={"10px"}
+          backgroundColor={"white"}
+          borderRadius={"100px"}
+          border={"none"}
           boxShadow={box_shadow_dark}
           id="name"
           type="text"
           value={name}
-          placeholder={'Ditt namn'}
+          placeholder={"Ditt namn"}
           onChange={(t) => setName(t.target.value)}
         />
         <Input
-          my={'10px'}
-          backgroundColor={'white'}
-          borderRadius={'100px'}
+          my={"10px"}
+          backgroundColor={"white"}
+          borderRadius={"100px"}
           boxShadow={box_shadow_dark}
-          border={'none'}
+          border={"none"}
           id="email"
           type="email"
           value={email}
-          placeholder={'Din email'}
+          placeholder={"Din email"}
           isRequired={true}
           onChange={(t) => setEmail(t.target.value)}
         />
         <Textarea
-          my={'10px'}
-          borderRadius={'20px'}
-          backgroundColor={'white'}
+          my={"10px"}
+          borderRadius={"20px"}
+          backgroundColor={"white"}
           boxShadow={box_shadow_dark}
-          border={'none'}
+          border={"none"}
           id="message"
           value={message}
-          placeholder={'Meddelande'}
+          placeholder={"Meddelande"}
           onChange={(t) => setMessage(t.target.value)}
-          size={'sm'}
+          size={"sm"}
         />
         {/* Only render buttons if we are not controlled ie onSubmit has been passeds */}
         {!!onSubmit && (
@@ -86,9 +91,7 @@ const ContactForm: React.FC<Props> = ({
               variant={"default"}
               isLoading={isSubmitting}
               type="submit"
-              onClick={() => {
-            
-              }}
+              onClick={() => {}}
             >
               Skicka
             </Button>
