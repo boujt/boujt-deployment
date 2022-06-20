@@ -15,7 +15,6 @@ export const doCreateChatRoom = async (data: CreateChatroomRequest) => {
     is_video: data.is_video,
     syssnare: data.syssnare,
   });
-  console.log(room);
 
   const response: ChatRoom = {
     room_url: room.data.data.chatroomData.room_url,
@@ -59,7 +58,6 @@ export const doGetActiveRooms = async (strapi: Strapi, syssnare: number) => {
       },
     },
   });
-  console.log(rooms);
 
   const rooms_filtered = rooms.data.filter((element) => {
     if (element.attributes.syssnare.data.id === syssnare) {
@@ -109,7 +107,7 @@ export const doCreateChatRequest = async (
 };
 
 export const doCancelChatRequest = async (token: string) => {
-  return await axios.delete(`(/api/chat-request/${token}`);
+  return await axios.delete(`/api/chat-request/${token}`);
 };
 
 export const doSubmitQuestionToFragelada = async (question: string) => {

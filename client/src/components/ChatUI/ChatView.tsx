@@ -24,8 +24,17 @@ import {
 } from "@chakra-ui/react";
 import DailyIframe from "@daily-co/daily-js";
 import { useDaily } from "@daily-co/daily-react-hooks";
+import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
-import { FaComment, FaPaperclip, FaPaperPlane, FaVideo } from "react-icons/fa";
+import {
+  FaArrowRight,
+  FaComment,
+  FaPaperclip,
+  FaPaperPlane,
+  FaPersonBooth,
+  FaPhoneSlash,
+  FaVideo,
+} from "react-icons/fa";
 import { BounceLoader, PuffLoader } from "react-spinners";
 import {
   ERRORS,
@@ -36,6 +45,7 @@ import {
   MESSAGE_REQUEST,
 } from "../../../utils/constants";
 import { ChatRoom } from "../../../utils/types";
+import { useStrapi } from "../../auth/auth";
 import { SYSSNARE_STATUS } from "../../utils/constants";
 import { doCreateChatRequest } from "../../utils/service";
 import { Syssnare } from "../../utils/types";
@@ -58,6 +68,8 @@ export const ChatView: React.FC<ChatViewProps> = ({ room, displayName }) => {
   const [sentRequestToChange, setSentRequestToChange] = useState<string>("");
   const [chatHistory, setChatHistory] = useState<any[]>([]);
   const [aloneInChat, setAloneInChat] = useState<boolean>(true);
+  const { user } = useStrapi();
+  const router = useRouter();
 
   useEffect(() => {
     if (da) {
@@ -66,11 +78,11 @@ export const ChatView: React.FC<ChatViewProps> = ({ room, displayName }) => {
       da.on("participant-left", handleParticipantLeft);
     }
 
-    return function cleanup() {
+    return () => {
       if (da) {
         da.off("app-message", handleAppMessage);
         da.off("participant-joined", handleParticipantJoined);
-        da.on("participant-left", handleParticipantLeft);
+        da.off("participant-left", handleParticipantLeft);
       }
     };
   }, [da]);
@@ -151,7 +163,11 @@ export const ChatView: React.FC<ChatViewProps> = ({ room, displayName }) => {
       );
     }
     if (!hasJoined) {
-      da?.join({ url: room.room_url })
+      da?.join({
+        url: room.room_url,
+        userName: displayName,
+        audioSource: false,
+      })
         .then((res) => {
           setHasJoined(true);
         })
@@ -167,7 +183,7 @@ export const ChatView: React.FC<ChatViewProps> = ({ room, displayName }) => {
     setSentRequestToChange(MESSAGE_REQUEST.SENT);
   };
 
-  const denyRequstChange = () => {
+  const denyRequestChange = () => {
     da.sendAppMessage({ message: MESSAGE_PREFIX_REQUEST_DENY }, "*");
     setSentRequestToChange("");
   };
@@ -189,6 +205,15 @@ export const ChatView: React.FC<ChatViewProps> = ({ room, displayName }) => {
     );
   }
 
+  const getIcon = () => {
+    if (sentRequestToChange === MESSAGE_REQUEST.SENT) {
+      return <Spinner />;
+    }
+    if (room.is_video) return <FaComment />;
+
+    return <FaVideo />;
+  };
+
   console.log(sentRequestToChange);
 
   return (
@@ -205,36 +230,58 @@ export const ChatView: React.FC<ChatViewProps> = ({ room, displayName }) => {
           disabled={sentRequestToChange === MESSAGE_REQUEST.SENT}
           backgroundColor="yellow"
           onClick={sendRequestToChange}
+          leftIcon={getIcon()}
         >
           {sentRequestToChange !== MESSAGE_REQUEST.SENT &&
             (showVideo ? "Byt till textchatt" : "Byt till videomöte")}
 
           {sentRequestToChange === MESSAGE_REQUEST.SENT && (
-            <>
-              <Spinner marginRight={1} />
-              Skickat förfrågan
-            </>
+            <>Skickat förfrågan</>
           )}
         </Button>
-        <Button color="white" backgroundColor={"red"}>
+        <Button
+          onClick={() =>
+            user !== null
+              ? window.close()
+              : (window.location.href = "http://localhost:3000/")
+          }
+          color="white"
+          backgroundColor={"red"}
+          leftIcon={<FaPhoneSlash />}
+        >
           Lämna möte
         </Button>
       </Flex>
 
       <Modal
+        onClose={() => denyRequestChange()}
         isOpen={sentRequestToChange === MESSAGE_REQUEST.RECIEVED}
-        onClose={denyRequstChange}
       >
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent alignSelf={"center"}>
           <ModalHeader>
             Vill du byta till {showVideo ? "textchatt" : "videosamtal"}?
+            <Flex marginTop={5} gap={4}>
+              {!showVideo && (
+                <>
+                  <FaComment color="#75E89D" />
+                  <FaArrowRight /> <FaVideo color="#2d76bf" />
+                </>
+              )}
+              {showVideo && (
+                <>
+                  <FaVideo color="#2d76bf" />
+                  <FaArrowRight /> <FaComment color="#75E89D" />
+                </>
+              )}
+            </Flex>
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             Personen du pratar föreslog att byta till{" "}
             {showVideo ? "textchatt" : "videosamtal"}. Om du också vill detta,
-            klicka på "Okej!", annars "Nej, tack!"
+            klicka på "Byt till {showVideo ? "textchatt" : "videosamtal"}",
+            annars "Stanna på här"
           </ModalBody>
 
           <ModalFooter>
@@ -242,21 +289,23 @@ export const ChatView: React.FC<ChatViewProps> = ({ room, displayName }) => {
               variant={"ghost"}
               color="red"
               mr={3}
-              onClick={denyRequstChange}
+              onClick={denyRequestChange}
+              leftIcon={showVideo ? <FaVideo /> : <FaComment />}
             >
-              Nej, tack!
+              Stanna här
             </Button>
-            <Button onClick={acceptRequstChange} colorScheme="blue">
-              Okej!
+            <Button
+              onClick={acceptRequstChange}
+              colorScheme="blue"
+              leftIcon={!showVideo ? <FaVideo /> : <FaComment />}
+            >
+              Byt till {showVideo ? "textchatt" : "videosamtal"}
             </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
 
-      <Modal
-        isOpen={sentRequestToChange === MESSAGE_REQUEST.DENIED}
-        onClose={denyRequstChange}
-      >
+      <Modal isOpen={sentRequestToChange === MESSAGE_REQUEST.DENIED}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Förfrågan nekades</ModalHeader>

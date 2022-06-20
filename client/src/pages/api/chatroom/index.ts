@@ -28,7 +28,6 @@ export default async function handler(req, res) {
         enable_chat: true,
         lang: "sv",
         geo: "eu-central-1",
-        exp: Math.round(Date.now() / 1000) + 1000,
         eject_at_room_exp: true,
         start_video_off: true,
         start_audio_off: true,

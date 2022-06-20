@@ -7,6 +7,7 @@ import {
   Button,
   Divider,
   Flex,
+  IconButton,
   Input,
   Spinner,
   Text,
@@ -14,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { useDaily } from "@daily-co/daily-react-hooks";
 import React, { useEffect, useRef, useState } from "react";
-import { FaPaperclip, FaPaperPlane } from "react-icons/fa";
+import { FaGrin, FaPaperclip, FaPaperPlane } from "react-icons/fa";
 import { BounceLoader, PuffLoader } from "react-spinners";
 import styles from "../style/livechat.module.scss";
 import DailyIframe from "@daily-co/daily-js";
@@ -24,6 +25,9 @@ import {
   MESSAGE_PREFIX_REQUEST_DENY,
   MESSAGE_REQUEST,
 } from "../../utils/constants";
+import dynamic from "next/dynamic";
+
+const Picker = dynamic(() => import("emoji-picker-react"), { ssr: false });
 interface MessageProps {
   message: string;
   displayName: string;
@@ -37,11 +41,6 @@ const ChatMessage: React.FC<MessageProps> = ({
   senderIsMe,
   isInfo,
 }) => {
-  const AlwaysScrollToBottom = () => {
-    const elementRef = useRef();
-    useEffect(() => elementRef.current.scrollIntoView());
-    return <div ref={elementRef} />;
-  };
   if (isInfo) {
     return (
       <Flex w="100%" justify={"center"}>
@@ -74,7 +73,7 @@ const ChatMessage: React.FC<MessageProps> = ({
         >
           <Flex flexDirection={"column"}>
             <Text fontSize={"xs"}>{displayName}</Text>
-            <Text>{message}</Text>
+            <Text whiteSpace={"pre-wrap"}>{message}</Text>
           </Flex>
         </Flex>
       </Flex>
@@ -106,6 +105,21 @@ export const LiveChat: React.FC<LiveChatProps> = ({
   const [inputValue, setInputValue] = useState<string>("");
 
   const [error, setError] = useState<string>("");
+  const [focus, setFocus] = useState<boolean>(false);
+  const [openEmoji, setOpenEmoji] = useState<boolean>(false);
+  const bottomRef = useRef(null);
+  useEffect(() => {
+    var objDiv = document.getElementById("bottom-message");
+
+    if (objDiv) {
+      objDiv.scrollTop = objDiv.scrollHeight;
+    }
+  }, [chatHistory]);
+
+  const onEmojiClick = (event, emojiObject) => {
+    setInputValue((prev) => prev + emojiObject.emoji);
+    setOpenEmoji(false);
+  };
 
   const sendMessage = () => {
     if (!dailyIframe || inputValue.trim() === "") return;
@@ -198,7 +212,7 @@ export const LiveChat: React.FC<LiveChatProps> = ({
             </Text>
           </Flex>
         )}
-        <Box overflowY={"scroll"}>
+        <Box scrollBehavior={"smooth"} overflowY={"scroll"} id="bottom-message">
           {chatHistory.map((item, id) => {
             return (
               <ChatMessage
@@ -213,31 +227,79 @@ export const LiveChat: React.FC<LiveChatProps> = ({
         </Box>
       </Flex>
       <Flex
-        backgroundColor={"#f5f5f5"}
         alignItems={"center"}
         justifyContent={"center"}
+        flexDirection="row"
+        padding="0 2rem"
       >
-        <Textarea
-          focusBorderColor="unset"
-          backgroundColor={"white"}
-          rows={4}
-          resize="none"
-          size="sm"
-          value={inputValue}
-          placeholder="Skriv ditt meddelande här..."
-          onChange={(e) => setInputValue(e.target.value)}
-          disabled={aloneInChat}
-          onKeyDown={(e) => onEnterPress(e)}
-        />
-        <Button
-          bg={"#f5f5f5"}
-          borderRadius={"0"}
-          onClick={() => sendMessage()}
-          leftIcon={<FaPaperPlane color="#00CCEE" />}
-          disabled={aloneInChat}
+        <Flex
+          borderRadius={8}
+          width={"100%"}
+          border={focus ? "1px solid #00CCEE" : "1px solid #dcdcdc"}
+          flexDirection={"row"}
+          boxShadow="0px 0px 18px -16px"
+          padding="0.5rem"
         >
-          Skicka
-        </Button>
+          <Flex width={"90%"}>
+            <Textarea
+              focusBorderColor="unset"
+              backgroundColor={"white"}
+              border="none"
+              rows={1}
+              onFocus={() => setFocus(true)}
+              onBlur={() => setFocus(false)}
+              width="100%"
+              resize="none"
+              size="sm"
+              value={inputValue}
+              placeholder="Skriv ditt meddelande här..."
+              onChange={(e) => setInputValue(e.target.value)}
+              disabled={aloneInChat}
+              onKeyDown={(e) => onEnterPress(e)}
+            />
+          </Flex>
+          <Flex
+            width={"10%"}
+            justifyContent="flex-end"
+            flexDirection={"column"}
+          >
+            <IconButton
+              aria-label="Emojis"
+              padding={0}
+              backgroundColor={"white"}
+              borderRadius={4}
+              onClick={() => setOpenEmoji(true)}
+              disabled={aloneInChat}
+              icon={<FaGrin color="gray" />}
+            ></IconButton>
+            {openEmoji && (
+              <Flex
+                zIndex={"999"}
+                onBlur={(t) => {
+                  if (!t.relatedTarget) {
+                    setOpenEmoji(false);
+                  } else if (t.relatedTarget.className.includes("chakra")) {
+                    setOpenEmoji(false);
+                  }
+                }}
+                position={"absolute"}
+              >
+                {" "}
+                <Picker onEmojiClick={onEmojiClick} />
+              </Flex>
+            )}
+
+            <IconButton
+              aria-label="Skicka meddelande"
+              padding={0}
+              backgroundColor={"white"}
+              borderRadius={4}
+              onClick={() => sendMessage()}
+              disabled={aloneInChat}
+              icon={<FaPaperPlane color="#00CCEE" />}
+            ></IconButton>
+          </Flex>
+        </Flex>
       </Flex>
     </Flex>
   );

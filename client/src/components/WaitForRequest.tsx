@@ -15,6 +15,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { useDaily } from "@daily-co/daily-react-hooks";
+import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import { FaComment, FaPaperclip, FaPaperPlane, FaVideo } from "react-icons/fa";
@@ -30,26 +31,41 @@ import { getColorFromStatus } from "./Adminpanel/SyssnareStatus";
 
 interface WaitForRequestProps {
   syssnare: Syssnare;
+  currentStatus: string;
   token: string;
 }
 
 export const WaitForRequest: React.FC<WaitForRequestProps> = ({
   syssnare,
   token,
+  currentStatus,
 }) => {
   const [url, setURL] = useState<string>("");
   const router = useRouter();
+  const [requestDenied, setRequestDenied] = useState<boolean>(false);
+
+  console.log(currentStatus);
 
   useEffect(() => {
     const myInterval = setInterval(async function () {
       if (url !== "") {
         clearInterval(myInterval);
       }
+      axios
+        .get(`/api/chat-request/${token}`)
+        .then()
+        .catch((er) => {
+          if (url === "") {
+            setRequestDenied(true);
+            clearInterval(myInterval);
+          }
+        });
       doGetChatRoomFromToken(token)
         .then((res) => {
           if (res.data.room) {
             console.log(res.data.room.attributes);
             setURL(res.data.room.attributes.room_url);
+            clearInterval(myInterval);
           }
         })
         .catch((er) => {
@@ -58,6 +74,47 @@ export const WaitForRequest: React.FC<WaitForRequestProps> = ({
     }, 2000);
     return () => clearInterval(myInterval);
   }, []);
+
+  if (requestDenied) {
+    return (
+      <Flex
+        gap={5}
+        flexDirection={"column"}
+        alignItems="center"
+        justifyContent={"center"}
+      >
+        <Text>
+          {syssnare.name} har tyvärr har tyvärr nekat din förfrågan. Detta beror
+          troligtvis på att {syssnare.name} var tvungen att gå, eller så har
+          chatten stängt.
+        </Text>
+        <Text>
+          Om chatten fortfarande är öppen, försök gärna med en annan syssnare!
+        </Text>
+      </Flex>
+    );
+  }
+
+  if (url.trim() === "" && currentStatus !== SYSSNARE_STATUS.AVAILABLE) {
+    return (
+      <Flex
+        gap={5}
+        flexDirection={"column"}
+        alignItems="center"
+        justifyContent={"center"}
+      >
+        {currentStatus === SYSSNARE_STATUS.IN_CALL && (
+          <Text>
+            {syssnare.name} verkar tyvärr vara upptagen i ett annat samtal
+          </Text>
+        )}
+
+        {currentStatus !== SYSSNARE_STATUS.IN_CALL && (
+          <Text>{syssnare.name} verkar tyvärr ha gått offline</Text>
+        )}
+      </Flex>
+    );
+  }
 
   if (url.trim() !== "") {
     return (
