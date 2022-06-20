@@ -7,11 +7,13 @@ import Footer from "./Footer";
 interface CustomContainerProps {
   children: JSX.Element[] | JSX.Element;
   gap?: number;
+  maxW?: string;
 }
 
 const CustomContainer: React.FC<CustomContainerProps> = ({
   children,
   gap = 0,
+  maxW = '4xl'
 }) => {
   return (
     <Container
@@ -19,7 +21,7 @@ const CustomContainer: React.FC<CustomContainerProps> = ({
       gap={gap}
       marginBottom={"4rem"}
       marginTop={"4rem"}
-      maxW={"4xl"}
+      maxW={maxW}
       flexDirection="column"
     >
       {children}
@@ -30,13 +32,14 @@ const CustomContainer: React.FC<CustomContainerProps> = ({
 interface BoujtTemplateProps {
   children: JSX.Element[] | JSX.Element;
   gap?: number;
+  maxW?: string;
 }
 
-const BoujtTemplate: React.FC<BoujtTemplateProps> = ({ children, gap = 0 }) => {
+const BoujtTemplate: React.FC<BoujtTemplateProps> = ({ children, gap = 0, maxW='4xl' }) => {
   return (
     <>
       <Navbar />
-      <CustomContainer gap={gap}>{children}</CustomContainer>
+      <CustomContainer maxW={maxW} gap={gap}>{children}</CustomContainer>
       <Footer />
     </>
   );
