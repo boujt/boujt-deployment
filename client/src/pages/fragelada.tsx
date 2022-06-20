@@ -52,7 +52,9 @@ const Fragelada: NextPage = () => {
     []
   );
   const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [searchString, setSearchString] = useState<string>("");
 
+  console.log(searchString);
   useEffect(() => {
     axios
       .get("/api/fragelada")
@@ -168,13 +170,21 @@ const Fragelada: NextPage = () => {
               );
             })}
           </Select>
+          <Text>Filtrera med sökord</Text>
+          <Input
+            placeholder="Ex. 'ensam'"
+            value={searchString}
+            onChange={(e) => setSearchString(e.target.value)}
+          />
         </Flex>
 
         <Grid templateColumns="repeat(auto-fill, minmax(300px,1fr))" gap={5}>
           {questionsAndAnswers.map((qa) => {
             if (
               selectedCategory === "" ||
-              qa.categories.includes(selectedCategory)
+              (qa.categories.includes(selectedCategory) &&
+                qa.answer.includes(searchString)) ||
+              qa.question.includes(searchString)
             ) {
               return (
                 <GridItem key={qa.id}>

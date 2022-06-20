@@ -49,7 +49,7 @@ export const ProfileMenu: React.FC<ProfileMenuProps> = ({ name }) => {
     <Flex flexDirection={"column"}>
       {/*TODO: Lägg till Avatar*/}
       <Flex>
-        <Avatar>
+        <Avatar src={user.profile_image}>
           <AvatarBadge boxSize="1.25em" bg="green.500" />
         </Avatar>
         <Flex marginLeft={2} flexDirection={"column"}>
