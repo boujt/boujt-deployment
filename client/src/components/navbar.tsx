@@ -79,7 +79,7 @@ type Props = {
 };
 
 const Navbar: NextPage<Props> = ({ transparent }) => {
-  const [isLessThan900] = useMediaQuery("(max-width: 900px)");
+  const [isLessThan900] = useMediaQuery("(max-width: 1070px)");
   const [openMenu, setOpenMenu] = useState<boolean>(false);
 
   if (isLessThan900) {
