@@ -4,6 +4,8 @@ import "@fontsource/quicksand"; // Defaults to weight 400.
 // Gradient defined and used throughout
 const chakra_gradient = `linear(to-b, #34569A, #1D3D63)`;
 const css_gradient = 'linear-gradient(0deg, #34569A 0%, #1D3D63 100%);'
+const box_shadow_light = '0 0 15px #d3d3d3';
+const box_shadow_dark = '0px 0px 10px rgba(0, 0, 0, 0.1)'
 
 // Define our font
 const fonts = {
@@ -64,4 +66,4 @@ const theme = extendTheme({
   fonts,
 });
 
-export { theme, chakra_gradient, css_gradient };
+export { theme, chakra_gradient, css_gradient, box_shadow_light, box_shadow_dark };

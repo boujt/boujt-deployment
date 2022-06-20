@@ -5,6 +5,7 @@ import {
 } from '@chakra-ui/react';
 import Image from 'next/image';
 import blogPreview from '../../../public/images/blog-preview.png';
+import { box_shadow_light } from '../../theme';
 
 const BlogPreview: React.FC = () => {
 	return (
@@ -15,7 +16,7 @@ const BlogPreview: React.FC = () => {
 				maxW={'400px'}
 				w={'full'}
 				bg={'white'}
-				boxShadow={'xl'}
+				boxShadow={box_shadow_light}
 				rounded={'md'}
 				p={6}
 				overflow={'hidden'}

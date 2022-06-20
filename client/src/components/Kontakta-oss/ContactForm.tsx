@@ -12,6 +12,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import React, { Dispatch, SetStateAction, useState } from "react";
+import { box_shadow_dark } from "../../theme";
 
 type Props = {
   // Will be passed if the ContactForm is not controlled
@@ -43,7 +44,7 @@ const ContactForm: React.FC<Props> = ({
           backgroundColor={'white'}
           borderRadius={'100px'}
           border={'none'}
-          boxShadow={'0px 0px 10px 0px #0000001A'}
+          boxShadow={box_shadow_dark}
           id="name"
           type="text"
           value={name}
@@ -54,7 +55,7 @@ const ContactForm: React.FC<Props> = ({
           my={'10px'}
           backgroundColor={'white'}
           borderRadius={'100px'}
-          boxShadow={'0px 0px 10px 0px #0000001A'}
+          boxShadow={box_shadow_dark}
           border={'none'}
           id="email"
           type="email"
@@ -67,7 +68,7 @@ const ContactForm: React.FC<Props> = ({
           my={'10px'}
           borderRadius={'20px'}
           backgroundColor={'white'}
-          boxShadow={'0px 0px 10px 0px #0000001A'}
+          boxShadow={box_shadow_dark}
           border={'none'}
           id="message"
           value={message}
