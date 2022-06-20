@@ -9,8 +9,8 @@ const style: React.CSSProperties = {
 
 type Props = {
     url: string,
-    width: number,
-    height: number,
+    width: number | string,
+    height: number | string,
     style?: React.CSSProperties
 }
 
