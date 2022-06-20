@@ -4,14 +4,22 @@ import axios from "axios";
 import { profile } from "console";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { BlogPost, Fragelada } from "../../../utils/types";
-
+const qs = require("qs");
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const query = qs.stringify(
+    {
+      sort: ["publishedAt:desc"],
+    },
+    {
+      encodeValuesOnly: true,
+    }
+  );
   if (req.method === "GET") {
     const { data } = await axios.get(
-      `${process.env.STRAPI_API_BASE_URL}/api/frageladas?populate=*`,
+      `${process.env.STRAPI_API_BASE_URL}/api/frageladas?${query}&populate=*`,
       {
         headers: {
           Authorization: `Bearer ${process.env.STRAPI_SERVICE_ACCOUNT_JWT}`,

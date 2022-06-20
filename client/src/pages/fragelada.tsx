@@ -13,6 +13,7 @@ import {
   Select,
   Text,
   Textarea,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import { NextPage } from "next";
 import ContactForm from "../components/Kontakta-oss/ContactForm";
@@ -25,11 +26,12 @@ import BoujtTemplate from "../components/BoujtTemplate";
 import Video from "../components/Video";
 import Starfield from "../components/Starfield";
 import { CSSProperties, useEffect, useState } from "react";
-import { FaEnvelope, FaMapPin, FaMarker } from "react-icons/fa";
+import { FaEnvelope, FaMagic, FaMapPin, FaMarker } from "react-icons/fa";
 import QuestionAnswer from "../components/Fragelada/QuestionAnswer";
 import { Fragelada } from "../../utils/types";
 import axios from "axios";
 import { doSubmitQuestionToFragelada } from "../../utils/service";
+import ResponsiveVideoPlayer from "../components/ResponsiveVideoPlayer";
 const background: CSSProperties = {
   position: "absolute",
   left: 0,
@@ -53,6 +55,8 @@ const Fragelada: NextPage = () => {
   );
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [searchString, setSearchString] = useState<string>("");
+
+  const [shouldBreak] = useMediaQuery("(min-width: 700px)");
 
   console.log(searchString);
   useEffect(() => {
@@ -90,22 +94,42 @@ const Fragelada: NextPage = () => {
         setSubmitState("error");
       });
   };
+
+  const filterQuestions = (ar: Fragelada[]) => {
+    let new_arr = ar;
+    if (searchString !== "") {
+      new_arr = new_arr.filter(
+        (qa) =>
+          qa.answer.includes(searchString) || qa.question.includes(searchString)
+      );
+    }
+    if (selectedCategory !== "") {
+      new_arr = new_arr.filter((qa) =>
+        qa.categories.includes(selectedCategory)
+      );
+    }
+    return new_arr;
+  };
+
   return (
     <BoujtTemplate gap={100}>
       <Heading>Frågelåda</Heading>
-      <Flex gap={40}>
-        <Box width={"50%"} display={"flex"} flexDirection="column" gap={4}>
+      <Flex gap={20} flexDirection={shouldBreak ? "row" : "column"}>
+        <Box
+          width={shouldBreak ? "50%" : "100%"}
+          display={"flex"}
+          flexDirection={"column"}
+          justifyContent={"space-between"}
+        >
           <Text>
             Här kan du maila oss om du har en fråga. Bla bla . Maila gärna oss
             när du har en fråga
           </Text>
-          <Video
-            width={"100%"}
-            height={200}
-            url={"https://www.youtube.com/embed/pT1o_Wwnc2U"}
-          />
+          <Flex flex={2} flexDir={"column"} gap={"20px"}>
+            <ResponsiveVideoPlayer url="http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1&origin=http://example.com" />
+          </Flex>
         </Box>
-        <Box width={"50%"}>
+        <Box width={shouldBreak ? "50%" : "100%"}>
           {submitState !== "done" && (
             <Text fontWeight={700} fontSize={25}>
               Ställ din fråga!
@@ -175,27 +199,25 @@ const Fragelada: NextPage = () => {
             placeholder="Ex. 'ensam'"
             value={searchString}
             onChange={(e) => setSearchString(e.target.value)}
+            width={280}
           />
         </Flex>
 
         <Grid templateColumns="repeat(auto-fill, minmax(300px,1fr))" gap={5}>
-          {questionsAndAnswers.map((qa) => {
-            if (
-              selectedCategory === "" ||
-              (qa.categories.includes(selectedCategory) &&
-                qa.answer.includes(searchString)) ||
-              qa.question.includes(searchString)
-            ) {
-              return (
-                <GridItem key={qa.id}>
-                  <QuestionAnswer fragelada={qa} />
-                </GridItem>
-              );
-            } else {
-              return null;
-            }
+          {filterQuestions(questionsAndAnswers).map((qa) => {
+            return (
+              <GridItem key={qa.id}>
+                <QuestionAnswer fragelada={qa} />
+              </GridItem>
+            );
           })}
         </Grid>
+        {filterQuestions(questionsAndAnswers).length === 0 && (
+          <Text align="center">
+            Vi kan tyvärr inte hitta några frågor som matchar{" "}
+            <Text fontStyle={"italic"}>'{searchString}'</Text>
+          </Text>
+        )}
       </Flex>
     </BoujtTemplate>
   );

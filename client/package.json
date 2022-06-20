@@ -26,6 +26,7 @@
     "react-dom": "18.1.0",
     "react-icons": "^4.4.0",
     "react-markdown": "^8.0.3",
+    "react-player": "^2.10.1",
     "react-spinners": "^0.12.0",
     "recoil": "^0.7.3",
     "sass": "^1.52.3",
