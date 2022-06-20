@@ -15,9 +15,11 @@ const background: CSSProperties = {
 }
 
 const KanslorOchRattigheterPortal: NextPage = () => {
+    const router = useRouter();
     
     const navigate = (age: string) => {
-        window.location.href = (`kanslor-och-rattigheter/${age}`)
+        // window.location.href = (`kanslor-och-rattigheter/${age}`)
+        router.push('/kanslor-och-rattigheter/' + age);
     }
 
     return (

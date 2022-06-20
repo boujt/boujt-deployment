@@ -57,3 +57,10 @@ export type AImage = {
   width: number,
   height: number
 }
+
+export type VaraFilmerItem = {
+  title: string,
+  description: string,
+  mainText: string,
+  videoUrl: string
+}

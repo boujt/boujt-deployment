@@ -21,7 +21,6 @@ const Blog: NextPage = () => {
     }
 
     return (
-        // <Flex flexDir={'column'}>
         <BoujtTemplate maxW={'6xl'} gap={25}>
             {/* <Navbar/> */}
             {/* TOP SECTION */}

@@ -16,11 +16,12 @@ type Props = {
     text: string,
     icon: IconType,
     iconColor: string,
-    width: number
+    width: number,
+    onClicked?: () => void
 }
 
 // Clickable button with starfield background
-const StarfieldButton: React.FC<Props> = ({width, text, icon, iconColor}) => {
+const StarfieldButton: React.FC<Props> = ({width, text, icon, iconColor, onClicked}) => {
     return (
         <Flex 
             width={width} 
@@ -28,6 +29,8 @@ const StarfieldButton: React.FC<Props> = ({width, text, icon, iconColor}) => {
             position={'relative'} 
             justifyContent={'center'}
             borderRadius={'20px'}
+            onClick={onClicked}
+            cursor={'pointer'}
         >
             <Flex
                 width={'85%'}
