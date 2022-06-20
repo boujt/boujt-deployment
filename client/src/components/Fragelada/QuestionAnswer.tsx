@@ -34,7 +34,7 @@ const QuestionAnswer: React.FC<QuestionAnswerProps> = ({ fragelada }) => {
       alignItems={"center"}
       gap={5}
     >
-      <Flex gap={2} width={"100%"} justifyContent={"flex-start"}>
+      <Flex gap={2} width={"100%"} justifyContent={"space-between"}>
         {fragelada.categories.map((cat) => {
           return (
             <Badge color="white" variant={"outline"} key={cat}>
@@ -42,6 +42,9 @@ const QuestionAnswer: React.FC<QuestionAnswerProps> = ({ fragelada }) => {
             </Badge>
           );
         })}
+        <Text color="white" fontStyle={"italic"}>
+          {fragelada.published_at.slice(0, 10)}
+        </Text>
       </Flex>
       <Flex>
         <Text fontSize={20} color="white">
