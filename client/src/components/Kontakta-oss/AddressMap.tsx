@@ -1,14 +1,19 @@
 import { Flex, Heading, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Map, Marker, Overlay } from "pigeon-maps";
-const AddressMap: React.FC = () => {
-  const [center, setCenter] = useState<[number, number]>([59.37277, 17.93477]);
+
+type Props = {
+  latitude?: number,
+  longitude?: number
+}
+
+const AddressMap: React.FC<Props> = ({latitude = 100, longitude = 100}) => {
   const [zoom, setZoom] = useState(11);
   return (
     <Flex width={"100%"} borderRadius={30}>
       <Map
         height={300}
-        defaultCenter={center}
+        defaultCenter={[latitude, longitude]}
         zoom={zoom}
         onBoundsChanged={({ center, zoom }) => {
           setZoom(zoom);
@@ -26,7 +31,7 @@ const AddressMap: React.FC = () => {
             <Text>Sverige</Text>
           </Flex>
         </Overlay>
-        <Marker anchor={center} />
+        <Marker anchor={[latitude, longitude]} />
       </Map>
     </Flex>
   );

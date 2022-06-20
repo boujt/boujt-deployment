@@ -11,12 +11,5 @@
     "draftAndPublish": true
   },
   "pluginOptions": {},
-  "attributes": {
-    "kontaktinformation": {
-      "displayName": "Kontakt",
-      "type": "component",
-      "repeatable": false,
-      "component": "information.kontakt"
-    }
-  }
+  "attributes": {}
 }
