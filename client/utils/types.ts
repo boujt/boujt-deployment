@@ -59,6 +59,23 @@ export type ContactUsData = {
   longitude: number
 }
 
+export type Worker = {
+  name: string,
+  email: string,
+  role: string,
+  imageUrl: string
+}
+
+export type Faq = {
+  question: string,
+  answer: string
+}
+
+export type AboutUsData = {
+  workers: Worker[],
+  faq: Faq[]
+}
+
 export type FetchDataResponse<T> = {
   data: T | undefined,
   isLoading: boolean,

@@ -7,7 +7,8 @@ import {
 import { NextPage } from "next";
 import { CSSProperties, useEffect, useState } from "react";
 import { FaEnvelope, FaMapPin } from "react-icons/fa";
-import { useKontaktaOss } from "../../utils/fetchData";
+import { useData } from "../../utils/fetchData";
+import { ContactUsData } from "../../utils/types";
 import BoujtTemplate from "../components/BoujtTemplate";
 import AddressMap from "../components/Kontakta-oss/AddressMap";
 import ContactForm from "../components/Kontakta-oss/ContactForm";
@@ -32,7 +33,7 @@ const content: CSSProperties = {
 
 const KontaktaOss: NextPage = () => {
 	// Static data
-	const {data, error, isLoading} = useKontaktaOss();
+	const {data} = useData<ContactUsData>('kontakta-oss');
 
 	const [name, setName] = useState<string>("");
 	const [email, setEmail] = useState<string>("");
