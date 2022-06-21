@@ -12,17 +12,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "video": {
-      "type": "media",
-      "multiple": true,
-      "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
     "text": {
       "type": "richtext"
     },
