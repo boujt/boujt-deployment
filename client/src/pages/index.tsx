@@ -11,6 +11,8 @@ import { CSSProperties } from "@emotion/serialize";
 import type { NextPage } from "next";
 import { Router, useRouter } from "next/router";
 import { ROUTES } from "../../utils/constants";
+import { useData } from "../../utils/fetchData";
+import { BlogPost } from "../../utils/types";
 import BlogPreview from "../components/Blog/BlogPreview";
 import CircleChart from "../components/CircleChart/CircleChart";
 import Footer from "../components/Footer";
@@ -35,6 +37,7 @@ const background: CSSProperties = {
 const Home: NextPage = () => {
     const [isLessThan900] = useMediaQuery("(max-width: 900px)");
     const router = useRouter();
+    const posts = useData<BlogPost[]>(`/posts`);
     const getChatSection = () => {
         return (
             <Flex justifyContent={"center"}>
@@ -110,9 +113,10 @@ const Home: NextPage = () => {
                 <Heading paddingTop={"50px"}>Det senaste från bloggen</Heading>
                 {/* Blog posts */}
                 <Flex justifyContent={"space-around"} gap={5} flexWrap={"wrap"}>
-                    <BlogPreview />
-                    <BlogPreview />
-                    <BlogPreview />
+                    {posts.data &&
+                        posts.data.slice(0, 3).map((post) => {
+                            return <BlogPreview key={post.id} post={post} />;
+                        })}
                 </Flex>
                 <Button
                     margin={"2rem 0"}

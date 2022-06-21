@@ -1,12 +1,25 @@
-import { Button, Flex, Heading, Select, Text } from "@chakra-ui/react";
+import {
+    Button,
+    Flex,
+    Grid,
+    GridItem,
+    Heading,
+    Select,
+    SimpleGrid,
+    Text,
+} from "@chakra-ui/react";
 import { NextPage } from "next";
 import React, { SyntheticEvent, useState } from "react";
+import { useData } from "../../../utils/fetchData";
+import { BlogPost } from "../../../utils/types";
 import BlogPreview from "../../components/Blog/BlogPreview";
 import BoujtTemplate from "../../components/BoujtTemplate";
 import { chakra_gradient } from "../../theme";
 
 const Blog: NextPage = () => {
     const [blogFilter, setBlogFilter] = useState<string>("");
+
+    const posts = useData<BlogPost[]>(`/posts`);
 
     // Later fetched from strapi backend
     const FILTER_OPTIONS = [
@@ -63,24 +76,13 @@ const Blog: NextPage = () => {
             </Flex>
 
             {/* LIST BLOG POSTS */}
-            <Flex justifyContent={"center"} gap={"20px"} flexWrap={"wrap"}>
-                <BlogPreview />
-                <BlogPreview />
-                <BlogPreview />
-                <Flex flexBasis={"100%"} />
-                <BlogPreview />
-                <BlogPreview />
-                <BlogPreview />
-                <Flex flexBasis={"100%"} />
-                <BlogPreview />
-                <BlogPreview />
-                <BlogPreview />
-                <Flex flexBasis={"100%"} />
-                <BlogPreview />
-
-                <Flex flexBasis={"100%"} />
-                <Button variant={"default"}>Ladda mer</Button>
-            </Flex>
+            <SimpleGrid columns={[1, null, 2, 3]} gap={10} flexWrap={"wrap"}>
+                {posts.data &&
+                    posts.data.map((post, idx) => {
+                        console.log(post);
+                        return <BlogPreview key={idx} post={post} />;
+                    })}
+            </SimpleGrid>
         </BoujtTemplate>
     );
 };
