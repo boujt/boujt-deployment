@@ -76,6 +76,14 @@ export type AboutUsData = {
     faq: Faq[];
 };
 
+export type BlogData = {
+    title: string,
+    text: string,
+    omslagsbild: string,
+    bilder: string[],
+    videos: string[]
+}
+
 export type FetchDataResponse<T> = {
     data: T | undefined;
     isLoading: boolean;
