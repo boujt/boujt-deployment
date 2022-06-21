@@ -8,8 +8,22 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
-  "attributes": {}
+  "attributes": {
+    "workers": {
+      "displayName": "arbetare",
+      "type": "component",
+      "repeatable": true,
+      "component": "adminstrativt.arbetare",
+      "required": true
+    },
+    "faq": {
+      "type": "component",
+      "repeatable": true,
+      "component": "adminstrativt.vanliga-fragor",
+      "required": true
+    }
+  }
 }

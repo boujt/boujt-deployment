@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_adminstrativt_arbetares",
+  "info": {
+    "displayName": "arbetare",
+    "icon": "male",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "image": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "default": "Ex. Klara",
+      "required": true
+    },
+    "email": {
+      "type": "string",
+      "required": true,
+      "default": "Ex. klara@gmail.com"
+    },
+    "role": {
+      "type": "string",
+      "required": true,
+      "default": "Ex. Kommunikatör "
+    }
+  }
+}
