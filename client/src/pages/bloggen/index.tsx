@@ -1,9 +1,9 @@
 import { Button, Flex, Heading, Select, Text } from "@chakra-ui/react";
 import { NextPage } from "next";
 import React, { SyntheticEvent, useState } from "react";
-import BlogPreview from "../components/Blog/BlogPreview";
-import BoujtTemplate from "../components/BoujtTemplate";
-import { chakra_gradient } from "../theme";
+import BlogPreview from "../../components/Blog/BlogPreview";
+import BoujtTemplate from "../../components/BoujtTemplate";
+import { chakra_gradient } from "../../theme";
 
 const Blog: NextPage = () => {
     const [blogFilter, setBlogFilter] = useState<string>("");

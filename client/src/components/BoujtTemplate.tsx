@@ -10,19 +10,21 @@ interface CustomContainerProps {
     children: JSX.Element[] | JSX.Element;
     gap?: number;
     maxW?: string;
+    marginY: string;
 }
 
 const CustomContainer: React.FC<CustomContainerProps> = ({
     children,
     gap = 0,
     maxW = "4xl",
+    marginY,
 }) => {
     return (
         <Container
             display={"flex"}
             gap={gap}
-            marginBottom={"4rem"}
-            marginTop={"4rem"}
+            marginBottom={marginY}
+            marginTop={marginY}
             maxW={maxW}
             flexDirection="column"
         >
@@ -32,24 +34,32 @@ const CustomContainer: React.FC<CustomContainerProps> = ({
 };
 
 interface BoujtTemplateProps {
-    children: JSX.Element[] | JSX.Element;
+    children: any;
     gap?: number;
     maxW?: string;
+    marginY?: string;
+    strict?: boolean;
 }
 
 const BoujtTemplate: React.FC<BoujtTemplateProps> = ({
     children,
     gap = 0,
     maxW = "4xl",
+    marginY = "4rem",
+    strict = true,
 }) => {
     return (
         <>
             <Navbar />
             <PanicButton />
             <FloatingChatButton />
-            <CustomContainer maxW={maxW} gap={gap}>
-                {children}
-            </CustomContainer>
+            {strict && (
+                <CustomContainer marginY={marginY} maxW={maxW} gap={gap}>
+                    {children}
+                </CustomContainer>
+            )}
+            {!strict && children}
+
             <Footer />
         </>
     );
