@@ -32,6 +32,7 @@ import { Fragelada } from "../../utils/types";
 import axios from "axios";
 import { doSubmitQuestionToFragelada } from "../../utils/service";
 import ResponsiveVideoPlayer from "../components/ResponsiveVideoPlayer";
+import { useData } from "../../utils/fetchData";
 const background: CSSProperties = {
     position: "absolute",
     left: 0,
@@ -50,29 +51,19 @@ const content: CSSProperties = {
 const Fragelada: NextPage = () => {
     const [message, setMessage] = useState<string>("");
     const [submitState, setSubmitState] = useState<string>("none");
-    const [questionsAndAnswers, setQuestionsAndAnswers] = useState<Fragelada[]>(
-        []
-    );
+
     const [selectedCategory, setSelectedCategory] = useState<string>("");
     const [searchString, setSearchString] = useState<string>("");
 
     const [shouldBreak] = useMediaQuery("(min-width: 700px)");
+    const questionsAndAnswers = useData<Fragelada[]>("/fragelada");
 
     console.log(searchString);
-    useEffect(() => {
-        axios
-            .get("/api/fragelada")
-            .then((res) => {
-                setQuestionsAndAnswers(res.data.data);
-            })
-            .catch((er) => {
-                console.error(er);
-            });
-    }, []);
 
     const getCategories = () => {
+        if (!questionsAndAnswers.data) return [];
         const categories = new Set();
-        questionsAndAnswers.forEach((qa) => {
+        questionsAndAnswers.data.forEach((qa) => {
             qa.categories.forEach((c) => {
                 categories.add(c);
             });
@@ -214,22 +205,24 @@ const Fragelada: NextPage = () => {
                     templateColumns="repeat(auto-fill, minmax(300px,1fr))"
                     gap={5}
                 >
-                    {filterQuestions(questionsAndAnswers).map((qa) => {
-                        return (
-                            <GridItem key={qa.id}>
-                                <QuestionAnswer fragelada={qa} />
-                            </GridItem>
-                        );
-                    })}
+                    {questionsAndAnswers.data &&
+                        filterQuestions(questionsAndAnswers.data).map((qa) => {
+                            return (
+                                <GridItem key={qa.id}>
+                                    <QuestionAnswer fragelada={qa} />
+                                </GridItem>
+                            );
+                        })}
                 </Grid>
-                {filterQuestions(questionsAndAnswers).length === 0 && (
-                    <Text align="center">
-                        Vi kan tyvärr inte hitta några frågor som matchar{" "}
-                        <Text fontStyle={"italic"}>
-                            `&apos`{searchString}`&apos`
+                {questionsAndAnswers.data &&
+                    filterQuestions(questionsAndAnswers.data).length === 0 && (
+                        <Text align="center">
+                            Vi kan tyvärr inte hitta några frågor som matchar{" "}
+                            <Text fontStyle={"italic"}>
+                                `&apos`{searchString}`&apos`
+                            </Text>
                         </Text>
-                    </Text>
-                )}
+                    )}
             </Flex>
         </BoujtTemplate>
     );

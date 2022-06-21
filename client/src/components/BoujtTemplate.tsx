@@ -4,6 +4,7 @@ import { Map, Marker, Overlay } from "pigeon-maps";
 import Navbar from "./navbar";
 import Footer from "./Footer";
 import PanicButton from "./PanicButton";
+import FloatingChatButton from "./FloatingChatButton";
 
 interface CustomContainerProps {
     children: JSX.Element[] | JSX.Element;
@@ -45,6 +46,7 @@ const BoujtTemplate: React.FC<BoujtTemplateProps> = ({
         <>
             <Navbar />
             <PanicButton />
+            <FloatingChatButton />
             <CustomContainer maxW={maxW} gap={gap}>
                 {children}
             </CustomContainer>
