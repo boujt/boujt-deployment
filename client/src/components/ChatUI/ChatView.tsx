@@ -290,9 +290,9 @@ export const ChatView: React.FC<ChatViewProps> = ({ room, displayName }) => {
                     <ModalBody>
                         Personen du pratar föreslog att byta till{" "}
                         {showVideo ? "textchatt" : "videosamtal"}. Om du också
-                        vill detta, klicka på "Byt till{" "}
-                        {showVideo ? "textchatt" : "videosamtal"}", annars
-                        "Stanna på här"
+                        vill detta, klicka på `&quot;`Byt till{" "}
+                        {showVideo ? "textchatt" : "videosamtal"}`&quot;`,
+                        annars `&quot;`Stanna på här`&quot;`
                     </ModalBody>
 
                     <ModalFooter>

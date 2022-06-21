@@ -86,7 +86,7 @@ const BrowserView: React.FC<{ browser: Browser }> = ({ browser }) => {
                 <Flex width={shouldBreak ? "100%" : "60%"} flexDir={"column"}>
                     {browser.instructions.map((instruction, idx) => {
                         return (
-                            <Text fontSize={20}>
+                            <Text key={idx} fontSize={20}>
                                 {idx + 1}. {instruction}
                             </Text>
                         );
