@@ -42,7 +42,6 @@ const syssnareVideoList = [
     }        
 ]
 
-
 const MainContent: React.FC = () => {
     const [isSmallerThan600] = useMediaQuery('(max-width: 600px)')
 
@@ -61,7 +60,6 @@ const MainContent: React.FC = () => {
     /* 
         **PREPARE SOME COMPONENT DATA** 
     */
-
     const orangeCardText = age == '7' ? 
         'Vill du veta vad du kan göra om du är kär?' : 
         'Lär dig mer om våld och utsatthet'
@@ -99,12 +97,16 @@ const MainContent: React.FC = () => {
             )
         }
 
-        // 7
+        // case age 7-14 here
         return (
             <Flex maxW={'300px'}>
                 <Image src={kidOnSwing}/>
             </Flex>
         )
+    }
+    
+    const onVaraFilmerClick = () => {
+        router.push(`/filmer/${age}`);
     }
 
     useEffect(() => {
@@ -170,8 +172,19 @@ const MainContent: React.FC = () => {
             {/* STARFIELD BUTTONS & QUIZ BUTTON */}
             <Flex justifyContent={'center'} alignItems={'center'} pb={'50px'} flexWrap={'wrap'} gap={'10px'}>
                 <Flex justifyContent={'center'} flexDir={'column'} gap={'10px'} flexWrap={'wrap'} >
-                    <StarfieldButton width={starfieldButtonWidth} text={'Stjärnquizet'} icon={FaStar} iconColor={'yellow'}/>
-                    <StarfieldButton width={starfieldButtonWidth} text={'Våra filmer'} icon={FaTv} iconColor={'white'}/>
+                    <StarfieldButton 
+                        width={starfieldButtonWidth} 
+                        text={'Stjärnquizet'} 
+                        icon={FaStar} 
+                        iconColor={'yellow'}
+                    />
+                    <StarfieldButton 
+                        width={starfieldButtonWidth} 
+                        text={'Våra filmer'} 
+                        icon={FaTv} 
+                        iconColor={'white'}
+                        onClicked={onVaraFilmerClick}
+                    />
                 </Flex>
                 <Flex 
                     width={val} height={300} 

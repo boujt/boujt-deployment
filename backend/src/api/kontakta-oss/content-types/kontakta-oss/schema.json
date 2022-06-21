@@ -1,0 +1,35 @@
+{
+  "kind": "singleType",
+  "collectionName": "kontakta_osses",
+  "info": {
+    "singularName": "kontakta-oss",
+    "pluralName": "kontakta-osses",
+    "displayName": "Kontakta oss",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "adress": {
+      "type": "string",
+      "required": true,
+      "default": "Ex. Adress"
+    },
+    "email": {
+      "type": "string",
+      "required": true,
+      "default": "superkonsulten@gmail.com"
+    },
+    "latitude": {
+      "type": "decimal",
+      "required": true
+    },
+    "longitude": {
+      "type": "decimal",
+      "required": true,
+      "default": 0
+    }
+  }
+}

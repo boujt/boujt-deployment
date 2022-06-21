@@ -4,28 +4,23 @@ import { ERRORS, SYSSNARE_STATUS } from "./constants";
 import { generateToken } from "./helperFunctions";
 import { ChatRoom } from "./types";
 
-export type CreateChatRequest = {
-  strapi: Strapi;
+export type CreateChatroomRequest = {
   is_video: boolean;
   token: string;
   syssnare: number;
 };
 
-export const doCreateChatRoom = async (data: CreateChatRequest) => {
-  const strapi_url = data.is_video ? "videochats" : "textchats";
-  const local_url = data.is_video ? "video_room" : "chat_room";
-  const room = await axios.post("/api/" + local_url + "/create");
-  const strapi_room = await data.strapi.create(strapi_url, {
-    room_url: room.data.name,
-    session_id: data.token,
-    user: data.syssnare,
+export const doCreateChatRoom = async (data: CreateChatroomRequest) => {
+  const room = await axios.post(`/api/chatroom/${data.token}`, {
+    is_video: data.is_video,
+    syssnare: data.syssnare,
   });
 
   const response: ChatRoom = {
-    room_url: room.data.url,
-    syssnare: data.syssnare,
-    token: data.token,
-    is_video: data.is_video,
+    room_url: room.data.data.chatroomData.room_url,
+    syssnare: room.data.data.chatroomData.syssnare,
+    token: room.data.data.chatroomData.token,
+    is_video: room.data.data.chatroomData.is_video,
   };
   return response;
 };
@@ -36,8 +31,6 @@ export type DeleteChatRequest = {
 };
 
 export const doDeleteChatRoom = async (data: DeleteChatRequest) => {
-  const video_rooms = await data.strapi.find("videochats");
-  const text_rooms = await data.strapi.find("textchats");
   const requests = await data.strapi.find("request-chats");
 
   requests.data.forEach(async (element) => {
@@ -45,22 +38,7 @@ export const doDeleteChatRoom = async (data: DeleteChatRequest) => {
       data.strapi.delete("request-chats", element.id);
     }
   });
-  video_rooms.data.forEach(async (element) => {
-    if (element.attributes.session_id === data.token) {
-      await data.strapi.delete("videochats", element.id);
-      await axios.delete(
-        `/api/chat_room/delete/${element.attributes.room_url}`
-      );
-    }
-  });
-  text_rooms.data.forEach(async (element) => {
-    if (element.attributes.session_id === data.token) {
-      await data.strapi.delete("textchats", element.id);
-      await axios.delete(
-        `/api/chat_room/delete/${element.attributes.room_url}`
-      );
-    }
-  });
+  return axios.delete(`/api/chatroom/${data.token}`);
 };
 
 export const doSetStatusSyssnare = async (
@@ -73,38 +51,24 @@ export const doSetStatusSyssnare = async (
 };
 
 export const doGetActiveRooms = async (strapi: Strapi, syssnare: number) => {
-  const video = await strapi?.find("videochats", {
+  const rooms = await strapi?.find("chatrooms", {
     populate: {
-      user: {
-        fields: ["id"],
-      },
-    },
-  });
-  const text = await strapi?.find("textchats", {
-    populate: {
-      user: {
+      syssnare: {
         fields: ["id"],
       },
     },
   });
 
-  const filtered_video = video.data.filter((element) => {
-    if (element.attributes.user.data.id === syssnare) {
-      return true;
-    }
-  });
-  const filteterd_text = text.data.filter((element) => {
-    if (element.attributes.user.data.id === syssnare) {
+  const rooms_filtered = rooms.data.filter((element) => {
+    if (element.attributes.syssnare.data.id === syssnare) {
       return true;
     }
   });
 
-  if (filtered_video.length > 0) {
-    return filtered_video[0];
+  if (rooms_filtered.length > 0) {
+    return rooms_filtered[0];
   }
-  if (filteterd_text.length > 0) {
-    return filteterd_text[0];
-  }
+
   return null;
 };
 
@@ -113,7 +77,7 @@ export const doGetAllSyssnare = async () => {
 };
 
 export const doGetChatRoomFromToken = async (token: string) => {
-  return await axios.get(`/api/chat-room-from-token/${token}`);
+  return await axios.get(`/api/chatroom/${token}`);
 };
 
 export const doGetRequestByToken = (token: string) => {
@@ -140,6 +104,10 @@ export const doCreateChatRequest = async (
   }
 
   return { error: ERRORS.BUSY };
+};
+
+export const doCancelChatRequest = async (token: string) => {
+  return await axios.delete(`/api/chat-request/${token}`);
 };
 
 export const doSubmitQuestionToFragelada = async (question: string) => {
