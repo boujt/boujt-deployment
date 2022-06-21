@@ -4,7 +4,7 @@ import axios from "axios";
 import { profile } from "console";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { BlogPost } from "../../../utils/types";
-
+const qs = require("qs");
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
@@ -16,8 +16,17 @@ export default async function handler(
         return;
     }
 
+    const query = qs.stringify(
+        {
+            sort: ["createdAt:desc"],
+        },
+        {
+            encodeValuesOnly: true,
+        }
+    );
+
     const { data } = await axios.get(
-        `${process.env.STRAPI_API_BASE_URL}/api/bloggs?populate=*`,
+        `${process.env.STRAPI_API_BASE_URL}/api/bloggs?${query}&populate=*`,
         {
             headers: {
                 Authorization: `Bearer ${process.env.STRAPI_SERVICE_ACCOUNT_JWT}`,
