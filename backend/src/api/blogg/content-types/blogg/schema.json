@@ -42,9 +42,6 @@
       "allowedTypes": [
         "videos"
       ]
-    },
-    "views": {
-      "type": "integer"
     }
   }
 }
