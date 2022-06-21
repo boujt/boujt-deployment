@@ -6,7 +6,8 @@ import { AboutUsData, ContactUsData, FetchDataError, FetchDataResponse } from ".
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 function useData<T>(endpoint: string): FetchDataResponse<T> {
-    const {data, error} = useSWR<T, FetchDataError>('/api/' + endpoint, fetcher);
+    const { data, error } = useSWR<T, FetchDataError>('/api/' + endpoint, fetcher);
+
     return {
         data,
         error,
@@ -14,4 +15,4 @@ function useData<T>(endpoint: string): FetchDataResponse<T> {
     };
 }
 
-export {useData}
+export { useData }
