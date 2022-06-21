@@ -131,7 +131,10 @@ const KontaktaOss: NextPage = () => {
                         alignItems="center"
                         marginBottom={shouldBreak ? "2rem" : 0}
                     >
-                        <Heading color="white">
+                        <Heading
+                            textAlign={shouldBreak ? "center" : "unset"}
+                            color="white"
+                        >
                             Sveriges Dövas Ungdomsförbund
                         </Heading>
                     </Flex>
