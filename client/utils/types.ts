@@ -25,9 +25,7 @@ export type EmailFormData = {
 export type EmailAttachment = {
     base64: string;
     type: string;
-    name: string;
     filename: string;
-    content_id: string;
 };
 
 export type ErrorStrapiUser = {

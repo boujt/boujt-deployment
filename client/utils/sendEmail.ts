@@ -11,5 +11,24 @@ export const sendEmail = async (emailData: EmailData) => {
         subject: emailData.subject,
         html: emailData.html,
     };
+
+    if (emailData.attachment) {
+        msg.attachments = [
+            {
+                content: emailData.attachment.base64,
+                type: emailData.attachment.type,
+                filename: emailData.attachment?.filename,
+                disposition: "attachment",
+            },
+        ];
+    }
     return await sgMail.send(msg);
+};
+
+export const config = {
+    api: {
+        bodyParser: {
+            sizeLimit: "30mb", // Set desired value here
+        },
+    },
 };
