@@ -160,6 +160,7 @@ export const ChatView: React.FC<ChatViewProps> = ({ room, displayName }) => {
                     },
                     showLeaveButton: false,
                     showFullscreenButton: true,
+                    audioSource: false,
                 })
             );
         }
@@ -195,6 +196,7 @@ export const ChatView: React.FC<ChatViewProps> = ({ room, displayName }) => {
     };
 
     const toggleTypeOfChat = () => {
+        da.updateParticipant("local", { setVideo: false });
         setShowVideo((prev) => !prev);
     };
 
