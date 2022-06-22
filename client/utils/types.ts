@@ -116,7 +116,7 @@ export type ExternalLink = {
 	text: string;
 };
 
-export type FaStod = {
+export type FaStodData = {
     externalLinks: ExternalLink[]
 }
 
