@@ -14,7 +14,7 @@ import { useRouter } from "next/router";
 import { CSSProperties, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 import { useData } from "../../utils/fetchData";
-import { ExternalLink, FaStod } from "../../utils/types";
+import { ExternalLink, FaStodData } from "../../utils/types";
 import BoujtTemplate from "../components/BoujtTemplate";
 import ResponsiveVideoPlayer from "../components/ResponsiveVideoPlayer";
 import Starfield from "../components/Starfield";
@@ -82,7 +82,7 @@ const ExternalLinkView: React.FC<{ externalLink: ExternalLink }> = ({
 const FaStod: NextPage = () => {
 	const [shouldBreak] = useMediaQuery("(max-width: 750px)");
 
-	const { data, error } = useData<FaStod>("fa-stod");
+	const { data, error } = useData<FaStodData>("fa-stod");
 
 	const router = useRouter();
 
