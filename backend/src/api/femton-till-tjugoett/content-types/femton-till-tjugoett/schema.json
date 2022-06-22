@@ -8,7 +8,7 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -17,6 +17,10 @@
     },
     "title": {
       "type": "string"
+    },
+    "video_link": {
+      "type": "string",
+      "required": true
     }
   }
 }
