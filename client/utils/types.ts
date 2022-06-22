@@ -8,6 +8,28 @@ export type RoomResponse = {
     privacy?: string;
 };
 
+export type EmailData = {
+    to: string;
+    html: string;
+    subject: string;
+    attachment?: EmailAttachment;
+};
+
+export type EmailFormData = {
+    name: string;
+    email: string;
+    message: string;
+    attachment?: EmailAttachment;
+};
+
+export type EmailAttachment = {
+    base64: string;
+    type: string;
+    name: string;
+    filename: string;
+    content_id: string;
+};
+
 export type ErrorStrapiUser = {
     invalid_credentials?: boolean;
 };

@@ -12,6 +12,7 @@ import {
     Text,
     Textarea,
 } from "@chakra-ui/react";
+import axios from "axios";
 import React, {
     Dispatch,
     SetStateAction,
@@ -19,6 +20,8 @@ import React, {
     useRef,
     useState,
 } from "react";
+import { getBase64 } from "../../../utils/helperFunctions";
+import { EmailAttachment, EmailFormData } from "../../../utils/types";
 import { box_shadow_dark } from "../../theme";
 
 const ContactForm: React.FC = () => {
@@ -31,10 +34,36 @@ const ContactForm: React.FC = () => {
     const [file, setFile] = useState<Object | null>(null);
     const [preview, setPreview] = useState<string>("");
 
+    const onEmailSubmit = async () => {
+        //setIsSubmitting(true);
+
+        if (file) {
+            const b64 = await getBase64(file);
+            console.log(b64);
+        }
+
+        // const emailData: EmailFormData = {
+        //     name,
+        //     email,
+        //     message,
+        // };
+        // axios
+        //     .post("/api/ask-by-email", { emailData })
+        //     .then((res) => {
+        //         console.log(res);
+        //         setIsSubmitting(false);
+        //     })
+        //     .catch((er) => {
+        //         console.log(er);
+        //         setIsSubmitting(false);
+        //     });
+    };
+
     const onChangeFile = (event: React.ChangeEvent<HTMLInputElement>) => {
         event.stopPropagation();
         event.preventDefault();
         if (event.target.files) {
+            getBase64(event.target.files[0]);
             setFile(event.target.files[0]);
             console.log(typeof file, file);
         } else {
@@ -55,7 +84,7 @@ const ContactForm: React.FC = () => {
     return (
         <Flex maxWidth={800} minWidth={250} flexDir={"column"}>
             {file && <a href={preview}>{preview}</a>}
-            <FormControl maxWidth={"100%"}>
+            <FormControl onSubmit={onEmailSubmit} maxWidth={"100%"}>
                 <Input
                     my={"10px"}
                     backgroundColor={"white"}
@@ -109,7 +138,7 @@ const ContactForm: React.FC = () => {
                         color="black"
                         variant={"default"}
                         isLoading={isSubmitting}
-                        type="submit"
+                        onClick={onEmailSubmit}
                     >
                         Skicka
                     </Button>
