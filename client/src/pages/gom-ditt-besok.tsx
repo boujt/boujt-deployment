@@ -19,6 +19,14 @@ import BoujtTemplate from "../components/BoujtTemplate";
 import ResponsiveVideoPlayer from "../components/ResponsiveVideoPlayer";
 import Video from "../components/Video";
 
+//CHROME FIREFOX EDGE SAFARI
+const VIDEOS: string[] = [
+    "https://youtu.be/Df8Gu1lTwT0",
+    "https://youtu.be/aks0fPwgdJQ",
+    "https://youtu.be/vsPEn0XjwT4",
+    "https://youtu.be/wwCqRvqhU5E",
+];
+
 type Browser = {
     value: string;
     label: string;
@@ -74,7 +82,10 @@ const BrowserOptions: Browser[] = [
     },
 ];
 
-const BrowserView: React.FC<{ browser: Browser }> = ({ browser }) => {
+const BrowserView: React.FC<{ browser: Browser; url: string }> = ({
+    browser,
+    url,
+}) => {
     const [shouldBreak] = useMediaQuery("(max-width: 775px)");
     return (
         <AccordionItem>
@@ -107,7 +118,7 @@ const BrowserView: React.FC<{ browser: Browser }> = ({ browser }) => {
                     width={shouldBreak ? "100%" : "40%"}
                     justifyContent="center"
                 >
-                    <ResponsiveVideoPlayer url="https://youtu.be/KAwTgScGtRU" />
+                    <ResponsiveVideoPlayer url={url} />
                 </Flex>
             </AccordionPanel>
         </AccordionItem>
@@ -149,7 +160,13 @@ const HideYourVisist: NextPage = () => {
                 <Box width={"100%"}>
                     <Accordion allowToggle>
                         {BrowserOptions.map((br, idx) => {
-                            return <BrowserView browser={br} key={idx} />;
+                            return (
+                                <BrowserView
+                                    url={VIDEOS[idx]}
+                                    browser={br}
+                                    key={idx}
+                                />
+                            );
                         })}
                     </Accordion>
                 </Box>

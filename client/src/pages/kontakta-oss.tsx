@@ -81,26 +81,7 @@ const KontaktaOss: NextPage = () => {
                         <ResponsiveVideoPlayer url="http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1&origin=http://example.com" />
                     </Flex>
                     <Flex flex={1} flexDirection="column">
-                        <ContactForm
-                            // onSubmit={onEmailSubmit}
-                            nameState={[name, setName]}
-                            emailState={[email, setEmail]}
-                            messageState={[message, setMessage]}
-                        />
-                        <Flex gap={5} justifyContent={"flex-start"}>
-                            <Button
-                                mt={4}
-                                color="black"
-                                variant={"default"}
-                                type="submit"
-                                onClick={onEmailSubmit}
-                            >
-                                Skicka
-                            </Button>
-                            <Button variant="information" mt={4} color="black">
-                                Ladda upp bilaga
-                            </Button>
-                        </Flex>
+                        <ContactForm />
                     </Flex>
 
                     <Box sx={background}>
