@@ -36,7 +36,12 @@ export const ERRORS = {
     BAD_REQUEST: "bad-request",
     METHOD_NOT_ALLOWED: "method-not-allowed",
     COULD_NOT_CREATE: "could-not-create-room",
+    TOO_LARGE: "too-large",
+    INVALID: "invalid",
+    CANNOT_BE_EMPTY: "cant-be-empty",
 };
+
+export const FILESIZE_UPLOAD_LIMIT = 30000000;
 
 export const ROUTES = {
     KONTAKTA_OSS: "/kontakta-oss",

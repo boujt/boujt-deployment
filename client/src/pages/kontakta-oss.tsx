@@ -6,11 +6,12 @@ import {
     Text,
     useMediaQuery,
 } from "@chakra-ui/react";
+import axios from "axios";
 import { NextPage } from "next";
 import { CSSProperties, useEffect, useState } from "react";
 import { FaEnvelope, FaMapPin } from "react-icons/fa";
 import { useData } from "../../utils/fetchData";
-import { ContactUsData } from "../../utils/types";
+import { ContactUsData, EmailData, EmailFormData } from "../../utils/types";
 import BoujtTemplate from "../components/BoujtTemplate";
 import AddressMap from "../components/Kontakta-oss/AddressMap";
 import ContactForm from "../components/Kontakta-oss/ContactForm";
@@ -42,10 +43,6 @@ const KontaktaOss: NextPage = () => {
     const [email, setEmail] = useState<string>("");
     const [message, setMessage] = useState<string>("");
     const [shouldBreak] = useMediaQuery("(max-width: 750px)");
-
-    const onEmailSubmit = () => {
-        console.log("SKICKA MAIL!");
-    };
 
     return (
         <BoujtTemplate gap={100}>

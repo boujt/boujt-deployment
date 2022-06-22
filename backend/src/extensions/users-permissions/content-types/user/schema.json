@@ -67,23 +67,19 @@
       "type": "string"
     },
     "profile_image": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ]
+      ],
+      "type": "media",
+      "multiple": false
     },
     "favorite_icecream": {
       "type": "string"
     },
     "favorite_animal": {
-      "type": "string"
-    },
-    "status": {
       "type": "string"
     }
   }

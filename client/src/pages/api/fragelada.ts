@@ -3,7 +3,8 @@
 import axios from "axios";
 import { profile } from "console";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { BlogPost, Fragelada } from "../../../utils/types";
+import { sendEmail } from "../../../utils/sendEmail";
+import { BlogPost, Fragelada, EmailData } from "../../../utils/types";
 const qs = require("qs");
 const sgMail = require("@sendgrid/mail");
 
@@ -36,9 +37,9 @@ export default async function handler(
             }
         );
 
-        const fragor: Fragelada[] = data.data.map((fraga) => {
+        const fragor: Fragelada[] = data.data.map((fraga: any) => {
             const cats = fraga.attributes.kategorier.data.map(
-                (cat) => cat.attributes.kategori
+                (cat: any) => cat.attributes.kategori
             );
             return {
                 id: fraga.id,
@@ -81,19 +82,20 @@ export default async function handler(
                     "%QUESTION%",
                     req.body.question
                 );
-                sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-
-                const msg = {
-                    to: "jakob.karlstrand@weknowit.nu", // Change to your recipient
-                    from: "boujt.videos@gmail.com", // Change to your verified sender
+                const email: EmailData = {
+                    to: "jakob.karlstrand@weknowit.nu",
                     subject: "Ny fråga i frågelådan",
                     html: formatted_html,
                 };
-                await sgMail.send(msg);
+
+                await sendEmail(email)
+                    .then((res) => {})
+                    .catch((er) => {});
             })
             .catch((err) => {
                 console.log(err.data.error);
                 res.status(500).json({ error: err });
+                return;
             });
         res.status(200).json({ message: "Question created" });
         return;

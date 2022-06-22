@@ -1,11 +1,12 @@
-import { Box } from "@chakra-ui/react";
+import { Box, useMediaQuery } from "@chakra-ui/react";
 import React from "react";
 import ReactPlayer from "react-player";
 import PanicImage from "../../public/images/Panikknapp.png";
 import { box_shadow_dark } from "../theme";
 
 const PanicButton: React.FC = () => {
-    return (
+    const [shouldHide] = useMediaQuery("(max-width: 900px)");
+    return shouldHide ? null : (
         <img
             onClick={() =>
                 (window.location.href = "https://www.filmstaden.se/")

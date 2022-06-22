@@ -180,7 +180,7 @@ export default function Chat() {
                         accepterat din förfrågan skickas du till ett chatrum
                     </Text>
                     <Box maxWidth={shouldBreak ? "100%" : "60%"}>
-                        <ResponsiveVideoPlayer url="http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1&origin=http://example.com" />
+                        <ResponsiveVideoPlayer url="https://youtu.be/fQ2jLE4fXAY" />
                     </Box>
                 </Flex>
                 <Flex
