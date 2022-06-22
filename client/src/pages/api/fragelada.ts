@@ -37,9 +37,9 @@ export default async function handler(
             }
         );
 
-        const fragor: Fragelada[] = data.data.map((fraga) => {
+        const fragor: Fragelada[] = data.data.map((fraga: any) => {
             const cats = fraga.attributes.kategorier.data.map(
-                (cat) => cat.attributes.kategori
+                (cat: any) => cat.attributes.kategori
             );
             return {
                 id: fraga.id,
