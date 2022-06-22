@@ -12,19 +12,19 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { CSSProperties, useEffect, useRef } from "react";
 import { FaStar, FaTv } from "react-icons/fa";
+import fist from "../../../public/images/fist.png";
 import hammer from "../../../public/images/hammer.png";
+import hands from "../../../public/images/hands.png";
 import hugging from "../../../public/images/hugging.png";
 import kidOnSwing from "../../../public/images/kid-on-swing.png";
-import hands from "../../../public/images/hands.png";
 import polis from "../../../public/images/polis.png";
-import fist from "../../../public/images/fist.png";
 import syssnare from "../../../public/images/syssnare.png";
-import Footer from "../../components/Footer";
+import { useData } from "../../../utils/fetchData";
+import { MovieData } from "../../../utils/types";
+import BoujtTemplate from "../../components/BoujtTemplate";
 import ImageCard from "../../components/ImageCard";
-import Navbar from "../../components/navbar";
 import Starfield from "../../components/Starfield";
 import StarfieldButton from "../../components/StarfieldButton";
-import BoujtTemplate from "../../components/BoujtTemplate";
 
 const background: CSSProperties = {
 	position: "absolute",
