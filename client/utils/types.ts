@@ -110,6 +110,16 @@ export type MovieData = {
     video_link: string;
 }
 
+export type ExternalLink = {
+	imageUrl: string;
+	link: string;
+	text: string;
+};
+
+export type FaStodData = {
+    externalLinks: ExternalLink[]
+}
+
 export type FetchDataResponse<T> = {
     data: T | undefined;
     isLoading: boolean;

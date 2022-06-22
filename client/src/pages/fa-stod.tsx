@@ -11,8 +11,10 @@ import {
 import { NextPage } from "next";
 import Image, { StaticImageData } from "next/image";
 import { useRouter } from "next/router";
-import { CSSProperties } from "react";
+import { CSSProperties, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
+import { useData } from "../../utils/fetchData";
+import { ExternalLink, FaStodData } from "../../utils/types";
 import BoujtTemplate from "../components/BoujtTemplate";
 import ResponsiveVideoPlayer from "../components/ResponsiveVideoPlayer";
 import Starfield from "../components/Starfield";
@@ -27,30 +29,6 @@ const background: CSSProperties = {
 	borderRadius: 8,
 	zIndex: -100,
 };
-
-type ExternalLink = {
-	imageUrl: string | StaticImageData;
-	link: string;
-	text: string;
-};
-
-const externalLinksMockData: ExternalLink[] = [
-	{
-		imageUrl: "https://www.unizonjourer.se/Assets/unizon-logga.png",
-		link: "www.sduf.se",
-		text: "Sveriges Dövas Ungdomsförbund erbjuder bland annat utbildningar, läger och möjligheter för dig som är ung att påverka i samhället. SDUF har nio anslutna ungdomsklubbar runtom i landet.",
-	},
-	{
-		imageUrl: "https://www.unizonjourer.se/Assets/unizon-logga.png",
-		link: "www.arvsfonden.se",
-		text: "Arvsfonden delar ut stöd till mer än 400 projekt över hela landet.",
-	},
-	{
-		imageUrl: "https://www.unizonjourer.se/Assets/unizon-logga.png",
-		link: "www.unizon.se",
-		text: "BRIS erbjuder stöd till barn och unga via webb och mobil.",
-	},
-];
 
 const WhiteTextContainer: React.FC<{ text: string }> = ({ text }) => {
 	return (
@@ -103,6 +81,8 @@ const ExternalLinkView: React.FC<{ externalLink: ExternalLink }> = ({
 
 const FaStod: NextPage = () => {
 	const [shouldBreak] = useMediaQuery("(max-width: 750px)");
+
+	const { data, error } = useData<FaStodData>("fa-stod");
 
 	const router = useRouter();
 
@@ -266,9 +246,12 @@ const FaStod: NextPage = () => {
 				</Heading>
 				<Flex flexDir={"column"} gap={"15px"}>
 					{/* MAP EACH EXTERNAL LINK TO EXTERNAL LINK VIEW */}
-					{externalLinksMockData.map((el, idx) => {
-						return <ExternalLinkView key={idx} externalLink={el} />;
-					})}
+					{data &&
+						data.externalLinks.map((el, idx) => {
+							return (
+								<ExternalLinkView key={idx} externalLink={el} />
+							);
+						})}
 				</Flex>
 			</Flex>
 		</BoujtTemplate>
