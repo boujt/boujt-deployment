@@ -4,8 +4,7 @@
   "info": {
     "singularName": "fragelada",
     "pluralName": "frageladas",
-    "displayName": "Frågelåda",
-    "description": ""
+    "displayName": "Frågelåda"
   },
   "options": {
     "draftAndPublish": true
@@ -22,11 +21,6 @@
       "type": "boolean",
       "default": false,
       "required": true
-    },
-    "kategorier": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::kategori.kategori"
     }
   }
 }
