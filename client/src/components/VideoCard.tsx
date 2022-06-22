@@ -1,12 +1,25 @@
 import { Button, Flex, Heading, Text, useMediaQuery } from "@chakra-ui/react";
-import { useState } from "react";
+import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { MovieData } from "../../utils/types";
+import ResponsiveVideoPlayer from "./ResponsiveVideoPlayer";
 import Video from "./Video";
 
 type Props = {
 	video: MovieData;
 	backgroundColor: string;
+};
+
+const MyCustomMarkDown: React.FC<{ children: string }> = ({ children }) => {
+	return (
+		<ReactMarkdown
+			components={{
+				p: ({ node, ...props }) => <Text {...props} color={"white"} />,
+			}}
+		>
+			{children}
+		</ReactMarkdown>
+	);
 };
 
 const VideoCard: React.FC<Props> = ({ video, backgroundColor }) => {
@@ -30,12 +43,17 @@ const VideoCard: React.FC<Props> = ({ video, backgroundColor }) => {
 			{/* MAIN CONTENT */}
 			<Flex gap={"25px"} flexDir={doBreak[0] ? "column" : "row"}>
 				{/* LEFT SIDE */}
-				<Flex flexDir={"column"} justifyContent={"center"} gap={"25px"}>
+				<Flex
+					flexDir={"column"}
+					justifyContent={"center"}
+					gap={"25px"}
+					flex={1}
+				>
 					{!showMore && (
 						<>
-							<ReactMarkdown>
-								{video.text.substring(0, 200) + "..."}
-							</ReactMarkdown>
+							<MyCustomMarkDown
+								children={video.text.substring(0, 200) + "..."}
+							/>
 							<Button
 								onClick={() => setShowMore(true)}
 								width={"40%"}
@@ -46,10 +64,10 @@ const VideoCard: React.FC<Props> = ({ video, backgroundColor }) => {
 							</Button>
 						</>
 					)}
-					{showMore && <ReactMarkdown>{video.text}</ReactMarkdown>}
+					{showMore && <MyCustomMarkDown children={video.text} />}
 				</Flex>
-				<Flex justifyContent={"center"}>
-					<Video height={200} width={400} url={video.video_link} />
+				<Flex justifyContent={"center"} flex={1} maxH={"220px"}>
+					<ResponsiveVideoPlayer url={video.video_link} />
 				</Flex>
 			</Flex>
 			{showMore && (
