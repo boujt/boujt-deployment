@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
 import ReactPlayer from "react-player";
-import PanicImage from "../../public/images/Panikknapp.svg";
+import PanicImage from "../../public/images/Panikknapp.png";
 import { box_shadow_dark } from "../theme";
 
 const PanicButton: React.FC = () => {

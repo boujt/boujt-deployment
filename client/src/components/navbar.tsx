@@ -23,28 +23,48 @@ import GomBesok from "../../public/tecken-video/gom_ditt_besok.gif";
 import OmOss from "../../public/tecken-video/om_oss.gif";
 import { VideoTooltip } from "./VideoTooltip";
 import { ROUTES } from "../../utils/constants";
-import { FaBars, FaHamburger, FaStar } from "react-icons/fa";
+import {
+    FaAddressCard,
+    FaBalanceScale,
+    FaBars,
+    FaEnvelope,
+    FaEyeSlash,
+    FaHamburger,
+    FaHeart,
+    FaQuestionCircle,
+    FaStar,
+} from "react-icons/fa";
 import { useState } from "react";
+import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 
 type NavbarItemProps = {
     text: string;
     route: string;
+    icon: ReactJSXElement;
 };
 
 const NavbarItem: NextPage<NavbarItemProps> = (props: NavbarItemProps) => {
     return (
         <Link href={props.route}>
-            <Text
-                cursor={"pointer"}
-                noOfLines={1}
-                marginTop={"auto"}
-                marginBottom={"auto"}
-                variant="link"
-                fontSize={{ base: "14px", md: "18px", lg: "23px" }}
-                padding={3}
+            <Flex
+                flexDirection={"column"}
+                alignItems="center"
+                justifyContent={"center"}
+                cursor="pointer"
             >
-                {props.text}
-            </Text>
+                {props.icon}
+                <Text
+                    cursor={"pointer"}
+                    noOfLines={1}
+                    marginTop={"auto"}
+                    marginBottom={"auto"}
+                    variant="link"
+                    fontSize={{ base: "10px", md: "13px", lg: "17px" }}
+                    padding={3}
+                >
+                    {props.text}
+                </Text>
+            </Flex>
         </Link>
     );
 };
@@ -184,33 +204,52 @@ const Navbar: NextPage<Props> = ({ transparent }) => {
             <Link href="/">
                 <Image
                     cursor={"pointer"}
-                    width={"171px"}
-                    height={"47px"}
-                    src="/images/icon.png"
+                    width={"auto"}
+                    height={"auto"}
+                    maxHeight="100px"
+                    src="/images/boujt_icon.png"
                     alt="boujt logo"
                 />
             </Link>
 
-            <Flex>
+            <Flex
+                alignItems={"center"}
+                justifyContent="space-between"
+                width={"60%"}
+            >
                 <VideoTooltip src={Kroppen.src}>
                     <NavbarItem
+                        icon={<FaBalanceScale size={"2rem"} color="yellow" />}
                         text="Känslor och rättigheter"
                         route="/kanslor-och-rattigheter"
                     />
                 </VideoTooltip>
 
                 <VideoTooltip src={Frageladan.src}>
-                    <NavbarItem text="Frågelådan" route={ROUTES.FRAGELADA} />
+                    <NavbarItem
+                        icon={<FaQuestionCircle size={"2rem"} color="yellow" />}
+                        text="Frågelådan"
+                        route={ROUTES.FRAGELADA}
+                    />
                 </VideoTooltip>
                 <VideoTooltip src={Stod.src}>
-                    <NavbarItem text="Få stöd" route={ROUTES.FA_STOD} />
+                    <NavbarItem
+                        icon={<FaHeart size={"2rem"} color="yellow" />}
+                        text="Få stöd"
+                        route={ROUTES.FA_STOD}
+                    />
                 </VideoTooltip>
                 <VideoTooltip src={OmOss.src}>
-                    <NavbarItem text="Om oss" route={ROUTES.OM_OSS} />
+                    <NavbarItem
+                        icon={<FaAddressCard size={"2rem"} color="yellow" />}
+                        text="Om oss"
+                        route={ROUTES.OM_OSS}
+                    />
                 </VideoTooltip>
 
                 <VideoTooltip src={Kontakt.src}>
                     <NavbarItem
+                        icon={<FaEnvelope size={"2rem"} color="yellow" />}
                         text="Kontakta oss"
                         route={ROUTES.KONTAKTA_OSS}
                     />
@@ -218,6 +257,7 @@ const Navbar: NextPage<Props> = ({ transparent }) => {
 
                 <VideoTooltip src={GomBesok.src}>
                     <NavbarItem
+                        icon={<FaEyeSlash size={"2rem"} color="yellow" />}
                         text="Göm ditt besök"
                         route={ROUTES.GOM_BESOK}
                     />

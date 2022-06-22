@@ -39,6 +39,7 @@ interface BoujtTemplateProps {
     maxW?: string;
     marginY?: string;
     strict?: boolean;
+    transparentHeader?: boolean;
 }
 
 const BoujtTemplate: React.FC<BoujtTemplateProps> = ({
@@ -47,10 +48,11 @@ const BoujtTemplate: React.FC<BoujtTemplateProps> = ({
     maxW = "4xl",
     marginY = "4rem",
     strict = true,
+    transparentHeader = false,
 }) => {
     return (
         <>
-            <Navbar />
+            <Navbar transparent={transparentHeader} />
             <PanicButton />
             <FloatingChatButton />
             {strict && (
