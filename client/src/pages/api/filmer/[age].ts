@@ -4,8 +4,9 @@ import { MovieData } from "../../../../utils/types";
 
 export default async (req: NextApiRequest, res: NextApiResponse<MovieData[]>) => {
     // We either want 7-14 data or 15-21 data, the split happends here
-    const { token } = req.query;
-    const endpoint = token == '7' ? 'sju-till-fjortons' : 'femton-till-tjugoetts';
+    const { age } = req.query;
+    console.log(age);
+    const endpoint = age == '7' ? 'sju-till-fjortons' : 'femton-till-tjugoetts';
 
     const { data } = await axios.get(
         `${process.env.STRAPI_API_BASE_URL}/api/${endpoint}?populate=*`

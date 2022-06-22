@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "externa_laenkars",
+  "info": {
+    "singularName": "externa-laenkar",
+    "pluralName": "externa-laenkars",
+    "displayName": "Externa Länkar"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "link": {
+      "type": "string",
+      "required": true
+    },
+    "text": {
+      "type": "text",
+      "required": true
+    },
+    "image": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    }
+  }
+}
