@@ -14,9 +14,12 @@ import { ROUTES } from "../../utils/constants";
 import { useData } from "../../utils/fetchData";
 import { BlogPost } from "../../utils/types";
 import BlogPreview from "../components/Blog/BlogPreview";
+import BoujtTemplate from "../components/BoujtTemplate";
 import CircleChart from "../components/CircleChart/CircleChart";
+import FloatingChatButton from "../components/FloatingChatButton";
 import Footer from "../components/Footer";
 import Navbar from "../components/navbar";
+import PanicButton from "../components/PanicButton";
 import Starfield from "../components/Starfield";
 
 const content: CSSProperties = {
@@ -182,8 +185,10 @@ const Home: NextPage = () => {
 
 	return (
 		<Box>
+			<FloatingChatButton />
 			<Box position={"relative"} height="100vh">
 				<Navbar transparent />
+				<PanicButton />
 				{/* FIRST SECTION AT THE TOP */}
 				<Container
 					// position={'relative'}
