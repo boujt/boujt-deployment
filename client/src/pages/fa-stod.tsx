@@ -147,7 +147,7 @@ const FaStod: NextPage = () => {
                     </Button>
                 </Flex>
                 <Flex minWidth={"50%"} flex={2} flexDir={"column"} gap={"20px"}>
-                    <ResponsiveVideoPlayer url="http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1&origin=http://example.com" />
+                    <ResponsiveVideoPlayer url="https://youtu.be/fQ2jLE4fXAY" />
 
                     <Button
                         justifySelf={"flex-end"}
@@ -204,7 +204,7 @@ const FaStod: NextPage = () => {
                         flexDir={"column"}
                         gap={"20px"}
                     >
-                        <ResponsiveVideoPlayer url="http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1&origin=http://example.com" />
+                        <ResponsiveVideoPlayer url="https://youtu.be/CCdoHcjAtYE" />
                     </Flex>
                 </Flex>
                 {/* RIGHT SIDE */}

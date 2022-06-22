@@ -47,6 +47,7 @@ export const ROUTES = {
     OM_OSS: "/om-oss",
     KROPPEN: "/kanslor-och-rattigheter",
     CHATTEN: "/chatten",
+    BLOGGEN: "/bloggen",
     STARTSIDA: "/",
     CHATROOM: (token: string) => `/chatt/${token}`,
 };

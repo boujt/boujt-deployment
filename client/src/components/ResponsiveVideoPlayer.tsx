@@ -1,5 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
+import { FaPlay } from "react-icons/fa";
 import ReactPlayer from "react-player";
 
 type Props = {
@@ -17,6 +18,19 @@ const ResponsiveVideoPlayer: React.FC<Props> = ({ url }) => {
             }}
         >
             <ReactPlayer
+                light
+                playing
+                playIcon={
+                    <div
+                        style={{
+                            borderRadius: "8px",
+                            backgroundColor: "black",
+                            padding: "1rem",
+                        }}
+                    >
+                        <FaPlay size={"2rem"} color="#00CCEE" />
+                    </div>
+                }
                 url={url}
                 className="react-player"
                 style={{
@@ -25,10 +39,10 @@ const ResponsiveVideoPlayer: React.FC<Props> = ({ url }) => {
                     position: "absolute",
                     top: 0,
                     left: 0,
+                    border: "1px solid #00CCEE",
                 }}
                 width="100%"
                 height="100%"
-                controls={true}
             />
         </div>
     );

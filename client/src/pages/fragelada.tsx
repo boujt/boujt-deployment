@@ -118,7 +118,7 @@ const Fragelada: NextPage = () => {
                         gärna oss när du har en fråga
                     </Text>
                     <Flex flex={2} flexDir={"column"} gap={"20px"}>
-                        <ResponsiveVideoPlayer url="http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1&origin=http://example.com" />
+                        <ResponsiveVideoPlayer url="https://youtu.be/f5E3kJ0C1hY" />
                     </Flex>
                 </Box>
                 <Box width={shouldBreak ? "50%" : "100%"}>
