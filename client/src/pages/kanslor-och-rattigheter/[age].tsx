@@ -150,6 +150,11 @@ const MainContent: React.FC = () => {
 		console.log("DONE ADJUSTING!");
 	}, [starfieldButtonsContainer, quizButtonContainer]);
 
+	// Navigate to the quiz page
+	const onQuiz = () => {
+		router.push("/quiz");
+	};
+
 	return (
 		<Box>
 			<Flex
@@ -216,6 +221,7 @@ const MainContent: React.FC = () => {
 					flexWrap={"wrap"}
 				>
 					<StarfieldButton
+						onClicked={onQuiz}
 						width={starfieldButtonWidth}
 						text={"Stjärnquizet"}
 						icon={FaStar}
