@@ -22,6 +22,7 @@ export default async function handler(
     const query = qs.stringify(
         {
             sort: ["publishedAt:desc"],
+            populate: ["kategorier"],
         },
         {
             encodeValuesOnly: true,
@@ -29,7 +30,12 @@ export default async function handler(
     );
     if (req.method === "GET") {
         const { data } = await axios.get(
-            `${process.env.STRAPI_API_BASE_URL}/api/frageladas?${query}&populate=*`
+            `${process.env.STRAPI_API_BASE_URL}/api/frageladas?${query}&populate=*`,
+            {
+                headers: {
+                    Authorization: `Bearer ${process.env.STRAPI_SERVICE_ACCOUNT_JWT}`,
+                },
+            }
         );
 
         const fragor: Fragelada[] = data.data.map((fraga: any) => {
