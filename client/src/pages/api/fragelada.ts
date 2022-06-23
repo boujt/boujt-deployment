@@ -15,7 +15,7 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    const query = qs.stringify(
+        const query = qs.stringify(
         {
             sort: ["publishedAt:desc"],
             populate: ["kategorier"],

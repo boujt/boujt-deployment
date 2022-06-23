@@ -64,7 +64,9 @@
       "configurable": false
     },
     "name": {
-      "type": "string"
+      "type": "string",
+      "required": true,
+      "default": "syssnarens namn"
     },
     "profile_image": {
       "type": "media",
@@ -84,7 +86,9 @@
       "type": "string"
     },
     "status": {
-      "type": "string"
+      "type": "string",
+      "required": true,
+      "default": "offline"
     }
   }
 }
