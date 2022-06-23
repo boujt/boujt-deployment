@@ -15,6 +15,8 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { useDaily } from "@daily-co/daily-react-hooks";
+import axios from "axios";
+import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import { FaComment, FaPaperclip, FaPaperPlane, FaVideo } from "react-icons/fa";
 import { BounceLoader, PuffLoader } from "react-spinners";
@@ -29,21 +31,42 @@ import { getColorFromStatus } from "./Adminpanel/SyssnareStatus";
 
 interface WaitForRequestProps {
   syssnare: Syssnare;
+  currentStatus: string;
   token: string;
 }
 
 export const WaitForRequest: React.FC<WaitForRequestProps> = ({
   syssnare,
   token,
+  currentStatus,
 }) => {
   const [url, setURL] = useState<string>("");
+  const router = useRouter();
+  const [requestDenied, setRequestDenied] = useState<boolean>(false);
+
+  console.log(currentStatus);
 
   useEffect(() => {
     const myInterval = setInterval(async function () {
+      if (url !== "") {
+        clearInterval(myInterval);
+      }
+      axios
+        .get(`/api/chat-request/${token}`)
+        .then()
+        .catch((er) => {
+          if (url === "") {
+            setRequestDenied(true);
+            clearInterval(myInterval);
+          }
+        });
       doGetChatRoomFromToken(token)
         .then((res) => {
-          console.log(res);
-          setURL(res.data.data.url);
+          if (res.data.room) {
+            console.log(res.data.room.attributes);
+            setURL(res.data.room.attributes.room_url);
+            clearInterval(myInterval);
+          }
         })
         .catch((er) => {
           console.log("No accepted yet");
@@ -52,8 +75,65 @@ export const WaitForRequest: React.FC<WaitForRequestProps> = ({
     return () => clearInterval(myInterval);
   }, []);
 
+  if (requestDenied) {
+    return (
+      <Flex
+        gap={5}
+        flexDirection={"column"}
+        alignItems="center"
+        justifyContent={"center"}
+      >
+        <Text>
+          {syssnare.name} har tyvärr har tyvärr nekat din förfrågan. Detta beror
+          troligtvis på att {syssnare.name} var tvungen att gå, eller så har
+          chatten stängt.
+        </Text>
+        <Text>
+          Om chatten fortfarande är öppen, försök gärna med en annan syssnare!
+        </Text>
+      </Flex>
+    );
+  }
+
+  if (url.trim() === "" && currentStatus !== SYSSNARE_STATUS.AVAILABLE) {
+    return (
+      <Flex
+        gap={5}
+        flexDirection={"column"}
+        alignItems="center"
+        justifyContent={"center"}
+      >
+        {currentStatus === SYSSNARE_STATUS.IN_CALL && (
+          <Text>
+            {syssnare.name} verkar tyvärr vara upptagen i ett annat samtal
+          </Text>
+        )}
+
+        {currentStatus !== SYSSNARE_STATUS.IN_CALL && (
+          <Text>{syssnare.name} verkar tyvärr ha gått offline</Text>
+        )}
+      </Flex>
+    );
+  }
+
   if (url.trim() !== "") {
-    return <Button>Gå till rum</Button>;
+    return (
+      <Flex
+        gap={5}
+        flexDirection={"column"}
+        alignItems="center"
+        justifyContent={"center"}
+      >
+        <Text>{syssnare.name} har accepterat din förfrågan!</Text>
+        <Button
+          onClick={() => router.push(`/chatt/${token}`)}
+          variant={"default"}
+          backgroundColor="yellow"
+        >
+          Gå till chattrummet
+        </Button>
+      </Flex>
+    );
   }
 
   return (
@@ -62,7 +142,7 @@ export const WaitForRequest: React.FC<WaitForRequestProps> = ({
       alignItems="center"
       flexDirection={"column"}
     >
-      <Text marginBottom={10} fontSize={30}>
+      <Text marginBottom={10} fontSize={20}>
         Inväntar svar från {syssnare?.name}
       </Text>
       <PuffLoader color="#00CCEE" speedMultiplier={0.6} />

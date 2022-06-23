@@ -18,6 +18,7 @@ import { ChatRequest } from "./ChatRequest";
 import { ProfileMenu } from "./ProfileMenu";
 import { SyssnareStatus } from "./SyssnareStatus";
 import { ListChatRequests } from "./ListChatRequests";
+import Link from "next/link";
 
 interface ChatRoomControllerProps {
   activeRoom: ChatRoom;
@@ -35,14 +36,9 @@ export const ChatRoomController: React.FC<ChatRoomControllerProps> = ({
   const [loading, setLoading] = useState<string>(LOADING_STATE.NONE);
 
   const handleCancelMeeting = () => {
-    console.log("DELETING-BEGIN");
     setLoading(LOADING_STATE.DELETING);
 
-    const data: DeleteChatRequest = {
-      strapi,
-      token: activeRoom?.token,
-    };
-    doDeleteChatRoom(data)
+    doDeleteChatRoom({ token: activeRoom?.token, strapi: strapi })
       .then((res) => {
         console.log("DELETING-END");
         setLoading(LOADING_STATE.NONE);
@@ -89,34 +85,20 @@ export const ChatRoomController: React.FC<ChatRoomControllerProps> = ({
         </Text>
 
         <Flex gap={5}>
-          {activeRoom.is_video ? (
-            <Button
-              variant={"adminPrimary"}
-              leftIcon={<FaVideo />}
-              as="a"
-              target="_blank"
-              href={activeRoom.room_url}
-            >
-              {loading === LOADING_STATE.ACCEPTING ? (
-                <Spinner />
-              ) : (
-                "Anslut till videomötet"
-              )}
-            </Button>
-          ) : (
-            <Button
-              variant={"adminPrimary"}
-              leftIcon={<FaComment />}
-              onClick={() => onChatEnter()}
-            >
-              {}
-              {loading === LOADING_STATE.ACCEPTING ? (
-                <Spinner />
-              ) : (
-                "Anslut till chatten"
-              )}
-            </Button>
-          )}
+          <Link href={`/chatt/${activeRoom.token}`}>
+            <a target="_blank" rel="noopener noreferrer">
+              <Button
+                variant={"adminPrimary"}
+                leftIcon={activeRoom.is_video ? <FaVideo /> : <FaComment />}
+              >
+                {loading === LOADING_STATE.ACCEPTING ? (
+                  <Spinner />
+                ) : (
+                  "Anslut till mötet"
+                )}
+              </Button>
+            </a>
+          </Link>
 
           <Button
             disabled={loading === LOADING_STATE.DELETING}

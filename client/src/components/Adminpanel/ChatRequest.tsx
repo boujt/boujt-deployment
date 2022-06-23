@@ -3,7 +3,10 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { FaComment, FaVideo } from "react-icons/fa";
 import { LOADING_STATE, SYSSNARE_STATUS } from "../../../utils/constants";
-import { CreateChatRequest, doCreateChatRoom } from "../../../utils/service";
+import {
+  CreateChatroomRequest,
+  doCreateChatRoom,
+} from "../../../utils/service";
 import { useStrapi } from "../../auth/auth";
 import { ProfileMenu } from "./ProfileMenu";
 import { SyssnareStatus } from "./SyssnareStatus";
@@ -34,8 +37,7 @@ export const ChatRequest: React.FC<ChatRequestProps> = ({
 
   const handleAccept = async () => {
     setLoading(LOADING_STATE.ACCEPTING);
-    const data: CreateChatRequest = {
-      strapi,
+    const data: CreateChatroomRequest = {
       is_video,
       token,
       syssnare: user.id,

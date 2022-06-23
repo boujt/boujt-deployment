@@ -8,26 +8,19 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
-    "video": {
-      "type": "media",
-      "multiple": true,
-      "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
     "text": {
       "type": "richtext"
     },
     "title": {
       "type": "string"
+    },
+    "video_link": {
+      "type": "string",
+      "required": true
     }
   }
 }

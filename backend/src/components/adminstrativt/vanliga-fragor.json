@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_adminstrativt_vanliga_fragors",
+  "info": {
+    "displayName": "Vanliga Frågor",
+    "icon": "bullhorn",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "question": {
+      "type": "string",
+      "required": true,
+      "default": "Ex. Fråga"
+    },
+    "answer": {
+      "type": "richtext",
+      "default": "Ex. Svar",
+      "required": true
+    }
+  }
+}

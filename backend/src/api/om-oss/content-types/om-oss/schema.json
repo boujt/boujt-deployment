@@ -8,15 +8,22 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
-    "kontaktinformation": {
-      "displayName": "Kontakt",
+    "workers": {
+      "displayName": "arbetare",
       "type": "component",
-      "repeatable": false,
-      "component": "information.kontakt"
+      "repeatable": true,
+      "component": "adminstrativt.arbetare",
+      "required": true
+    },
+    "faq": {
+      "type": "component",
+      "repeatable": true,
+      "component": "adminstrativt.vanliga-fragor",
+      "required": true
     }
   }
 }
