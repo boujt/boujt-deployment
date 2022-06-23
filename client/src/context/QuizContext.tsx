@@ -16,6 +16,8 @@ type QuizContextType = {
 	setCurrentQuestionIdx: Dispatch<SetStateAction<number>>;
 	answersMap: Map<string, string>;
 	setAnswersMap: Dispatch<SetStateAction<Map<string, string>>>;
+	doneWithQuiz: boolean;
+	setDoneWithQuiz: Dispatch<SetStateAction<boolean>>;
 };
 
 const QuizContext = createContext<QuizContextType>({
@@ -24,6 +26,8 @@ const QuizContext = createContext<QuizContextType>({
 	setCurrentQuestionIdx: () => {},
 	answersMap: new Map<string, string>(),
 	setAnswersMap: () => {},
+	doneWithQuiz: false,
+	setDoneWithQuiz: () => {},
 });
 
 const QuizProvider: React.FC<PropsWithChildren> = (props) => {
@@ -31,6 +35,7 @@ const QuizProvider: React.FC<PropsWithChildren> = (props) => {
 	const [currentQuestionIdx, setCurrentQuestionIdx] = useState(-1);
 	// question.prompt -> user answer
 	const [answersMap, setAnswersMap] = useState(new Map<string, string>());
+	const [doneWithQuiz, setDoneWithQuiz] = useState(false);
 
 	useEffect(() => {
 		if (!error) return;
@@ -47,6 +52,8 @@ const QuizProvider: React.FC<PropsWithChildren> = (props) => {
 				setCurrentQuestionIdx,
 				answersMap,
 				setAnswersMap,
+				doneWithQuiz,
+				setDoneWithQuiz,
 			}}
 		>
 			{props.children}

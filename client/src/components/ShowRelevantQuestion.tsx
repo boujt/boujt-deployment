@@ -25,6 +25,7 @@ const ShowRelevantQuestion: React.FC = () => {
 		setAnswersMap,
 		answersMap,
 		setCurrentQuestionIdx,
+		setDoneWithQuiz,
 	} = useContext(QuizContext);
 
 	const [pickIdx, setPickIdx] = useState(-1);
@@ -46,7 +47,7 @@ const ShowRelevantQuestion: React.FC = () => {
 	useEffect(() => {
 		// Are we on the last question?
 		if (currentQuestionIdx == quizData?.questions.length) {
-			console.log("Answers: ", answersMap);
+			setDoneWithQuiz(true);
 		}
 	}, [currentQuestionIdx]);
 
@@ -77,7 +78,7 @@ const ShowRelevantQuestion: React.FC = () => {
 							onClick={() => setPickIdx(idx)}
 							key={idx}
 							variant="default"
-							bgColor={pickIdx == idx ? "yellow" : "orange"}
+							bgColor={pickIdx == idx ? "white" : "orange"}
 							boxShadow={
 								pickIdx == idx ? selected_shadow : "none"
 							}

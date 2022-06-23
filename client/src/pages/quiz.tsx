@@ -2,13 +2,18 @@ import { Button, Flex, Heading, Text, useToast } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { useContext, useEffect } from "react";
 import BoujtTemplate from "../components/BoujtTemplate";
+import QuizResults from "../components/QuizResults";
 import ShowRelevantQuestion from "../components/ShowRelevantQuestion";
 import { QuizContext } from "../context/QuizContext";
 import { chakra_gradient } from "../theme";
 
 const Quiz: NextPage = () => {
-	const { currentQuestionIdx, setCurrentQuestionIdx, quizData } =
-		useContext(QuizContext);
+	const {
+		currentQuestionIdx,
+		setCurrentQuestionIdx,
+		quizData,
+		doneWithQuiz,
+	} = useContext(QuizContext);
 
 	const toast = useToast();
 
@@ -55,7 +60,7 @@ const Quiz: NextPage = () => {
 					<Text>VIDEO KOMMER SNART</Text>
 				</>
 			) : (
-				<ShowRelevantQuestion />
+				<>{doneWithQuiz ? <QuizResults /> : <ShowRelevantQuestion />}</>
 			)}
 		</BoujtTemplate>
 	);
