@@ -32,7 +32,7 @@ const Blog: NextPage = () => {
         );
     };
 
-    const post = useData<BlogPost>(`/posts/${pid}`);
+    const post = useData<BlogPost>(`posts/${pid}`);
     return (
         <BoujtTemplate strict={false}>
             {!post.isLoading && (

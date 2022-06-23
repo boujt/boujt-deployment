@@ -19,7 +19,7 @@ import { chakra_gradient } from "../../theme";
 const Blog: NextPage = () => {
     const [blogFilter, setBlogFilter] = useState<string>("");
 
-    const posts = useData<BlogPost[]>(`/posts`);
+    const posts = useData<BlogPost[]>(`posts`);
 
     // Later fetched from strapi backend
     const FILTER_OPTIONS = [
