@@ -1,19 +1,15 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
 import axios from "axios";
-import { profile } from "console";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { sendEmail } from "../../../utils/sendEmail";
-import { BlogPost, Fragelada, EmailData } from "../../../utils/types";
+import { EmailData, Fragelada } from "../../../utils/types";
 const qs = require("qs");
 const sgMail = require("@sendgrid/mail");
 
 var fs = require("fs");
 
-const html_template: string = require("fs").readFileSync(
-    "./public/fragelada_template.html",
-    "utf8"
-);
+import html_template from './fragelada_template';
 
 export default async function handler(
     req: NextApiRequest,
