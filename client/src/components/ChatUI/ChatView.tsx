@@ -254,6 +254,7 @@ export const ChatView: React.FC<ChatViewProps> = ({ room, displayName }) => {
                         user !== null ? window.close() : router.push("/")
                     }
                     color="white"
+                    disabled={false}
                     backgroundColor={"red"}
                     leftIcon={<FaPhoneSlash />}
                 >
