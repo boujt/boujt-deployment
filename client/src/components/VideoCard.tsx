@@ -64,7 +64,9 @@ const VideoCard: React.FC<Props> = ({ video, backgroundColor }) => {
 							</Button>
 						</>
 					)}
-					{showMore && <MyCustomMarkDown children={video.text} />}
+					{showMore && (
+						<MyCustomMarkDown>{video.text}</MyCustomMarkDown>
+					)}
 				</Flex>
 				<Flex justifyContent={"center"} flex={1} maxH={"220px"}>
 					<ResponsiveVideoPlayer url={video.video_link} />
