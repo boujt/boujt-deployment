@@ -110,6 +110,23 @@ export type MovieData = {
     video_link: string;
 }
 
+/*  QUIZ  */
+/*  TYPES */
+export type QuizData = {
+    questions: Question[]
+}
+
+export type Question = {
+    prompt: string,
+    options: Option[],
+    video_link?: string;
+}
+
+export type Option = {
+    prompt: string,
+    is_correct: boolean;
+}
+
 export type ExternalLink = {
 	imageUrl: string;
 	link: string;

@@ -4,7 +4,8 @@
   "info": {
     "singularName": "kategori",
     "pluralName": "kategoris",
-    "displayName": "Kategori"
+    "displayName": "Kategori",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -12,7 +13,9 @@
   "pluginOptions": {},
   "attributes": {
     "kategori": {
-      "type": "string"
+      "type": "string",
+      "required": true,
+      "default": "kategori namn"
     }
   }
 }
