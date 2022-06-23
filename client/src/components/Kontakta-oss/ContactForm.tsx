@@ -225,11 +225,9 @@ const ContactForm: React.FC = () => {
 
                         <Button
                             onClick={() => inputFile.current?.click()}
-                            variant="defualt"
+                            variant="information"
                             borderRadius={20}
                             mt={4}
-                            color="black"
-                            backgroundColor={"white"}
                             isDisabled={isSubmitting}
                             leftIcon={<FaPaperclip color="black" />}
                         >
