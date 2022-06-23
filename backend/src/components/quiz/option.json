@@ -2,13 +2,19 @@
   "collectionName": "components_quiz_options",
   "info": {
     "displayName": "Option",
-    "icon": "bars"
+    "icon": "bars",
+    "description": ""
   },
   "options": {},
   "attributes": {
     "prompt": {
       "type": "string",
       "default": "alternativ 1",
+      "required": true
+    },
+    "is_correct": {
+      "type": "boolean",
+      "default": false,
       "required": true
     }
   }
