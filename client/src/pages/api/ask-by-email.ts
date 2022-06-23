@@ -16,7 +16,7 @@ const sgMail = require("@sendgrid/mail");
 var fs = require("fs");
 
 const html_template: string = require("fs").readFileSync(
-    "public/kontakt_template.html",
+    "./public/kontakt_template.html",
     "utf8"
 );
 

@@ -11,7 +11,7 @@ const sgMail = require("@sendgrid/mail");
 var fs = require("fs");
 
 const html_template: string = require("fs").readFileSync(
-    "public/fragelada_template.html",
+    "./public/fragelada_template.html",
     "utf8"
 );
 
@@ -31,12 +31,12 @@ export default async function handler(
     console.log(query);
     if (req.method === "GET") {
         const { data } = await axios.get(
-            `${process.env.STRAPI_API_BASE_URL}/api/frageladas?${query}&populate=*`
-            // {
-            //     headers: {
-            //         Authorization: `Bearer ${process.env.STRAPI_SERVICE_ACCOUNT_JWT}`,
-            //     },
-            // }
+            `${process.env.STRAPI_API_BASE_URL}/api/frageladas?${query}&populate=*`,
+            {
+                headers: {
+                    Authorization: `Bearer ${process.env.STRAPI_SERVICE_ACCOUNT_JWT}`,
+                },
+            }
         );
 
         const fragor: Fragelada[] = data.data.map((fraga: any) => {
