@@ -104,6 +104,22 @@ export type BlogData = {
     videos: string[];
 };
 
+export type MovieData = {
+    title: string;
+    text: string;
+    video_link: string;
+}
+
+export type ExternalLink = {
+	imageUrl: string;
+	link: string;
+	text: string;
+};
+
+export type FaStodData = {
+    externalLinks: ExternalLink[]
+}
+
 export type FetchDataResponse<T> = {
     data: T | undefined;
     isLoading: boolean;
@@ -118,13 +134,6 @@ export type AImage = {
     imageUrl: string;
     width: number;
     height: number;
-};
-
-export type VaraFilmerItem = {
-    title: string;
-    description: string;
-    mainText: string;
-    videoUrl: string;
 };
 
 export type OpeningHours = {

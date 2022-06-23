@@ -29,12 +29,7 @@ export default async function handler(
     );
     if (req.method === "GET") {
         const { data } = await axios.get(
-            `${process.env.STRAPI_API_BASE_URL}/api/frageladas?${query}&populate=*`,
-            {
-                headers: {
-                    Authorization: `Bearer ${process.env.STRAPI_SERVICE_ACCOUNT_JWT}`,
-                },
-            }
+            `${process.env.STRAPI_API_BASE_URL}/api/frageladas?${query}&populate=*`
         );
 
         const fragor: Fragelada[] = data.data.map((fraga: any) => {

@@ -61,6 +61,7 @@ const NavbarItem: NextPage<NavbarItemProps> = (props: NavbarItemProps) => {
 					variant="link"
 					fontSize={{ base: "10px", md: "13px", lg: "17px" }}
 					padding={3}
+					overflow={"visible"}
 				>
 					{props.text}
 				</Text>
