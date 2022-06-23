@@ -68,7 +68,7 @@ export default async function handler(req, res) {
             return;
         } else if (req.method === "DELETE") {
             const rooms = await getRoom(token);
-            console.log("innan");
+
             if (rooms.data.data.length > 0) {
                 const room = rooms.data.data[0];
 
