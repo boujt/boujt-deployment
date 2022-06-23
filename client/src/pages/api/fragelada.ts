@@ -24,27 +24,33 @@ export default async function handler(
             encodeValuesOnly: true,
         }
     );
+    console.log(query);
     if (req.method === "GET") {
         const { data } = await axios.get(
-            `${process.env.STRAPI_API_BASE_URL}/api/frageladas?${query}&populate=*`,
-            {
-                headers: {
-                    Authorization: `Bearer ${process.env.STRAPI_SERVICE_ACCOUNT_JWT}`,
-                },
-            }
+            `${process.env.STRAPI_API_BASE_URL}/api/frageladas?${query}&populate=*`
+            // {
+            //     headers: {
+            //         Authorization: `Bearer ${process.env.STRAPI_SERVICE_ACCOUNT_JWT}`,
+            //     },
+            // }
         );
 
         const fragor: Fragelada[] = data.data.map((fraga: any) => {
-            const cats = fraga.attributes.kategorier.data.map(
-                (cat: any) => cat.attributes.kategori
-            );
+            let category = ["Övrigt"];
+            if (fraga.attributes.kategorier) {
+                const cats = fraga.attributes.kategorier.data.map(
+                    (cat: any) => cat.attributes.kategori
+                );
+                category = cats.length === 0 ? ["Övrigt"] : cats;
+            }
+
             return {
                 id: fraga.id,
                 published_at: fraga.attributes.publishedAt,
                 question: fraga.attributes.question,
                 answer: fraga.attributes.answer,
                 visible: fraga.attributes.visible,
-                categories: cats.length === 0 ? ["Övrigt"] : cats,
+                categories: category,
             };
         });
 
