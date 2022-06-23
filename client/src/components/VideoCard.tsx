@@ -51,9 +51,9 @@ const VideoCard: React.FC<Props> = ({ video, backgroundColor }) => {
 				>
 					{!showMore && (
 						<>
-							<MyCustomMarkDown
-								children={video.text.substring(0, 200) + "..."}
-							/>
+							<MyCustomMarkDown>
+								{video.text.substring(0, 200) + "..."}
+							</MyCustomMarkDown>
 							<Button
 								onClick={() => setShowMore(true)}
 								width={"40%"}
