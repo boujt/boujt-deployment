@@ -251,9 +251,7 @@ export const ChatView: React.FC<ChatViewProps> = ({ room, displayName }) => {
                 </Button>
                 <Button
                     onClick={() =>
-                        user !== null
-                            ? window.close()
-                            : (window.location.href = "http://localhost:3000/")
+                        user !== null ? window.close() : router.push("/")
                     }
                     color="white"
                     backgroundColor={"red"}
