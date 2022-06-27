@@ -46,6 +46,7 @@ export type Syssnare = {
     favorite_animal: string;
     favorite_icecream: string;
     img: string;
+    people_in_queue: number;
 };
 
 export type BlogPost = {
@@ -108,34 +109,34 @@ export type MovieData = {
     title: string;
     text: string;
     video_link: string;
-}
+};
 
 /*  QUIZ  */
 /*  TYPES */
 export type QuizData = {
-    questions: Question[]
-}
+    questions: Question[];
+};
 
 export type Question = {
-    prompt: string,
-    options: Option[],
+    prompt: string;
+    options: Option[];
     video_link?: string;
-}
+};
 
 export type Option = {
-    prompt: string,
+    prompt: string;
     is_correct: boolean;
-}
+};
 
 export type ExternalLink = {
-	imageUrl: string;
-	link: string;
-	text: string;
+    imageUrl: string;
+    link: string;
+    text: string;
 };
 
 export type FaStodData = {
-    externalLinks: ExternalLink[]
-}
+    externalLinks: ExternalLink[];
+};
 
 export type FetchDataResponse<T> = {
     data: T | undefined;

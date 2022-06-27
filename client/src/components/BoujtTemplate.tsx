@@ -1,10 +1,17 @@
-import { Container, Flex, Heading, Text } from "@chakra-ui/react";
+import {
+    ColorModeScript,
+    Container,
+    Flex,
+    Heading,
+    Text,
+} from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Map, Marker, Overlay } from "pigeon-maps";
 import Navbar from "./navbar";
 import Footer from "./Footer";
 import PanicButton from "./PanicButton";
 import FloatingChatButton from "./FloatingChatButton";
+import { theme } from "../theme";
 
 interface CustomContainerProps {
     children: JSX.Element[] | JSX.Element;

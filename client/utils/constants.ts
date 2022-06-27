@@ -23,6 +23,8 @@ export const MESSAGE_REQUEST = {
     RECIEVED: "request-recieved",
 };
 
+export const MAX_PEOPLE_IN_QUEUE = 5;
+
 export const SYSSNARE_STATUS = {
     IN_CALL: "in-call",
     AVAILABLE: "available",
@@ -39,6 +41,7 @@ export const ERRORS = {
     TOO_LARGE: "too-large",
     INVALID: "invalid",
     CANNOT_BE_EMPTY: "cant-be-empty",
+    QUEUE_IS_FULL: "queue-full",
 };
 
 export const FILESIZE_UPLOAD_LIMIT = 30000000;
@@ -55,4 +58,10 @@ export const ROUTES = {
     BLOGGEN: "/bloggen",
     STARTSIDA: "/",
     CHATROOM: (token: string) => `/chatt/${token}`,
+};
+
+export const ADMIN_ROUTES = {
+    CHATT: "chatt",
+    FORUM: "forum",
+    CALENDAR: "calendar",
 };
