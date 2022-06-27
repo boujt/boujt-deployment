@@ -2,6 +2,7 @@ import {
 	AspectRatioProps,
 	Box,
 	Center,
+	Container,
 	Flex,
 	Heading,
 	useBreakpointValue,
@@ -23,8 +24,10 @@ import { useData } from "../../../utils/fetchData";
 import { MovieData } from "../../../utils/types";
 import BoujtTemplate from "../../components/BoujtTemplate";
 import ImageCard from "../../components/ImageCard";
+import ResponsiveVideoPlayer from "../../components/ResponsiveVideoPlayer";
 import Starfield from "../../components/Starfield";
 import StarfieldButton from "../../components/StarfieldButton";
+import HorizontalScroll from "react-scroll-horizontal";
 
 const background: CSSProperties = {
 	position: "absolute",
@@ -116,6 +119,8 @@ const MainContent: React.FC = () => {
 	const redImageContainerProps: AspectRatioProps = {
 		alignSelf: "center",
 	};
+
+	const debug = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
 	const getHeadingImage = () => {
 		if (age == "15") {
@@ -257,8 +262,42 @@ const MainContent: React.FC = () => {
 					</Flex>
 				</Flex>
 			</Flex>
-			<Center>
+			<Center
+				flexDir={"column"}
+				gap={"25px"}
+				py={"50px"}
+				overflowX={"hidden"}
+			>
 				<Heading>Våra syssnare tipsar!</Heading>
+				{/* <Flex
+					overflowX={"scroll"}
+					whiteSpace={"nowrap"}
+					overflowY={"hidden"}
+					gap={"25px"}
+					width={"100%"}
+					scrollBehavior={"smooth"}
+					cursor={"grab"}
+				> */}
+				<HorizontalScroll
+					style={{
+						width: "100%",
+						height: "300px",
+					}}
+				>
+					{/* Video slide thingy, should be scrollable */}
+					{debug.map((_, idx) => (
+						<Box
+							key={idx}
+							mx={"25px"}
+							minW={"350px"}
+							height={"250px"}
+							display={"inline-block"}
+						>
+							<ResponsiveVideoPlayer url="https://www.youtube.com/watch?v=jTmFW1J-KLc" />
+						</Box>
+					))}
+				</HorizontalScroll>
+				{/* </Flex> */}
 			</Center>
 		</Box>
 	);
