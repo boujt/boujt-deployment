@@ -61,7 +61,9 @@ const ShowRelevantQuestion: React.FC = () => {
 				<Text fontSize={"xl"} fontWeight={"bold"}>
 					{currentQuestion?.prompt}
 				</Text>
-				<ResponsiveVideoPlayer url="https://www.youtube.com/watch?v=lpcpsCY4Mco" />
+				{currentQuestion?.video_link && (
+					<ResponsiveVideoPlayer url={currentQuestion.video_link} />
+				)}
 			</Flex>
 			{/* RIGHT */}
 			<Flex

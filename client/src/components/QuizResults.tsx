@@ -79,6 +79,7 @@ const QuizResults: React.FC = () => {
 						chatta, mejla eller ställa en fråga i frågelådan! Kramar
 						från BOUJT!
 					</Text>
+					{/* TODO: CORRECT VIDEO */}
 					<ResponsiveVideoPlayer url="https://www.youtube.com/watch?v=lpcpsCY4Mco" />
 				</Flex>
 				{/* RIGHT */}
