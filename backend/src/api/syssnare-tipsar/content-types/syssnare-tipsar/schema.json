@@ -1,0 +1,19 @@
+{
+  "kind": "collectionType",
+  "collectionName": "syssnare_tipsars",
+  "info": {
+    "singularName": "syssnare-tipsar",
+    "pluralName": "syssnare-tipsars",
+    "displayName": "Syssnare Tipsar"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "video_link": {
+      "type": "string",
+      "required": true
+    }
+  }
+}
