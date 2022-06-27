@@ -18,6 +18,7 @@ type QuizContextType = {
 	setAnswersMap: Dispatch<SetStateAction<Map<string, string>>>;
 	doneWithQuiz: boolean;
 	setDoneWithQuiz: Dispatch<SetStateAction<boolean>>;
+	resetQuizForUser: () => void;
 };
 
 const QuizContext = createContext<QuizContextType>({
@@ -28,6 +29,7 @@ const QuizContext = createContext<QuizContextType>({
 	setAnswersMap: () => {},
 	doneWithQuiz: false,
 	setDoneWithQuiz: () => {},
+	resetQuizForUser: () => {},
 });
 
 const QuizProvider: React.FC<PropsWithChildren> = (props) => {
@@ -44,6 +46,12 @@ const QuizProvider: React.FC<PropsWithChildren> = (props) => {
 		console.log("QUIZ CONTEXT ERROR: ", error);
 	}, [error]);
 
+	const resetQuizForUser = () => {
+		setAnswersMap(new Map<string, string>());
+		setCurrentQuestionIdx(-1);
+		setDoneWithQuiz(false);
+	};
+
 	return (
 		<QuizContext.Provider
 			value={{
@@ -54,6 +62,7 @@ const QuizProvider: React.FC<PropsWithChildren> = (props) => {
 				setAnswersMap,
 				doneWithQuiz,
 				setDoneWithQuiz,
+				resetQuizForUser,
 			}}
 		>
 			{props.children}

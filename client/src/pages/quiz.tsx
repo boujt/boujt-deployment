@@ -36,7 +36,12 @@ const Quiz: NextPage = () => {
 			{/* Have we started the quiz? */}
 			{currentQuestionIdx == -1 ? (
 				<>
-					<Flex flexDir={"column"} alignItems={"center"} gap={"25px"}>
+					<Flex
+						flexDir={"column"}
+						alignItems={"center"}
+						gap={"25px"}
+						flex={1}
+					>
 						<Heading bgGradient={chakra_gradient} bgClip={"text"}>
 							Stjärnquizet
 						</Heading>
@@ -62,6 +67,7 @@ const Quiz: NextPage = () => {
 			) : (
 				<>{doneWithQuiz ? <QuizResults /> : <ShowRelevantQuestion />}</>
 			)}
+			<Flex flex={1} />
 		</BoujtTemplate>
 	);
 };
