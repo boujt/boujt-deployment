@@ -49,6 +49,15 @@ export type Syssnare = {
     people_in_queue: number;
 };
 
+export type Event = {
+    title: string;
+    text: string;
+    when: string;
+    start?: string;
+    end?: string;
+    whole_day: boolean;
+};
+
 export type ForumComment = {
     id: number;
     syssnare: Syssnare;
@@ -156,7 +165,7 @@ export type FaStodData = {
 
 export type SyssnareTipsarData = {
     video_link: string;
-}
+};
 
 export type FetchDataResponse<T> = {
     data: T | undefined;

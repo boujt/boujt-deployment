@@ -65,7 +65,7 @@ export default function AdminSidebar({
 }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     return (
-        <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
+        <Box minH="100vh" bg={"#f2f7fc"}>
             <SidebarContent
                 setPage={setPage}
                 currentPage={currentPage}
@@ -179,7 +179,7 @@ const SidebarContent = ({
                     onClick={() => setPage(ADMIN_ROUTES.CALENDAR)}
                     icon={FiCalendar}
                 >
-                    Kalender
+                    Events
                 </NavItem>
                 <NavItem
                     backgroundColor={

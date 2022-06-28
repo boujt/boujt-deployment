@@ -84,7 +84,7 @@ export const ChatRequest: React.FC<ChatRequestProps> = ({
                 <Flex gap={2}>
                     <Button
                         onClick={() => handleAccept()}
-                        colorScheme={"linkedin"}
+                        variant="adminPrimary"
                         disabled={loading !== LOADING_STATE.NONE}
                     >
                         {" "}
@@ -109,57 +109,5 @@ export const ChatRequest: React.FC<ChatRequestProps> = ({
                 </Flex>
             </Td>
         </Tr>
-    );
-
-    return (
-        <Flex
-            justifyContent={"space-between"}
-            flexDirection="row"
-            border="1px solid gray"
-            paddingTop={5}
-            paddingBottom={5}
-            paddingRight="6"
-            borderRadius={7}
-        >
-            <Flex justifyContent="center" alignItems="center" width={"30%"}>
-                {is_video ? (
-                    <FaVideo color="black" size={"30"} />
-                ) : (
-                    <FaComment color="black" size={"30"} />
-                )}
-            </Flex>
-            <Flex width={250} flexDirection={"column"}>
-                <Flex justifyContent={"space-between"} marginBottom="4">
-                    <Text fontSize={"20"}>
-                        {is_video ? "Videochatt" : "Textchatt"}
-                    </Text>
-                    <Text>{millisToMinutesAndSeconds(time)}</Text>
-                </Flex>
-                <Flex justifyContent={"space-between"}>
-                    <Button
-                        onClick={() => handleAccept()}
-                        colorScheme={"blue"}
-                        variant={"solid"}
-                        disabled={loading !== LOADING_STATE.NONE || disabled}
-                    >
-                        {loading === LOADING_STATE.ACCEPTING ? (
-                            <Spinner />
-                        ) : (
-                            "Godkänn"
-                        )}
-                    </Button>
-                    <Button
-                        disabled={loading !== LOADING_STATE.NONE || disabled}
-                        onClick={() => handleDecline()}
-                    >
-                        {loading === LOADING_STATE.DELETING ? (
-                            <Spinner />
-                        ) : (
-                            "Neka"
-                        )}
-                    </Button>
-                </Flex>
-            </Flex>
-        </Flex>
     );
 };

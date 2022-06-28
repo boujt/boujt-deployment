@@ -86,8 +86,7 @@ const ForumPostView: React.FC<ForumPostProps> = ({ post, onPostComment }) => {
                         />
                         <Button
                             onClick={() => submitComment()}
-                            color="white"
-                            backgroundColor={"#00CCEE"}
+                            variant="adminPrimary"
                             disabled={isSubmitting}
                         >
                             {isSubmitting ? <Spinner /> : "Kommentera"}

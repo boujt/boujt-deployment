@@ -9,6 +9,7 @@ import "../style/videotooltip.scss";
 import "../style/global.scss";
 import PanicButton from "../components/PanicButton";
 import { QuizProvider } from "../context/QuizContext";
+import "../style/events.scss";
 
 function MyApp({ Component, pageProps }: AppProps) {
     const [co, setCo] = useState();

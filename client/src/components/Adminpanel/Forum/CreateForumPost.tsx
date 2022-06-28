@@ -103,8 +103,7 @@ export const CreateForumPost: React.FC<CreateForumPostProps> = ({
                             placeholder="Skriv ditt inlägg här"
                         />
                         <Button
-                            backgroundColor={"turquoise"}
-                            color="white"
+                            variant={"adminPrimary"}
                             onClick={() => handleSubmit()}
                             disabled={isSubmitting}
                         >
