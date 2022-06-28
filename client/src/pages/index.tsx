@@ -10,6 +10,7 @@ import {
 import { CSSProperties } from "@emotion/serialize";
 import type { NextPage } from "next";
 import { Router, useRouter } from "next/router";
+import { FaComment } from "react-icons/fa";
 import { ROUTES } from "../../utils/constants";
 import { useData } from "../../utils/fetchData";
 import { BlogPost } from "../../utils/types";
@@ -237,8 +238,9 @@ const Home: NextPage = () => {
                                 height="45px"
                                 variant={"default"}
                                 onClick={() => router.push(ROUTES.CHATTEN)}
+                                leftIcon={<FaComment />}
                             >
-                                <Text>Ta mig dit</Text>
+                                <Text>Till Chatten</Text>
                             </Button>
                             <Button
                                 mx={"5px"}

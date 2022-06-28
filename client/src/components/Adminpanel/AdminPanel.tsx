@@ -1,4 +1,4 @@
-import { Button, Flex, Text } from "@chakra-ui/react";
+import { Button, Center, Flex, Text } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import { FaBan, FaWifi } from "react-icons/fa";
 import { DAILY_MEETING_BASE_URL } from "../../../utils/constants";
@@ -27,7 +27,7 @@ export const AdminPanel: React.FC = () => {
     };
 
     return (
-        <div>
+        <Center height={"100%"}>
             <Flex
                 flexDirection={"row"}
                 justifyContent={"space-between"}
@@ -86,6 +86,6 @@ export const AdminPanel: React.FC = () => {
                     )}
                 </Flex>
             </Flex>
-        </div>
+        </Center>
     );
 };

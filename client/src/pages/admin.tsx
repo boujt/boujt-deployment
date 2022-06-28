@@ -5,6 +5,7 @@ import { ADMIN_ROUTES } from "../../utils/constants";
 import { useStrapi } from "../auth/auth";
 import { AdminPanel } from "../components/Adminpanel/AdminPanel";
 import AdminSidebar from "../components/Adminpanel/AdminSidebar";
+import { Forum } from "../components/Adminpanel/Forum/Forum";
 import LoginForm from "../components/LoginForm";
 export default function Admin() {
     const { strapi, user, logout, loading } = useStrapi();
@@ -30,7 +31,7 @@ export default function Admin() {
                 >
                     {selectedPage === ADMIN_ROUTES.CHATT && <AdminPanel />}
 
-                    {selectedPage === ADMIN_ROUTES.FORUM && <Text>Forum</Text>}
+                    {selectedPage === ADMIN_ROUTES.FORUM && <Forum />}
                     {selectedPage === ADMIN_ROUTES.CALENDAR && (
                         <Text>Calendar</Text>
                     )}

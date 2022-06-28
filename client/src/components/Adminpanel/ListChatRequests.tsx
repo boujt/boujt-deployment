@@ -88,9 +88,10 @@ export const ListChatRequests: React.FC<ListChatRequestsProps> = ({
             <Flex
                 flexDirection={"column"}
                 borderRadius={8}
-                boxShadow="0px 0px 120px -65px #0000006e"
+                boxShadow="0px 0px 120px -45px #0000006e"
+                height={"100%"}
             >
-                <TableContainer>
+                <TableContainer height={"100%"}>
                     <Table variant="striped" colorScheme="linkedin">
                         <Thead>
                             <Tr>
@@ -127,7 +128,8 @@ export const ListChatRequests: React.FC<ListChatRequestsProps> = ({
                     justifyContent={"center"}
                     alignItems="center"
                     flexDirection="column"
-                    py={5}
+                    paddingBottom={0}
+                    height="70%"
                 >
                     <PuffLoader
                         color="#00CCEE"

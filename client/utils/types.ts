@@ -49,6 +49,22 @@ export type Syssnare = {
     people_in_queue: number;
 };
 
+export type ForumComment = {
+    id: number;
+    syssnare: Syssnare;
+    text: string;
+    created_at: string;
+};
+
+export type ForumPost = {
+    id: number;
+    title: string;
+    text: string;
+    created_at: string;
+    syssnare: Syssnare;
+    comments: ForumComment[];
+};
+
 export type BlogPost = {
     id: number;
     published_at: string;
