@@ -35,12 +35,16 @@ import { ChatRequest } from "../ChatRequest";
 import { CreateForumPost } from "./CreateForumPost";
 import ForumPostView from "./ForumPostView";
 import ForumPreview from "./ForumPreview";
+import { UpdateForumPost } from "./UpdateForumPost";
 
 interface ForumProps {}
 
 export const Forum: React.FC<ForumProps> = ({}) => {
     const { strapi, user } = useStrapi();
     const [selectedPost, setSelectedPost] = useState<ForumPost | null>(null);
+    const [selectedEditPost, setSelectedEditPost] = useState<ForumPost | null>(
+        null
+    );
     const [openCreatePost, setOpenCreatePost] = useState<boolean>(false);
     const [allPosts, setAllPosts] = useState<ForumPost[]>([]);
 
@@ -53,12 +57,15 @@ export const Forum: React.FC<ForumProps> = ({}) => {
         img: "aowkdoawd.png",
         people_in_queue: 2,
     };
-
+    console.log(allPosts);
     const getAllPosts = () => {
         axios
-            .get("http://localhost:1337/api/forums?populate=*")
+            .get(
+                "http://localhost:1337/api/forums?_sort=createdAt:ASC&populate=*"
+            )
             .then((res) => {
                 const posts = res.data.data;
+                console.log(posts);
                 setAllPosts(
                     posts.map((post) => {
                         const p: ForumPost = {
@@ -97,10 +104,14 @@ export const Forum: React.FC<ForumProps> = ({}) => {
 
     const onClosePost = () => {
         setSelectedPost(null);
+        setSelectedEditPost(null);
     };
 
     const onSelectPost = (post: ForumPost) => {
         setSelectedPost(post);
+    };
+    const onSelectEditPost = (post: ForumPost) => {
+        setSelectedEditPost(post);
     };
 
     return (
@@ -110,6 +121,17 @@ export const Forum: React.FC<ForumProps> = ({}) => {
                     onClose={() => setOpenCreatePost(false)}
                     open={openCreatePost}
                     onSubmit={() => setOpenCreatePost(false)}
+                />
+            )}
+            {selectedEditPost && (
+                <UpdateForumPost
+                    onClose={() => setSelectedEditPost(null)}
+                    open={selectedEditPost !== null}
+                    onSubmit={() => {
+                        getAllPosts();
+                        setSelectedEditPost(null);
+                    }}
+                    post={selectedEditPost}
                 />
             )}
             {selectedPost !== null && (
@@ -150,6 +172,9 @@ export const Forum: React.FC<ForumProps> = ({}) => {
                 {allPosts.map((post) => {
                     return (
                         <ForumPreview
+                            onDelete={() => getAllPosts()}
+                            key={post.id}
+                            onSelectEdit={(p: ForumPost) => onSelectEditPost(p)}
                             onSelect={(p: ForumPost) => onSelectPost(p)}
                             post={post}
                         />

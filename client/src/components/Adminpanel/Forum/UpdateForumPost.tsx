@@ -34,19 +34,24 @@ import { ChatRequest } from "../ChatRequest";
 import ForumPostView from "./ForumPostView";
 import ForumPreview from "./ForumPreview";
 
-interface CreateForumPostProps {
+interface UpdateForumPostProps {
     open: boolean;
     onClose: Function;
     onSubmit?: Function;
+    post: ForumPost;
 }
 
-export const CreateForumPost: React.FC<CreateForumPostProps> = ({
+export const UpdateForumPost: React.FC<UpdateForumPostProps> = ({
     open,
     onClose,
     onSubmit,
+    post,
 }) => {
     const { strapi, user } = useStrapi();
-    const [formData, setFormData] = useState({ title: "", text: "" });
+    const [formData, setFormData] = useState({
+        title: post.title,
+        text: post.text,
+    });
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const toast = useToast();
 
@@ -56,18 +61,18 @@ export const CreateForumPost: React.FC<CreateForumPostProps> = ({
         if (formData.title.trim() === "" || formData.text.trim() === "") return;
         const ID_SYS = 1;
         setIsSubmitting(true);
+        //TODO : CHANGE TO STRAPI SDK
         axios
-            .post("http://localhost:1337/api/forums", {
+            .put(`http://localhost:1337/api/forums/${post.id}`, {
                 data: {
                     title: formData.title,
                     text: formData.text,
-                    syssnare: ID_SYS,
                 },
             })
             .then((res) => {
                 toast({
-                    title: "Inlägg skapat!",
-                    description: "Ditt inlägg har publicerats",
+                    title: "Inlägget är uppdaterat!",
+                    description: "Ditt inlägg har uppdaterats",
                     status: "success",
                     duration: 5000,
                     isClosable: true,
@@ -93,7 +98,7 @@ export const CreateForumPost: React.FC<CreateForumPostProps> = ({
                 <ModalBody borderRadius={8} backgroundColor={"white"} py={5}>
                     <Flex flexDirection={"column"} gap={5}>
                         <Text fontSize={20} fontWeight={800}>
-                            Skapa nytt inlägg
+                            Uppdatera inlägg
                         </Text>
                         <Input
                             value={formData.title}
@@ -119,7 +124,7 @@ export const CreateForumPost: React.FC<CreateForumPostProps> = ({
                             onClick={() => handleSubmit()}
                             disabled={isSubmitting}
                         >
-                            {!isSubmitting ? "Publicera" : <Spinner />}
+                            {!isSubmitting ? "Uppdatera" : <Spinner />}
                         </Button>
                     </Flex>
                 </ModalBody>

@@ -9,13 +9,13 @@ const sgMail = require("@sendgrid/mail");
 
 var fs = require("fs");
 
-import html_template from './fragelada_template';
+import html_template from "./fragelada_template";
 
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-        const query = qs.stringify(
+    const query = qs.stringify(
         {
             sort: ["publishedAt:desc"],
             populate: ["kategorier"],
@@ -24,6 +24,7 @@ export default async function handler(
             encodeValuesOnly: true,
         }
     );
+
     console.log(query);
     if (req.method === "GET") {
         const { data } = await axios.get(

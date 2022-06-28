@@ -1,26 +1,72 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
-import { FaCalendar, FaComment, FaUser } from "react-icons/fa";
+import {
+    Box,
+    Button,
+    Flex,
+    Icon,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuList,
+    Text,
+} from "@chakra-ui/react";
+import axios from "axios";
+import { userInfo } from "os";
+import {
+    FaCalendar,
+    FaComment,
+    FaEdit,
+    FaEllipsisV,
+    FaTrash,
+    FaUser,
+} from "react-icons/fa";
 import { ForumPost } from "../../../../utils/types";
+import { useStrapi } from "../../../auth/auth";
 
 interface ForumPreviewProps {
     post: ForumPost;
     onSelect: Function;
+    onSelectEdit: Function;
+    onDelete?: Function;
 }
 
-const ForumPreview: React.FC<ForumPreviewProps> = ({ post, onSelect }) => {
+const ForumPreview: React.FC<ForumPreviewProps> = ({
+    post,
+    onSelect,
+    onSelectEdit,
+    onDelete,
+}) => {
+    const { user, strapi } = useStrapi();
+
+    const deletePost = () => {
+        // TODO : CHANGE TO STRAPI SDK
+        if (
+            post.syssnare.id === user?.id ||
+            confirm("Vill du ta bort inlägget?")
+        ) {
+            axios
+                .delete(`http://localhost:1337/api/forums/${post.id}`)
+                .then((res) => {
+                    if (onDelete) onDelete();
+                })
+                .catch((er) => {
+                    console.error(er);
+                });
+        }
+    };
     return (
         <Flex
             cursor={"pointer"}
             backgroundColor={"white"}
             borderRadius={8}
+            justifyContent="space-between"
             boxShadow="0px 4px 100px -30px #00000040"
             padding={6}
-            onClick={() => onSelect(post)}
+            maxWidth={"100%"}
         >
-            <Flex flexDirection={"column"}>
+            <Flex flexDirection={"column"} onClick={() => onSelect(post)}>
                 <Box>
                     <Text fontWeight={800}>{post.title}</Text>
-                    <Text maxWidth={"70%"}>
+                    <Text maxWidth={"90%"}>
                         {post.text.slice(0, 70)}{" "}
                         {post.text.length > 70 && "..."}
                     </Text>
@@ -40,6 +86,28 @@ const ForumPreview: React.FC<ForumPreviewProps> = ({ post, onSelect }) => {
                     </Flex>
                 </Flex>
             </Flex>
+            {post.syssnare.id === user?.id ||
+                (true && (
+                    <Menu>
+                        <MenuButton as={Button}>
+                            <FaEllipsisV />
+                        </MenuButton>
+                        <MenuList>
+                            <MenuItem
+                                onClick={() => deletePost()}
+                                icon={<FaTrash color="red" />}
+                            >
+                                Ta bort
+                            </MenuItem>
+                            <MenuItem
+                                onClick={() => onSelectEdit(post)}
+                                icon={<FaEdit />}
+                            >
+                                Redigera
+                            </MenuItem>
+                        </MenuList>
+                    </Menu>
+                ))}
         </Flex>
     );
 };
