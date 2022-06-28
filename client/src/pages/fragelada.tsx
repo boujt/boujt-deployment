@@ -14,6 +14,7 @@ import {
     useToast,
 } from "@chakra-ui/react";
 import { NextPage } from "next";
+import Head from "next/head";
 import { CSSProperties, useState } from "react";
 import { useData } from "../../utils/fetchData";
 import { doSubmitQuestionToFragelada } from "../../utils/service";
@@ -87,6 +88,13 @@ const Fragelada: NextPage = () => {
 
     return (
         <BoujtTemplate gap={100}>
+            <Head>
+                <title>Frågelådan</title>
+                <meta
+                    name="viewport"
+                    content="initial-scale=1.0, width=device-width"
+                />
+            </Head>
             <Heading>Frågelåda</Heading>
             <Flex gap={20} flexDirection={shouldBreak ? "row" : "column"}>
                 <Box

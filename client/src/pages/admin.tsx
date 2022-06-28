@@ -1,4 +1,5 @@
 import { Flex, Spinner, Text } from "@chakra-ui/react";
+import Head from "next/head";
 import React, { useState } from "react";
 import Strapi from "strapi-sdk-js";
 import { ADMIN_ROUTES } from "../../utils/constants";
@@ -24,6 +25,13 @@ export default function Admin() {
     }
     return (
         <div>
+            <Head>
+                <title>Adminpanelen</title>
+                <meta
+                    name="viewport"
+                    content="initial-scale=1.0, width=device-width"
+                />
+            </Head>
             {!user && <LoginForm />}
             {user && (
                 <AdminSidebar

@@ -9,6 +9,7 @@ import {
     Text,
 } from "@chakra-ui/react";
 import { NextPage } from "next";
+import Head from "next/head";
 import React, { SyntheticEvent, useState } from "react";
 import { useData } from "../../../utils/fetchData";
 import { BlogPost } from "../../../utils/types";
@@ -35,6 +36,13 @@ const Blog: NextPage = () => {
 
     return (
         <BoujtTemplate maxW={"6xl"} gap={25}>
+            <Head>
+                <title>Bloggen</title>
+                <meta
+                    name="viewport"
+                    content="initial-scale=1.0, width=device-width"
+                />
+            </Head>
             {/* <Navbar/> */}
             {/* TOP SECTION */}
             <Flex

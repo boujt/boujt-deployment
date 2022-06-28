@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { NextPage } from "next";
+import Head from "next/head";
 import { CSSProperties, useEffect, useState } from "react";
 import { FaEnvelope, FaMapPin } from "react-icons/fa";
 import { useData } from "../../utils/fetchData";
@@ -46,6 +47,13 @@ const KontaktaOss: NextPage = () => {
 
     return (
         <BoujtTemplate gap={100}>
+            <Head>
+                <title>Kontakta oss</title>
+                <meta
+                    name="viewport"
+                    content="initial-scale=1.0, width=device-width"
+                />
+            </Head>
             <Heading
                 textAlign={"center"}
                 bgGradient={chakra_gradient}
