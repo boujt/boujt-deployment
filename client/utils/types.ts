@@ -49,15 +49,6 @@ export type Syssnare = {
     people_in_queue: number;
 };
 
-export type Event = {
-    title: string;
-    text: string;
-    when: string;
-    start?: string;
-    end?: string;
-    whole_day: boolean;
-};
-
 export type ForumComment = {
     id: number;
     syssnare: Syssnare;
@@ -135,6 +126,20 @@ export type MovieData = {
     text: string;
     video_link: string;
 };
+
+export type Event = {
+    title: string;
+    text: string;
+    when: string;
+    start?: string;
+    end?: string;
+    whole_day: boolean;
+};
+
+// Response from API
+export type EventData = {
+    events: Event[];
+}
 
 /*  QUIZ  */
 /*  TYPES */
