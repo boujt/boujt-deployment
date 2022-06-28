@@ -134,9 +134,8 @@ export const Forum: React.FC<ForumProps> = ({}) => {
                     </Text>
                     <Button
                         onClick={() => setOpenCreatePost(true)}
-                        backgroundColor={"turquoise"}
+                        variant="adminPrimary"
                         leftIcon={<FaPlus color="white" />}
-                        color="white"
                     >
                         Skapa inlägg
                     </Button>
