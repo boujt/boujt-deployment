@@ -154,6 +154,10 @@ export type FaStodData = {
     externalLinks: ExternalLink[];
 };
 
+export type SyssnareTipsarData = {
+    video_link: string;
+}
+
 export type FetchDataResponse<T> = {
     data: T | undefined;
     isLoading: boolean;
