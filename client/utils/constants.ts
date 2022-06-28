@@ -42,6 +42,7 @@ export const ERRORS = {
     INVALID: "invalid",
     CANNOT_BE_EMPTY: "cant-be-empty",
     QUEUE_IS_FULL: "queue-full",
+    WRONG_FORMAT: "wrong-format",
 };
 
 export const FILESIZE_UPLOAD_LIMIT = 30000000;

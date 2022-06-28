@@ -39,8 +39,7 @@ type FormData = {
     description: string;
 };
 type FormDataError = {
-    start_time?: string;
-    end_time?: string;
+    time?: string;
     whole_day?: boolean;
     title?: string;
     description?: string;
@@ -92,29 +91,31 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
     console.log(eventsTheSameDay);
 
     const validateTime = (val: string) => {
-        if (!val.includes(":")) return false;
+        if (!val.includes(":")) return [false, 0, 0];
 
         const split = val.split(":");
 
-        if (split.length !== 2) return false;
+        if (split.length !== 2) return [false, 0, 0];
 
-        const [start, end] = split;
+        const [hours, minutes] = split;
 
         try {
+            const hours_int = parseInt(hours);
+            const minutes_int = parseInt(minutes);
             if (
-                start.length === 2 &&
-                end.length === 2 &&
-                parseInt(start) < 24 &&
-                parseInt(start) >= 0 &&
-                parseInt(end) >= 0 &&
-                parseInt(end) < 60
+                hours.length === 2 &&
+                minutes.length === 2 &&
+                hours_int < 24 &&
+                hours_int >= 0 &&
+                minutes_int >= 0 &&
+                minutes_int < 60
             ) {
-                return true;
+                return [true, hours_int, minutes_int];
             }
         } catch (error) {
-            return false;
+            return [false, 0, 0];
         }
-        return false;
+        return [false, 0, 0];
     };
 
     const submitEvent = () => {
@@ -127,11 +128,26 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
         if (formData.description.trim() === "") {
             errors.description = ERRORS.INVALID;
         }
-        if (!formData.whole_day && !validateTime(formData.start_time)) {
-            errors.start_time = ERRORS.INVALID;
+        if (
+            !formData.whole_day &&
+            (!validateTime(formData.start_time)[0] ||
+                !validateTime(formData.end_time)[0])
+        ) {
+            errors.time = ERRORS.WRONG_FORMAT;
         }
-        if (!formData.whole_day && !validateTime(formData.end_time)) {
-            errors.end_time = ERRORS.INVALID;
+
+        if (!formData.whole_day && !("time" in errors)) {
+            const [a, startHour, startMinutes] = validateTime(
+                formData.start_time
+            );
+            const [b, endHour, endMinutes] = validateTime(formData.end_time);
+
+            if (
+                startHour > endHour ||
+                (startHour === endHour && startMinutes >= endMinutes)
+            ) {
+                errors.time = ERRORS.INVALID;
+            }
         }
 
         if (Object.keys(errors).length !== 0) {
@@ -141,7 +157,7 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
         }
 
         //TODO: SWAP TO REAL API ROUTE WITH AUTH
-        const data = {
+        const data: any = {
             title: formData.title,
             text: formData.description,
             whole_day: formData.whole_day,
@@ -157,6 +173,7 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
                 data: data,
             })
             .then((res) => {
+                onSubmit();
                 onClose();
             })
             .catch((er) => {
@@ -243,9 +260,7 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
                                     <Flex gap={5} alignItems="center">
                                         <Input
                                             borderColor={
-                                                error.start_time
-                                                    ? "red"
-                                                    : "gray.200"
+                                                error.time ? "red" : "gray.200"
                                             }
                                             disabled={formData.whole_day}
                                             value={formData.start_time}
@@ -259,9 +274,7 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
                                         <Input
                                             placeholder="20:00"
                                             borderColor={
-                                                error.end_time
-                                                    ? "red"
-                                                    : "gray.200"
+                                                error.time ? "red" : "gray.200"
                                             }
                                             disabled={formData.whole_day}
                                             textAlign={"center"}
@@ -272,10 +285,15 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
                                         />
                                     </Flex>
                                 </Box>
-                                {(error.end_time || error.start_time) && (
+                                {error.time === ERRORS.INVALID && (
                                     <Text color="red">
-                                        Kontrollera formatet på tiden. Den måste
-                                        vara hh:mm
+                                        Sluttiden kan inte vara före starttiden
+                                    </Text>
+                                )}
+                                {error.time === ERRORS.WRONG_FORMAT && (
+                                    <Text color="red">
+                                        Kontrollera att formatet är skrivet
+                                        enligt hh:mm
                                     </Text>
                                 )}
 
