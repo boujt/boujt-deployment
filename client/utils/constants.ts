@@ -23,6 +23,8 @@ export const MESSAGE_REQUEST = {
     RECIEVED: "request-recieved",
 };
 
+export const MAX_PEOPLE_IN_QUEUE = 5;
+
 export const SYSSNARE_STATUS = {
     IN_CALL: "in-call",
     AVAILABLE: "available",
@@ -39,6 +41,8 @@ export const ERRORS = {
     TOO_LARGE: "too-large",
     INVALID: "invalid",
     CANNOT_BE_EMPTY: "cant-be-empty",
+    QUEUE_IS_FULL: "queue-full",
+    WRONG_FORMAT: "wrong-format",
 };
 
 export const FILESIZE_UPLOAD_LIMIT = 30000000;
@@ -56,3 +60,24 @@ export const ROUTES = {
     STARTSIDA: "/",
     CHATROOM: (token: string) => `/chatt/${token}`,
 };
+
+export const ADMIN_ROUTES = {
+    CHATT: "chatt",
+    FORUM: "forum",
+    CALENDAR: "calendar",
+};
+
+export const INTEGER_TO_MONTH = new Map<number, string>([
+    [1,   'Jan'],
+    [2,   'Feb'],
+    [3,   'Mar'],
+    [4,   'Apr'],
+    [5,   'May'],
+    [6,   'Jun'],
+    [7,   'Jul'],
+    [8,   'Aug'],
+    [9,   'Sep'],
+    [10,  'Oct'],
+    [11,  'Nov'],
+    [12,  'Dec']
+]);

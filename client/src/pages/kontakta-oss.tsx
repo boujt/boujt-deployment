@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { NextPage } from "next";
+import Head from "next/head";
 import { CSSProperties, useEffect, useState } from "react";
 import { FaEnvelope, FaMapPin } from "react-icons/fa";
 import { useData } from "../../utils/fetchData";
@@ -46,6 +47,13 @@ const KontaktaOss: NextPage = () => {
 
     return (
         <BoujtTemplate gap={100}>
+            <Head>
+                <title>Kontakta oss</title>
+                <meta
+                    name="viewport"
+                    content="initial-scale=1.0, width=device-width"
+                />
+            </Head>
             <Heading
                 textAlign={"center"}
                 bgGradient={chakra_gradient}
@@ -75,7 +83,7 @@ const KontaktaOss: NextPage = () => {
                     padding={"20px"}
                 >
                     <Flex flex={1} flexDirection="column" gap={4}>
-                        <ResponsiveVideoPlayer url="http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1&origin=http://example.com" />
+                        <ResponsiveVideoPlayer url="https://youtu.be/DDjEmdmHUjQ" />
                     </Flex>
                     <Flex flex={1} flexDirection="column">
                         <ContactForm />

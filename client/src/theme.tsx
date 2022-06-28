@@ -54,6 +54,10 @@ const theme = extendTheme({
 				adminPrimary: {
 					backgroundColor: "turquoise",
 					color: "white",
+					borderRadius: "4px",
+					_hover: {
+						backgroundColor: "#8FE4F5",
+					},
 				},
 				information: {
 					backgroundColor: "white",

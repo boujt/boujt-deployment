@@ -1,5 +1,6 @@
 import { Box, Flex, Heading, Text, useMediaQuery } from "@chakra-ui/react";
 import { NextPage } from "next";
+import Head from "next/head";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useData } from "../../utils/fetchData";
 import { AboutUsData, Faq, Worker } from "../../utils/types";
@@ -55,6 +56,13 @@ const OmOss: NextPage = () => {
 
     return (
         <BoujtTemplate gap={100}>
+            <Head>
+                <title>Om oss</title>
+                <meta
+                    name="viewport"
+                    content="initial-scale=1.0, width=device-width"
+                />
+            </Head>
             <Heading
                 textAlign={"center"}
                 bgGradient={chakra_gradient}

@@ -9,7 +9,9 @@ import {
 } from "@chakra-ui/react";
 import { CSSProperties } from "@emotion/serialize";
 import type { NextPage } from "next";
+import Head from "next/head";
 import { Router, useRouter } from "next/router";
+import { FaComment } from "react-icons/fa";
 import { ROUTES } from "../../utils/constants";
 import { useData } from "../../utils/fetchData";
 import { BlogPost } from "../../utils/types";
@@ -185,6 +187,13 @@ const Home: NextPage = () => {
 
     return (
         <Box>
+            <Head>
+                <title>BOUJT</title>
+                <meta
+                    name="viewport"
+                    content="initial-scale=1.0, width=device-width"
+                />
+            </Head>
             <FloatingChatButton />
             <Box position={"relative"} height="100vh">
                 <Navbar transparent />
@@ -237,8 +246,9 @@ const Home: NextPage = () => {
                                 height="45px"
                                 variant={"default"}
                                 onClick={() => router.push(ROUTES.CHATTEN)}
+                                leftIcon={<FaComment />}
                             >
-                                <Text>Ta mig dit</Text>
+                                <Text>Till Chatten</Text>
                             </Button>
                             <Button
                                 mx={"5px"}

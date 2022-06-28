@@ -16,9 +16,15 @@ import {
 } from "@chakra-ui/react";
 import { useDaily } from "@daily-co/daily-react-hooks";
 import React, { useEffect, useRef, useState } from "react";
-import { FaComment, FaPaperclip, FaPaperPlane, FaVideo } from "react-icons/fa";
+import {
+    FaComment,
+    FaPaperclip,
+    FaPaperPlane,
+    FaUserFriends,
+    FaVideo,
+} from "react-icons/fa";
 import { BounceLoader, PuffLoader } from "react-spinners";
-import { SYSSNARE_STATUS } from "../../utils/constants";
+import { MAX_PEOPLE_IN_QUEUE, SYSSNARE_STATUS } from "../../utils/constants";
 import { doCreateChatRequest } from "../../utils/service";
 import { Syssnare } from "../../utils/types";
 import styles from "../style/livechat.module.scss";
@@ -35,11 +41,10 @@ export const SyssnareItem: React.FC<SyssnareItemProps> = ({
     onCreateRequest,
 }) => {
     const colorFromStatus = () => {
-        if (syssnare.status === SYSSNARE_STATUS.AVAILABLE) {
+        if (syssnare.people_in_queue < MAX_PEOPLE_IN_QUEUE) {
             return "#75E89D";
-        }
-        if (syssnare.status === SYSSNARE_STATUS.IN_CALL) {
-            return "orange";
+        } else {
+            return "red";
         }
     };
     if (
@@ -68,12 +73,22 @@ export const SyssnareItem: React.FC<SyssnareItemProps> = ({
                         fontSize={20}
                         color={colorFromStatus()}
                     >
-                        {syssnare.status === SYSSNARE_STATUS.AVAILABLE
+                        {/* {syssnare.status === SYSSNARE_STATUS.AVAILABLE
                             ? "LEDIG"
-                            : "I SAMTAL"}
+                            : "I SAMTAL"} */}
+
+                        {syssnare.people_in_queue < MAX_PEOPLE_IN_QUEUE
+                            ? "TILLGÄNGLIG"
+                            : "FULL"}
                     </Text>
                 </Flex>
-                <Avatar size="lg" src={syssnare.img}></Avatar>
+                <Flex
+                    flexDirection={"column"}
+                    justifyContent="center"
+                    alignItems={"center"}
+                >
+                    <Avatar size="lg" src={syssnare.img}></Avatar>
+                </Flex>
             </Flex>
             <Flex
                 marginTop={5}
@@ -81,7 +96,7 @@ export const SyssnareItem: React.FC<SyssnareItemProps> = ({
                 flexDirection={"row"}
             >
                 <Button
-                    disabled={syssnare.status !== SYSSNARE_STATUS.AVAILABLE}
+                    disabled={syssnare.people_in_queue >= MAX_PEOPLE_IN_QUEUE}
                     leftIcon={<FaComment />}
                     onClick={() => onCreateRequest(syssnare, false)}
                     backgroundColor="#75E89D"
@@ -92,12 +107,21 @@ export const SyssnareItem: React.FC<SyssnareItemProps> = ({
                 <Button
                     backgroundColor="#76CEEA"
                     color="white"
-                    disabled={syssnare.status !== SYSSNARE_STATUS.AVAILABLE}
+                    disabled={syssnare.people_in_queue >= MAX_PEOPLE_IN_QUEUE}
                     leftIcon={<FaVideo />}
                     onClick={() => onCreateRequest(syssnare, true)}
                 >
                     Video
                 </Button>
+            </Flex>
+            <Flex
+                paddingTop={"1rem"}
+                alignItems="center"
+                justifyContent={"center"}
+                gap={2}
+            >
+                <FaUserFriends />
+                {`${syssnare.people_in_queue}/${MAX_PEOPLE_IN_QUEUE} i kö`}
             </Flex>
         </Flex>
     );
