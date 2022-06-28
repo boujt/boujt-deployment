@@ -75,7 +75,7 @@ const KontaktaOss: NextPage = () => {
                     padding={"20px"}
                 >
                     <Flex flex={1} flexDirection="column" gap={4}>
-                        <ResponsiveVideoPlayer url="http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1&origin=http://example.com" />
+                        <ResponsiveVideoPlayer url="https://youtu.be/DDjEmdmHUjQ" />
                     </Flex>
                     <Flex flex={1} flexDirection="column">
                         <ContactForm />

@@ -18,6 +18,7 @@ import {
     useMediaQuery,
 } from "@chakra-ui/react";
 import axios from "axios";
+import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { FaComment, FaVideo } from "react-icons/fa";
 import { PuffLoader } from "react-spinners";
@@ -42,8 +43,9 @@ import { box_shadow_dark } from "../theme";
 
 const DAYS_OPEN: number[] = [1, 2, 4]; // Mondat, tuesday, thursday
 
+const ALERT_TITLE = "(1) Det är din tur!";
+
 export default function Chat() {
-    const [url, setURL] = useState<string>("");
     const [sentRequest, setSentRequest] = useState<boolean>(false);
     const [requestData, setRequestData] = useState<{
         token: string | null;
@@ -51,11 +53,25 @@ export default function Chat() {
     }>({ token: null, syssnare: null });
 
     const openingHours = useData<OpeningHours>("openinghours");
+    const [title, setTitle] = useState<string>("");
 
     const [shouldBreak] = useMediaQuery("(max-width: 850px)");
 
     const [syssnare, setSyssnare] = useState<Syssnare[]>([]);
     const [error, setError] = useState<string>("");
+    const myInterval2 = () =>
+        setInterval(function () {
+            setTitle((prev) =>
+                prev === ALERT_TITLE ? "Chatten" : ALERT_TITLE
+            );
+        }, 1000);
+
+    const alertFirstQueueTitle = () => {
+        if (title === "") {
+            setTitle(ALERT_TITLE);
+            myInterval2();
+        }
+    };
 
     useEffect(() => {
         doGetAllSyssnare()
@@ -90,6 +106,7 @@ export default function Chat() {
     };
 
     const cancelRequest = (token: string) => {
+        clearInterval(myInterval2());
         doCancelChatRequest(token)
             .then((res) => {
                 setRequestData({ token: null, syssnare: null });
@@ -170,6 +187,13 @@ export default function Chat() {
 
     return (
         <BoujtTemplate gap={50}>
+            <Head>
+                <title>{title === "" ? "Chatten" : title}</title>
+                <meta
+                    name="viewport"
+                    content="initial-scale=1.0, width=device-width"
+                />
+            </Head>
             <Heading>Chatten</Heading>
             <Flex gap={6} flexDirection={shouldBreak ? "column" : "row"}>
                 <Flex
@@ -261,6 +285,7 @@ export default function Chat() {
                     <ModalBody justifyContent={"center"}>
                         {requestData.token && (
                             <WaitForRequest
+                                alertFirstQueue={() => alertFirstQueueTitle()}
                                 currentStatus={
                                     syssnare.filter(
                                         (sys) =>

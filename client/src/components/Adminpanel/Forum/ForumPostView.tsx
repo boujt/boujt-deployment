@@ -1,4 +1,12 @@
-import { Box, Button, Flex, Spinner, Text, Textarea } from "@chakra-ui/react";
+import {
+    Box,
+    Button,
+    Flex,
+    Spinner,
+    Text,
+    Textarea,
+    useToast,
+} from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
 import { FaCalendar, FaComment, FaTrash, FaUser } from "react-icons/fa";
@@ -15,13 +23,22 @@ const ForumPostView: React.FC<ForumPostProps> = ({ post, onPostComment }) => {
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
     const { user } = useStrapi();
+    const toast = useToast();
 
     const deleteComment = (commentID: number) => {
         const confirmAction = confirm("Vill du ta bort kommentaren?");
         if (confirmAction) {
             axios
                 .delete(`http://localhost:1337/api/comments/${commentID}`)
-                .then()
+                .then((res) => {
+                    toast({
+                        title: "Kommentar borttagen",
+                        description: "Din kommentar har tagits bort",
+                        status: "success",
+                        duration: 5000,
+                        isClosable: true,
+                    });
+                })
                 .catch()
                 .finally(() => {
                     onPostComment();

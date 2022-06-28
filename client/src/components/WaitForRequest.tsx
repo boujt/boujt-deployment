@@ -39,12 +39,14 @@ interface WaitForRequestProps {
     syssnare: Syssnare;
     currentStatus: string;
     token: string;
+    alertFirstQueue?: Function;
 }
 
 export const WaitForRequest: React.FC<WaitForRequestProps> = ({
     syssnare,
     token,
     currentStatus,
+    alertFirstQueue,
 }) => {
     const [url, setURL] = useState<string>("");
     const router = useRouter();
@@ -74,6 +76,10 @@ export const WaitForRequest: React.FC<WaitForRequestProps> = ({
                     if (res.data.room) {
                         console.log(res.data.room.attributes);
                         setURL(res.data.room.attributes.room_url);
+                        if (alertFirstQueue) {
+                            alertFirstQueue();
+                        }
+
                         clearInterval(myInterval);
                     }
                 })

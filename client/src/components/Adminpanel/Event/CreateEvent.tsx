@@ -16,6 +16,7 @@ import {
     FormErrorMessage,
     FormLabel,
     Box,
+    useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -53,6 +54,7 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
     const [error, setError] = useState<FormDataError>({});
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const [eventsTheSameDay, setEventsTheSameDay] = useState<Event[]>([]);
+    const toast = useToast();
 
     const [formData, setFormData] = useState<FormData>({
         start_time: "",
@@ -173,6 +175,13 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
                 data: data,
             })
             .then((res) => {
+                toast({
+                    title: "Event skapat!",
+                    description: "Ditt event är skapat och publicerat",
+                    status: "success",
+                    duration: 5000,
+                    isClosable: true,
+                });
                 onSubmit();
                 onClose();
             })
@@ -205,7 +214,7 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
                             Skapa nytt event
                         </Text>
 
-                        <Flex gap={4}>
+                        <Flex gap={10}>
                             <Flex
                                 width={"50%"}
                                 gap={5}

@@ -22,6 +22,7 @@ import {
     Th,
     Thead,
     Tr,
+    useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -47,6 +48,7 @@ export const CreateForumPost: React.FC<CreateForumPostProps> = ({
     const { strapi, user } = useStrapi();
     const [formData, setFormData] = useState({ title: "", text: "" });
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+    const toast = useToast();
 
     const handleSubmit = () => {
         //TODO: Submit post from auth user
@@ -62,7 +64,15 @@ export const CreateForumPost: React.FC<CreateForumPostProps> = ({
                     syssnare: ID_SYS,
                 },
             })
-            .then((res) => {})
+            .then((res) => {
+                toast({
+                    title: "Inlägg skapat!",
+                    description: "Ditt inlägg har publicerats",
+                    status: "success",
+                    duration: 5000,
+                    isClosable: true,
+                });
+            })
             .catch((er) => {
                 console.error(er);
             })
