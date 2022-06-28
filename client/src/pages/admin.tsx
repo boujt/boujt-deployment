@@ -8,35 +8,35 @@ import AdminSidebar from "../components/Adminpanel/AdminSidebar";
 import { Forum } from "../components/Adminpanel/Forum/Forum";
 import LoginForm from "../components/LoginForm";
 export default function Admin() {
-    const { strapi, user, logout, loading } = useStrapi();
-    const [selectedPage, setSelectedPage] = useState<string>(
-        ADMIN_ROUTES.CHATT
-    );
+	const { strapi, user, logout, loading } = useStrapi();
+	const [selectedPage, setSelectedPage] = useState<string>(
+		ADMIN_ROUTES.CHATT
+	);
 
-    if (loading) {
-        return (
-            <Flex flexDirection={"column"}>
-                <Text>Laddar</Text>
-                <Spinner />
-            </Flex>
-        );
-    }
-    return (
-        <div>
-            {!user && <LoginForm />}
-            {user && (
-                <AdminSidebar
-                    currentPage={selectedPage}
-                    setPage={setSelectedPage}
-                >
-                    {selectedPage === ADMIN_ROUTES.CHATT && <AdminPanel />}
+	if (loading) {
+		return (
+			<Flex flexDirection={"column"}>
+				<Text>Laddar</Text>
+				<Spinner />
+			</Flex>
+		);
+	}
+	return (
+		<div>
+			{!user && <LoginForm />}
+			{user && (
+				<AdminSidebar
+					currentPage={selectedPage}
+					setPage={setSelectedPage}
+				>
+					{selectedPage === ADMIN_ROUTES.CHATT && <AdminPanel />}
 
-                    {selectedPage === ADMIN_ROUTES.FORUM && <Forum />}
-                    {selectedPage === ADMIN_ROUTES.CALENDAR && (
-                        <Text>Calendar</Text>
-                    )}
-                </AdminSidebar>
-            )}
-        </div>
-    );
+					{selectedPage === ADMIN_ROUTES.FORUM && <Forum />}
+					{selectedPage === ADMIN_ROUTES.CALENDAR && (
+						<Text>Calendar</Text>
+					)}
+				</AdminSidebar>
+			)}
+		</div>
+	);
 }
