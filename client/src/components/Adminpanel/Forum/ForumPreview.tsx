@@ -38,13 +38,12 @@ const ForumPreview: React.FC<ForumPreviewProps> = ({
     const { user, strapi } = useStrapi();
 
     const deletePost = () => {
-        // TODO : CHANGE TO STRAPI SDK
         if (
-            post.syssnare.id === user?.id ||
+            post.syssnare.id === user?.id &&
             confirm("Vill du ta bort inlägget?")
         ) {
-            axios
-                .delete(`http://localhost:1337/api/forums/${post.id}`)
+            strapi
+                ?.delete("forums", post.id)
                 .then((res) => {
                     if (onDelete) onDelete();
                 })
@@ -86,28 +85,27 @@ const ForumPreview: React.FC<ForumPreviewProps> = ({
                     </Flex>
                 </Flex>
             </Flex>
-            {post.syssnare.id === user?.id ||
-                (true && (
-                    <Menu>
-                        <MenuButton as={Button}>
-                            <FaEllipsisV />
-                        </MenuButton>
-                        <MenuList>
-                            <MenuItem
-                                onClick={() => deletePost()}
-                                icon={<FaTrash color="red" />}
-                            >
-                                Ta bort
-                            </MenuItem>
-                            <MenuItem
-                                onClick={() => onSelectEdit(post)}
-                                icon={<FaEdit />}
-                            >
-                                Redigera
-                            </MenuItem>
-                        </MenuList>
-                    </Menu>
-                ))}
+            {post.syssnare.id === user?.id && (
+                <Menu>
+                    <MenuButton as={Button}>
+                        <FaEllipsisV />
+                    </MenuButton>
+                    <MenuList>
+                        <MenuItem
+                            onClick={() => deletePost()}
+                            icon={<FaTrash color="red" />}
+                        >
+                            Ta bort
+                        </MenuItem>
+                        <MenuItem
+                            onClick={() => onSelectEdit(post)}
+                            icon={<FaEdit />}
+                        >
+                            Redigera
+                        </MenuItem>
+                    </MenuList>
+                </Menu>
+            )}
         </Flex>
     );
 };

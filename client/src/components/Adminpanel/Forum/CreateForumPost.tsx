@@ -51,18 +51,18 @@ export const CreateForumPost: React.FC<CreateForumPostProps> = ({
     const toast = useToast();
 
     const handleSubmit = () => {
-        //TODO: Submit post from auth user
-
-        if (formData.title.trim() === "" || formData.text.trim() === "") return;
-        const ID_SYS = 1;
+        if (
+            formData.title.trim() === "" ||
+            formData.text.trim() === "" ||
+            !user
+        )
+            return;
         setIsSubmitting(true);
-        axios
-            .post("http://localhost:1337/api/forums", {
-                data: {
-                    title: formData.title,
-                    text: formData.text,
-                    syssnare: ID_SYS,
-                },
+        strapi
+            ?.create("forums", {
+                title: formData.title,
+                text: formData.text,
+                syssnare: user.id,
             })
             .then((res) => {
                 toast({

@@ -22,14 +22,14 @@ const ForumPostView: React.FC<ForumPostProps> = ({ post, onPostComment }) => {
     const [comment, setComment] = useState<string>("");
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-    const { user } = useStrapi();
+    const { user, strapi } = useStrapi();
     const toast = useToast();
 
     const deleteComment = (commentID: number) => {
         const confirmAction = confirm("Vill du ta bort kommentaren?");
         if (confirmAction) {
-            axios
-                .delete(`http://localhost:1337/api/comments/${commentID}`)
+            strapi
+                ?.delete("comments", commentID)
                 .then((res) => {
                     toast({
                         title: "Kommentar borttagen",
@@ -49,13 +49,11 @@ const ForumPostView: React.FC<ForumPostProps> = ({ post, onPostComment }) => {
     const submitComment = () => {
         if (comment.trim() === "") return;
 
-        axios
-            .post("http://localhost:1337/api/comments", {
-                data: {
-                    text: comment,
-                    syssnare: 1, //TODO: REPLACE WITH DYNAMIC ID
-                    forum: post.id,
-                },
+        strapi
+            ?.create("comments", {
+                text: comment,
+                syssnare: user?.id,
+                forum: post.id,
             })
             .then((res) => {})
             .catch((er) => {
