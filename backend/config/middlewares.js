@@ -1,4 +1,4 @@
-module.exports = [
+module.exports = ({ env }) => [
   'strapi::errors',
   {
     name: "strapi::security",
@@ -22,11 +22,10 @@ module.exports = [
             `${process.env.DO_SPACE_BUCKET}.${process.env.DO_SPACE_ENDPOINT}`,
           ],
           upgradeInsecureRequests: null,
-        },
-      },
-    },
+        }
+      }
+    }
   },
-  'strapi::security',
   'strapi::cors',
   'strapi::poweredBy',
   'strapi::logger',
