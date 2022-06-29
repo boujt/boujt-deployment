@@ -26,11 +26,19 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { FaCalendar, FaComment, FaPlus, FaUser } from "react-icons/fa";
+import {
+    FaCalendar,
+    FaComment,
+    FaGem,
+    FaPaperclip,
+    FaPlus,
+    FaUser,
+} from "react-icons/fa";
 
 import { ChatRoom, ForumPost, Syssnare } from "../../../../utils/types";
 import { useStrapi } from "../../../auth/auth";
 import { ChatRequest } from "../ChatRequest";
+import { DragAndDropInput } from "../DragAndDropInput";
 import ForumPostView from "./ForumPostView";
 import ForumPreview from "./ForumPreview";
 
@@ -46,11 +54,41 @@ export const CreateForumPost: React.FC<CreateForumPostProps> = ({
     onSubmit,
 }) => {
     const { strapi, user } = useStrapi();
-    const [formData, setFormData] = useState({ title: "", text: "" });
+
+    type formDataType = {
+        title: string;
+        text: string;
+        file?: File;
+    };
+    const [formData, setFormData] = useState<formDataType>({
+        title: "",
+        text: "",
+    });
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const toast = useToast();
 
-    const handleSubmit = () => {
+    const uploadFile = async () => {
+        console.log(formData);
+        if (!formData.file) {
+            return;
+        }
+        const fileData = new FormData();
+        fileData.append("files", formData.file);
+
+        axios
+            .post(
+                "https://boujt-app-6a3vb.ondigitalocean.app/api/upload",
+                fileData
+            )
+            .then((res) => {
+                return res.data[0].id;
+            })
+            .catch((er) => {
+                return null;
+            });
+    };
+
+    const handleSubmit = async () => {
         if (
             formData.title.trim() === "" ||
             formData.text.trim() === "" ||
@@ -58,11 +96,21 @@ export const CreateForumPost: React.FC<CreateForumPostProps> = ({
         )
             return;
         setIsSubmitting(true);
+        const payload = {
+            title: formData.title,
+            text: formData.text,
+            syssnare: user.id,
+        };
+        if (formData.file) {
+            const fileID = await uploadFile();
+            if (fileID) {
+                payload.files = fileID;
+            }
+        }
+
         strapi
             ?.create("forums", {
-                title: formData.title,
-                text: formData.text,
-                syssnare: user.id,
+                ...payload,
             })
             .then((res) => {
                 toast({
@@ -95,15 +143,21 @@ export const CreateForumPost: React.FC<CreateForumPostProps> = ({
                         <Text fontSize={20} fontWeight={800}>
                             Skapa nytt inlägg
                         </Text>
+
                         <Input
+                            multiple
                             value={formData.title}
                             placeholder="Titel"
                             onChange={(e) =>
                                 setFormData((prev) => {
-                                    return { ...prev, title: e.target.value };
+                                    return {
+                                        ...prev,
+                                        title: e.target.value,
+                                    };
                                 })
                             }
                         />
+
                         <Textarea
                             value={formData.text}
                             onChange={(e) =>
@@ -114,12 +168,23 @@ export const CreateForumPost: React.FC<CreateForumPostProps> = ({
                             rows={5}
                             placeholder="Skriv ditt inlägg här"
                         />
+
+                        <DragAndDropInput
+                            onChange={(file: File) => {
+                                setFormData((prev) => {
+                                    return { ...prev, file: file };
+                                });
+                            }}
+                        />
                         <Button
                             variant={"adminPrimary"}
                             onClick={() => handleSubmit()}
                             disabled={isSubmitting}
                         >
                             {!isSubmitting ? "Publicera" : <Spinner />}
+                        </Button>
+                        <Button onClick={() => uploadFile()}>
+                            Upload file test
                         </Button>
                     </Flex>
                 </ModalBody>
