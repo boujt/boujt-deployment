@@ -79,11 +79,11 @@ export const ChatView: React.FC<ChatViewProps> = ({ room, displayName }) => {
         }
 
         return () => {
-            if (da) {
-                da.off("app-message", handleAppMessage);
-                da.off("participant-joined", handleParticipantJoined);
-                da.off("participant-left", handleParticipantLeft);
-            }
+            // if (da) {
+            //     da.off("app-message", handleAppMessage);
+            //     da.off("participant-joined", handleParticipantJoined);
+            //     da.off("participant-left", handleParticipantLeft);
+            // }
         };
     }, [da]);
 

@@ -1,4 +1,5 @@
 import {
+    Avatar,
     Box,
     Button,
     Flex,
@@ -74,7 +75,11 @@ const ForumPostView: React.FC<ForumPostProps> = ({ post, onPostComment }) => {
                     </Text>
                     <Flex gap={5} marginTop={2}>
                         <Flex gap={2} alignItems="center">
-                            <FaUser color="#00CCEE" />
+                            <Avatar
+                                size={"sm"}
+                                name={post.syssnare.name}
+                                src={post.syssnare.img}
+                            />
                             <Text>{post.syssnare.name}</Text>
                         </Flex>
                         <Flex gap={2} alignItems="center">
@@ -121,43 +126,58 @@ const ForumPostView: React.FC<ForumPostProps> = ({ post, onPostComment }) => {
 
                         {post.comments.map((comment) => {
                             return (
-                                <Box
+                                <Flex
+                                    key={comment.id}
                                     border="1px solid #00CCEE"
                                     borderRadius={8}
                                     padding={4}
-                                    px={10}
+                                    px={5}
+                                    alignItems="center"
+                                    gap={4}
                                 >
-                                    <Flex justifyContent={"space-between"}>
-                                        <Text fontWeight={800}>
-                                            {comment.syssnare.name}
-                                        </Text>
-                                        <Flex gap={2} alignItems={"center"}>
-                                            <FaCalendar color="#00CCEE" />
-                                            <Text>
-                                                {post.created_at.slice(0, 10)}
+                                    <Avatar
+                                        size={"sm"}
+                                        src={comment.syssnare.img}
+                                        name={comment.syssnare.name}
+                                    />
+                                    <Box width={"100%"}>
+                                        <Flex justifyContent={"space-between"}>
+                                            <Text fontWeight={800}>
+                                                {comment.syssnare.name}
                                             </Text>
-                                            {user.id ===
-                                                comment.syssnare.id && (
-                                                <Flex
-                                                    justifyContent={"center"}
-                                                    alignItems={"center"}
-                                                >
-                                                    <FaTrash
-                                                        onClick={() =>
-                                                            deleteComment(
-                                                                comment.id
-                                                            )
+                                            <Flex gap={2} alignItems={"center"}>
+                                                <FaCalendar color="#00CCEE" />
+                                                <Text>
+                                                    {post.created_at.slice(
+                                                        0,
+                                                        10
+                                                    )}
+                                                </Text>
+                                                {user.id ===
+                                                    comment.syssnare.id && (
+                                                    <Flex
+                                                        justifyContent={
+                                                            "center"
                                                         }
-                                                        cursor={"pointer"}
-                                                        color="red"
-                                                    />
-                                                </Flex>
-                                            )}
+                                                        alignItems={"center"}
+                                                    >
+                                                        <FaTrash
+                                                            onClick={() =>
+                                                                deleteComment(
+                                                                    comment.id
+                                                                )
+                                                            }
+                                                            cursor={"pointer"}
+                                                            color="red"
+                                                        />
+                                                    </Flex>
+                                                )}
+                                            </Flex>
                                         </Flex>
-                                    </Flex>
 
-                                    <Text>{comment.text}</Text>
-                                </Box>
+                                        <Text>{comment.text}</Text>
+                                    </Box>
+                                </Flex>
                             );
                         })}
                     </Flex>

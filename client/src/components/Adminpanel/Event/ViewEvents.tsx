@@ -1,4 +1,10 @@
 import {
+    Accordion,
+    AccordionButton,
+    AccordionIcon,
+    AccordionItem,
+    AccordionPanel,
+    Box,
     Flex,
     Tab,
     TabList,
@@ -18,50 +24,21 @@ import { Event, EventData } from "../../../../utils/types";
 import { useStrapi } from "../../../auth/auth";
 import EventCard from "./EventCard";
 
-const ViewEvents: React.FC = () => {
+const ViewEvents: React.FC<{
+    onSelectEvent: Function;
+    allEvents: Event[];
+    fetchEvents: Function;
+
+    onSelectEditEvent: Function;
+}> = ({ onSelectEvent, onSelectEditEvent, allEvents, fetchEvents }) => {
     // Grab all the events
     // const { data, error } = useData<EventData>("events");
-    const [allEvents, setAllEvents] = useState<Event[]>([]);
+
     const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
     const fontSize = useBreakpointValue({ base: "20", md: "30", sm: "25" });
     const [doCalendarView, setDoCalendarView] = useState(false);
     const [date, setDate] = useState(new Date());
     const { strapi, user } = useStrapi();
-
-    useEffect(() => {
-        //TODO: BYT TILL RIKTIG API SAMT HÄMTA SYSSNARE
-
-        strapi
-            ?.find("events", {
-                populate: "deep",
-            })
-            .then((res) => {
-                console.log("EVENTS", res);
-                const temp_allEvents: Event[] = res.data.map((ev) => {
-                    const event: Event = {
-                        id: ev.id,
-                        title: ev.attributes.title,
-                        text: ev.attributes.text,
-                        when: ev.attributes.when,
-                        whole_day: ev.attributes.whole_day,
-                        // syssnare: populateSyssnare(ev),
-                    };
-                    if (
-                        !event.whole_day &&
-                        ev.attributes.start &&
-                        ev.attributes.end
-                    ) {
-                        event.end = ev.attributes.end;
-                        event.start = ev.attributes.start;
-                    }
-                    return event;
-                });
-                setAllEvents(temp_allEvents);
-            })
-            .catch((er) => {
-                console.error(er);
-            });
-    }, []);
 
     useEffect(() => {
         // if (!data) return;
@@ -72,6 +49,7 @@ const ViewEvents: React.FC = () => {
         if (!doCalendarView) {
             setFilteredEvents(allEvents);
         } else {
+            console.log(allEvents);
             // Filter and only grab the events from currently selected date
             setFilteredEvents(
                 allEvents.filter((event) => {
@@ -83,8 +61,6 @@ const ViewEvents: React.FC = () => {
             );
         }
     }, [allEvents, doCalendarView, date]);
-
-    console.log(allEvents);
 
     const enabledColor = "#00CCEE";
     const disabledColor = "gray";
@@ -140,10 +116,59 @@ const ViewEvents: React.FC = () => {
                 gap={"30px"}
                 alignItems={"center"}
             >
+                {filteredEvents.length != 0 && (
+                    <Accordion width={"100%"} allowToggle>
+                        <AccordionItem>
+                            <h2>
+                                <AccordionButton>
+                                    <Box flex="1" textAlign="center">
+                                        Visa gamla event
+                                    </Box>
+                                    <AccordionIcon />
+                                </AccordionButton>
+                            </h2>
+                            <AccordionPanel pb={4}>
+                                {filteredEvents
+                                    .filter(
+                                        (ev) => new Date(ev.when) < new Date()
+                                    )
+                                    .map((event, idx) => {
+                                        return (
+                                            <EventCard
+                                                fetchEvents={fetchEvents}
+                                                onClick={() => {
+                                                    onSelectEvent(event);
+                                                }}
+                                                onEdit={() => {
+                                                    onSelectEditEvent(event);
+                                                }}
+                                                key={idx}
+                                                event={event}
+                                            />
+                                        );
+                                    })}
+                            </AccordionPanel>
+                        </AccordionItem>
+                    </Accordion>
+                )}
                 {filteredEvents.length != 0 &&
-                    filteredEvents.map((event, idx) => {
-                        return <EventCard key={idx} event={event} />;
-                    })}
+                    filteredEvents
+                        .filter((ev) => new Date(ev.when) >= new Date())
+                        .map((event, idx) => {
+                            return (
+                                <EventCard
+                                    fetchEvents={fetchEvents}
+                                    onClick={() => {
+                                        onSelectEvent(event);
+                                    }}
+                                    onEdit={() => {
+                                        onSelectEditEvent(event);
+                                    }}
+                                    key={idx}
+                                    event={event}
+                                />
+                            );
+                        })}
             </Flex>
         </Flex>
     );

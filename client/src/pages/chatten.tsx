@@ -92,6 +92,7 @@ export default function Chat() {
     const createChatRequest = (syssnare: Syssnare, isVideo: boolean) => {
         setSentRequest(true);
         setError("");
+
         doCreateChatRequest(syssnare.id, isVideo).then((res) => {
             if (res.error) {
                 setError(res.error);
@@ -280,7 +281,7 @@ export default function Chat() {
             >
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>Förfrågan skickat</ModalHeader>
+                    <ModalHeader>Chatt-förfrågan</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody justifyContent={"center"}>
                         {requestData.token && (
@@ -330,7 +331,7 @@ export default function Chat() {
                             mr={3}
                             onClick={() => cancelRequest(requestData.token)}
                         >
-                            Avbryt förfrågan
+                            Avbryt
                         </Button>
                     </ModalFooter>
                 </ModalContent>

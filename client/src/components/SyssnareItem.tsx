@@ -87,7 +87,11 @@ export const SyssnareItem: React.FC<SyssnareItemProps> = ({
                     justifyContent="center"
                     alignItems={"center"}
                 >
-                    <Avatar size="lg" src={syssnare.img}></Avatar>
+                    <Avatar
+                        size="lg"
+                        name={syssnare.name}
+                        src={syssnare.img}
+                    ></Avatar>
                 </Flex>
             </Flex>
             <Flex

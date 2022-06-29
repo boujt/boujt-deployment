@@ -111,28 +111,6 @@ export const WaitForRequest: React.FC<WaitForRequestProps> = ({
         );
     }
 
-    if (url.trim() === "" && currentStatus !== SYSSNARE_STATUS.AVAILABLE) {
-        return (
-            <Flex
-                gap={5}
-                flexDirection={"column"}
-                alignItems="center"
-                justifyContent={"center"}
-            >
-                {currentStatus === SYSSNARE_STATUS.IN_CALL && (
-                    <Text>
-                        {syssnare.name} verkar tyvärr vara upptagen i ett annat
-                        samtal
-                    </Text>
-                )}
-
-                {currentStatus !== SYSSNARE_STATUS.IN_CALL && (
-                    <Text>{syssnare.name} verkar tyvärr ha gått offline</Text>
-                )}
-            </Flex>
-        );
-    }
-
     if (url.trim() !== "") {
         return (
             <Flex

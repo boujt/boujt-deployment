@@ -55,6 +55,7 @@ export const ListChatRequests: React.FC<ListChatRequestsProps> = ({
         if (!strapi) return;
         Promise.all([doGetActiveRooms(strapi, user.id), fetchRequests()]).then(
             (values) => {
+                console.log(values);
                 if (values[0]) {
                     const aR: ChatRoom = {
                         syssnare: user.id,
@@ -67,6 +68,7 @@ export const ListChatRequests: React.FC<ListChatRequestsProps> = ({
                     setActiveRoom(null);
                 }
                 if (values[1]) {
+                    console.log(values[1]);
                     setRequests(
                         values[1].data.filter(
                             (a) => a.attributes.syssnare.data.id === user.id
