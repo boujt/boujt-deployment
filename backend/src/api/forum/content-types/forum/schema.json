@@ -30,6 +30,16 @@
       "relation": "oneToMany",
       "target": "api::comment.comment",
       "mappedBy": "forum"
+    },
+    "files": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": true
     }
   }
 }
