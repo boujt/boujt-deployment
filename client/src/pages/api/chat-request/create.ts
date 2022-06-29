@@ -44,7 +44,7 @@ export default async function handler(
     );
 
     const people_in_queue = requests.data.data.filter((re) => {
-        return req.body.syssnare === re.attributes.syssnare.data.id;
+        return data.syssnare === re.attributes.syssnare.data.id;
     }).length;
 
     if (people_in_queue >= MAX_PEOPLE_IN_QUEUE) {
@@ -59,7 +59,11 @@ export default async function handler(
     }
 
     await axios
-        .post(`${process.env.STRAPI_API_BASE_URL}/api/request-chats`, payload)
+        .post(`${process.env.STRAPI_API_BASE_URL}/api/request-chats`, payload, {
+            headers: {
+                Authorization: `Bearer ${process.env.STRAPI_SERVICE_ACCOUNT_JWT}`,
+            },
+        })
         .then((response) => {
             res.status(200).json({
                 message: "Request sent",

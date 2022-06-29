@@ -84,57 +84,6 @@ const ListOfSyssnare: React.FC<ListOfSyssnareProps> = ({ syssnare }) => {
                         </>
                     );
                 })}
-                {syssnare.map((sys) => {
-                    if (sys.status !== SYSSNARE_STATUS.OFFLINE) return null;
-                    return (
-                        <>
-                            <ListItem key={sys.id}>
-                                <Text color="gray" fontWeight={700}>
-                                    {sys.name}
-                                </Text>
-                                <Badge color={getColorFromStatus(sys.status)}>
-                                    {getTextFromStatus(sys.status)}
-                                </Badge>
-                                <Text></Text>
-                            </ListItem>
-                            <Divider />
-                        </>
-                    );
-                })}
-                {syssnare.map((sys) => {
-                    if (sys.status !== SYSSNARE_STATUS.OFFLINE) return null;
-                    return (
-                        <>
-                            <ListItem key={sys.id}>
-                                <Text color="gray" fontWeight={700}>
-                                    {sys.name}
-                                </Text>
-                                <Badge color={getColorFromStatus(sys.status)}>
-                                    {getTextFromStatus(sys.status)}
-                                </Badge>
-                                <Text></Text>
-                            </ListItem>
-                            <Divider />
-                        </>
-                    );
-                })}
-                {syssnare.map((sys) => {
-                    if (sys.status !== SYSSNARE_STATUS.OFFLINE) return null;
-                    return (
-                        <>
-                            <ListItem key={sys.id}>
-                                <Text color="gray" fontWeight={700}>
-                                    {sys.name}
-                                </Text>
-                                <Badge color={getColorFromStatus(sys.status)}>
-                                    {getTextFromStatus(sys.status)}
-                                </Badge>
-                                <Text></Text>
-                            </ListItem>
-                            <Divider />
-                        </>
-                    );
-                })}
             </List>
         </Flex>
     );

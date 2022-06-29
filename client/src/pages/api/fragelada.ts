@@ -25,7 +25,6 @@ export default async function handler(
         }
     );
 
-    console.log(query);
     if (req.method === "GET") {
         const { data } = await axios.get(
             `${process.env.STRAPI_API_BASE_URL}/api/frageladas?${query}&populate=*`,

@@ -2,16 +2,13 @@
 
 import type { NextApiRequest, NextApiResponse } from "next";
 import { sendEmail } from "../../../utils/sendEmail";
-import {
-    EmailData,
-    EmailFormData
-} from "../../../utils/types";
+import { EmailData, EmailFormData } from "../../../utils/types";
 const qs = require("qs");
 const sgMail = require("@sendgrid/mail");
 
 var fs = require("fs");
 
-import html_template from './kontakt_template';
+import html_template from "./kontakt_template";
 
 export default async function handler(
     req: NextApiRequest,
@@ -43,9 +40,7 @@ export default async function handler(
     }
 
     await sendEmail(email)
-        .then((res) => {
-            console.log(res);
-        })
+        .then((res) => {})
         .catch((er) => {
             console.log(er.response);
         });

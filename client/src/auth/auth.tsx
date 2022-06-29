@@ -80,8 +80,16 @@ function useProvideAuth() {
         strapi
             ?.login({ identifier: data.uid, password: data.pw })
             .then((res) => {
-                setUser(strapi.user);
-                setLoading(false);
+                doSetStatusSyssnare(SYSSNARE_STATUS.ONLINE, strapi.user.id)
+                    .then((res) => {
+                        const updated_user = res.data;
+                        delete updated_user.role;
+                        setUser(updated_user);
+                        setLoading(false);
+                    })
+                    .catch((er) => {
+                        console.log(er);
+                    });
             })
             .catch((er) => {
                 console.error(er);
@@ -93,8 +101,14 @@ function useProvideAuth() {
     };
 
     const logout = () => {
-        strapi.logout();
-        setUser(null);
+        doSetStatusSyssnare(SYSSNARE_STATUS.OFFLINE, user.id)
+            .then((res) => {
+                strapi.logout();
+                setUser(null);
+            })
+            .catch((er) => {
+                console.log(er);
+            });
     };
 
     useEffect(() => {

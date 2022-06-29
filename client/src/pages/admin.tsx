@@ -6,7 +6,7 @@ import { ADMIN_ROUTES } from "../../utils/constants";
 import { useStrapi } from "../auth/auth";
 import { AdminPanel } from "../components/Adminpanel/AdminPanel";
 import AdminSidebar from "../components/Adminpanel/AdminSidebar";
-import { Event } from "../components/Adminpanel/Event/Event";
+import { EventRoot } from "../components/Adminpanel/Event/Event";
 import { Forum } from "../components/Adminpanel/Forum/Forum";
 import LoginForm from "../components/LoginForm";
 export default function Admin() {
@@ -15,14 +15,6 @@ export default function Admin() {
         ADMIN_ROUTES.CHATT
     );
 
-    if (loading) {
-        return (
-            <Flex flexDirection={"column"}>
-                <Text>Laddar</Text>
-                <Spinner />
-            </Flex>
-        );
-    }
     return (
         <div>
             <Head>
@@ -33,7 +25,7 @@ export default function Admin() {
                 />
             </Head>
             {!user && <LoginForm />}
-            {user && (
+            {user && !loading && (
                 <AdminSidebar
                     currentPage={selectedPage}
                     setPage={setSelectedPage}
@@ -41,7 +33,7 @@ export default function Admin() {
                     {selectedPage === ADMIN_ROUTES.CHATT && <AdminPanel />}
 
                     {selectedPage === ADMIN_ROUTES.FORUM && <Forum />}
-                    {selectedPage === ADMIN_ROUTES.CALENDAR && <Event />}
+                    {selectedPage === ADMIN_ROUTES.CALENDAR && <EventRoot />}
                 </AdminSidebar>
             )}
         </div>

@@ -27,11 +27,11 @@ import { useData } from "../../../../utils/fetchData";
 import { addDays, populateSyssnare } from "../../../../utils/helperFunctions";
 import { Event } from "../../../../utils/types";
 import { useStrapi } from "../../../auth/auth";
-import EventCard from "./EventCard";
 type Props = {
     open: boolean;
     onClose: () => void;
     onSubmit: () => void;
+    event: Event;
 };
 
 type FormData = {
@@ -48,23 +48,23 @@ type FormDataError = {
     description?: string;
 };
 
-const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
+const UpdateEvent: React.FC<Props> = ({ open, onClose, onSubmit, event }) => {
     const { strapi, user } = useStrapi();
-    const [date, setDate] = useState(new Date());
+    const [date, setDate] = useState(new Date(event.when));
     const [error, setError] = useState<FormDataError>({});
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const [eventsTheSameDay, setEventsTheSameDay] = useState<Event[]>([]);
     const toast = useToast();
 
-    console.log(date);
-
     const [formData, setFormData] = useState<FormData>({
-        start_time: "",
-        end_time: "",
-        title: "",
-        description: "",
-        whole_day: false,
+        start_time: event.start ? event.start.slice(0, 5) : "",
+        end_time: event.end ? event.end.slice(0, 5) : "",
+        title: event.title,
+        description: event.text,
+        whole_day: event.whole_day,
     });
+
+    console.log(event);
 
     useEffect(() => {
         strapi
@@ -169,9 +169,7 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
             text: formData.description,
             whole_day: formData.whole_day,
             when: addDays(date, 1),
-            syssnare: user?.id,
         };
-        console.log("DATE", date);
         const seconds = ":00.000";
         if (!formData.whole_day) {
             data.start = formData.start_time + seconds;
@@ -179,13 +177,13 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
         }
 
         strapi
-            ?.create("events", {
+            ?.update("events", event.id, {
                 ...data,
             })
             .then((res) => {
                 toast({
-                    title: "Event skapat!",
-                    description: "Ditt event är skapat och publicerat",
+                    title: "Event uppdaterat!",
+                    description: "Ditt event är uppdaterat och publicerat",
                     status: "success",
                     duration: 5000,
                     isClosable: true,
@@ -210,7 +208,7 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
         });
     };
 
-    if (!open) return null;
+    if (!open || !event) return null;
 
     return (
         <Modal size={"3xl"} isOpen={true} onClose={() => onClose()}>
@@ -221,7 +219,7 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
                 <ModalBody borderRadius={8} backgroundColor={"white"} py={5}>
                     <Flex flexDirection={"column"} gap={5}>
                         <Text fontSize={25} fontWeight={800}>
-                            Skapa nytt event
+                            Uppdatera event
                         </Text>
 
                         <Flex gap={10}>
@@ -317,6 +315,7 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
                                 )}
 
                                 <Checkbox
+                                    defaultChecked={formData.whole_day}
                                     checked={formData.whole_day}
                                     onChange={(t) =>
                                         setFormData((prev) => {
@@ -350,23 +349,15 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
                             )}
                             {eventsTheSameDay.length !== 0 && (
                                 <Box width={"100%"}>
-                                    <Text
-                                        color="red"
-                                        textAlign={"center"}
-                                        marginBottom={5}
-                                    >
+                                    <Text textAlign={"center"}>
                                         Det finns {eventsTheSameDay.length}{" "}
                                         event under denna dag
                                     </Text>
                                     {eventsTheSameDay.map((ev) => {
                                         return (
-                                            <EventCard
-                                                key={ev.id}
-                                                event={ev}
-                                                onClick={() => {}}
-                                                onEdit={() => {}}
-                                                fetchEvents={() => {}}
-                                            />
+                                            <Text key={ev.id}>
+                                                ett event här
+                                            </Text>
                                         );
                                     })}
                                 </Box>
@@ -377,7 +368,7 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
                             onClick={submitEvent}
                             variant={"adminPrimary"}
                         >
-                            {isSubmitting ? <Spinner /> : "Skapa event"}
+                            {isSubmitting ? <Spinner /> : "Uppdatera event"}
                         </Button>
                     </Flex>
                 </ModalBody>
@@ -386,4 +377,4 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
     );
 };
 
-export default CreateEvent;
+export default UpdateEvent;

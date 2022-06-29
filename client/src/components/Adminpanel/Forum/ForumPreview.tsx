@@ -1,4 +1,5 @@
 import {
+    Avatar,
     Box,
     Button,
     Flex,
@@ -72,7 +73,11 @@ const ForumPreview: React.FC<ForumPreviewProps> = ({
                 </Box>
                 <Flex gap={5} marginTop={5}>
                     <Flex gap={2} alignItems="center">
-                        <FaUser color="#00CCEE" />
+                        <Avatar
+                            size={"sm"}
+                            name={post.syssnare.name}
+                            src={post.syssnare.img}
+                        />
                         <Text>{post.syssnare.name}</Text>
                     </Flex>
                     <Flex gap={2} alignItems="center">

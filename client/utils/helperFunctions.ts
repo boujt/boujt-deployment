@@ -35,3 +35,8 @@ export function populateSyssnare(sys) {
 
     return syssnare;
 }
+export function addDays(date: Date, days: number) {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+}

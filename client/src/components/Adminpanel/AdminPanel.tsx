@@ -15,7 +15,7 @@ import AdminSidebar from "./AdminSidebar";
 
 export const AdminPanel: React.FC = () => {
     const { strapi, user, setSyssnareStatus } = useStrapi();
-    console.log(user);
+
     const [activeRoom, setActiveRoom] = useState<ChatRoom | null>(null);
     const [openChat, setOpenChat] = useState<boolean>(false);
 

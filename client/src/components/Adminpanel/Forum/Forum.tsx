@@ -58,7 +58,7 @@ export const Forum: React.FC<ForumProps> = ({}) => {
             })
             .then((res) => {
                 const posts = res.data;
-                console.log(posts);
+
                 setAllPosts(
                     posts.map((post) => {
                         const p: ForumPost = {
@@ -108,7 +108,7 @@ export const Forum: React.FC<ForumProps> = ({}) => {
     };
 
     return (
-        <Center alignItems={"center"} minHeight="100vh" marginTop={20}>
+        <Flex justifyContent={"center"} minHeight="100%" marginTop={20}>
             {openCreatePost && (
                 <CreateForumPost
                     onClose={() => setOpenCreatePost(false)}
@@ -174,6 +174,6 @@ export const Forum: React.FC<ForumProps> = ({}) => {
                     );
                 })}
             </Flex>
-        </Center>
+        </Flex>
     );
 };
