@@ -74,18 +74,22 @@ export const CreateForumPost: React.FC<CreateForumPostProps> = ({
         }
         const fileData = new FormData();
         fileData.append("files", formData.file);
-
-        axios
-            .post(
-                "https://boujt-app-6a3vb.ondigitalocean.app/api/upload",
-                fileData
-            )
-            .then((res) => {
-                return res.data[0].id;
-            })
-            .catch((er) => {
-                return null;
-            });
+        const token = strapi?.getToken();
+        const res = await axios.post(
+            "https://boujt-app-6a3vb.ondigitalocean.app/api/upload",
+            fileData,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        console.log(res);
+        if (res.data) {
+            return res.data[0].id;
+        } else {
+            return -1;
+        }
     };
 
     const handleSubmit = async () => {
@@ -103,7 +107,9 @@ export const CreateForumPost: React.FC<CreateForumPostProps> = ({
         };
         if (formData.file) {
             const fileID = await uploadFile();
-            if (fileID) {
+            console.log(fileID);
+
+            if (fileID !== -1) {
                 payload.files = fileID;
             }
         }

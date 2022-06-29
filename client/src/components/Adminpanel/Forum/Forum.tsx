@@ -78,6 +78,7 @@ export const Forum: React.FC<ForumProps> = ({}) => {
                                     };
                                 }
                             ),
+                            files: post.attributes.files.data,
                         };
                         if (selectedPost !== null && selectedPost.id === p.id) {
                             setSelectedPost(p);

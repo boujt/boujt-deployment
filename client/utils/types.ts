@@ -89,6 +89,7 @@ export type ForumPost = {
     created_at: string;
     syssnare: Syssnare;
     comments: ForumComment[];
+    files?: any[];
 };
 
 export type BlogPost = {
