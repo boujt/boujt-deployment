@@ -28,6 +28,7 @@ import React, { useEffect, useState } from "react";
 import { FaCalendar, FaComment, FaPlus, FaUser } from "react-icons/fa";
 import { PuffLoader } from "react-spinners";
 import { LOADING_STATE } from "../../../../utils/constants";
+import { populateSyssnare } from "../../../../utils/helperFunctions";
 import { doGetActiveRooms } from "../../../../utils/service";
 import { ChatRoom, ForumPost, Syssnare } from "../../../../utils/types";
 import { useStrapi } from "../../../auth/auth";
@@ -65,24 +66,7 @@ export const Forum: React.FC<ForumProps> = ({}) => {
                             title: post.attributes.title,
                             text: post.attributes.text,
                             created_at: post.attributes.createdAt,
-                            syssnare: {
-                                id: post.attributes.syssnare.data.id,
-                                name: post.attributes.syssnare.data.attributes
-                                    .name,
-                                status: post.attributes.syssnare.data.attributes
-                                    .status,
-                                favorite_animal:
-                                    post.attributes.syssnare.data.attributes
-                                        .favorite_animal,
-                                favorite_icecream:
-                                    post.attributes.syssnare.data.attributes
-                                        .favorite_icecream,
-                                img: post.attributes.syssnare.data.attributes
-                                    .profile_img,
-                                people_in_queue:
-                                    post.attributes.syssnare.data.attributes
-                                        .people_in_queue,
-                            },
+                            syssnare: populateSyssnare(post),
                             comments: post.attributes.comments.data.map(
                                 (comment) => {
                                     return {
@@ -90,26 +74,7 @@ export const Forum: React.FC<ForumProps> = ({}) => {
                                         text: comment.attributes.text,
                                         created_at:
                                             comment.attributes.createdAt,
-                                        syssnare: {
-                                            id: comment.attributes.syssnare.data
-                                                .id,
-                                            name: comment.attributes.syssnare
-                                                .data.attributes.name,
-                                            status: comment.attributes.syssnare
-                                                .data.attributes.status,
-                                            favorite_animal:
-                                                comment.attributes.syssnare.data
-                                                    .attributes.favorite_animal,
-                                            favorite_icecream:
-                                                comment.attributes.syssnare.data
-                                                    .attributes
-                                                    .favorite_icecream,
-                                            img: comment.attributes.syssnare
-                                                .data.attributes.profile_img,
-                                            // people_in_queue:
-                                            //     comment.attributes.syssnare.data
-                                            //         .attributes.people_in_queue,
-                                        },
+                                        syssnare: populateSyssnare(comment),
                                     };
                                 }
                             ),

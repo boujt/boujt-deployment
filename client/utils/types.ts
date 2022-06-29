@@ -72,7 +72,7 @@ export type Syssnare = {
     favorite_animal: string;
     favorite_icecream: string;
     img: string;
-    people_in_queue: number;
+    people_in_queue: number; // NOT IN THE COLLECTION. Is calculated at API endpoint
 };
 
 export type ForumComment = {
@@ -154,6 +154,7 @@ export type MovieData = {
 };
 
 export type Event = {
+    id: number;
     title: string;
     text: string;
     when: string;

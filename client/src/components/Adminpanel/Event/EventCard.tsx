@@ -19,7 +19,7 @@ import {
 } from "react-icons/fa";
 import { INTEGER_TO_MONTH } from "../../../../utils/constants";
 import { Event } from "../../../../utils/types";
-import { useConfirmationDialog } from "../../../hooks/useConfirm";
+
 import { box_shadow_dark } from "../../../theme";
 
 type Props = {
@@ -31,14 +31,7 @@ export default function EventCard({ event }: Props) {
     const month_literal: string = INTEGER_TO_MONTH.get(month_integer) || "NaN";
     const date = event.when.substring(event.when.lastIndexOf("-") + 1);
 
-    const { getConfirmation } = useConfirmationDialog();
-
-    const deleteEvent = async () => {
-        const confirmed = await getConfirmation({
-            title: "Attention!",
-            message: "OMG are you sure?",
-        });
-    };
+    const deleteEvent = async () => {};
 
     return (
         <Flex

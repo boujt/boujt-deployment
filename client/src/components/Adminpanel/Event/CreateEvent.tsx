@@ -74,6 +74,7 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
                     date.toLocaleDateString()
                 ) {
                     const newEvent: Event = {
+                        id: ev.id,
                         title: ev.attributes.title,
                         text: ev.attributes.text,
                         when: ev.attributes.when,
@@ -158,7 +159,6 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
             return;
         }
 
-        //TODO: SWAP TO REAL API ROUTE WITH AUTH
         const data: any = {
             title: formData.title,
             text: formData.description,
@@ -346,7 +346,11 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
                                         event under denna dag
                                     </Text>
                                     {eventsTheSameDay.map((ev) => {
-                                        return <Text>ett event här</Text>;
+                                        return (
+                                            <Text key={ev.id}>
+                                                ett event här
+                                            </Text>
+                                        );
                                     })}
                                 </Box>
                             )}
