@@ -13,12 +13,12 @@ export const Event: React.FC = () => {
                 onClose={() => setOpenCreateEvent(false)}
                 onSubmit={() => {}}
             />
-            {/* <Button
+            <Button
                 onClick={() => setOpenCreateEvent(true)}
                 variant="adminPrimary"
             >
                 Skapa event
-            </Button> */}
+            </Button>
             <ViewEvents />
         </Center>
     );

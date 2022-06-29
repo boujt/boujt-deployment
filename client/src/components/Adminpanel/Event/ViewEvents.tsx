@@ -13,7 +13,9 @@ import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import { FaCalendar, FaListUl } from "react-icons/fa";
 import { useData } from "../../../../utils/fetchData";
+import { populateSyssnare } from "../../../../utils/helperFunctions";
 import { Event, EventData } from "../../../../utils/types";
+import { useStrapi } from "../../../auth/auth";
 import EventCard from "./EventCard";
 
 const ViewEvents: React.FC = () => {
@@ -24,29 +26,25 @@ const ViewEvents: React.FC = () => {
     const fontSize = useBreakpointValue({ base: "20", md: "30", sm: "25" });
     const [doCalendarView, setDoCalendarView] = useState(false);
     const [date, setDate] = useState(new Date());
-
-    const example_syssnare: Syssnare = {
-        id: 2,
-        name: "Jakob",
-        status: "online",
-        favorite_animal: "figatt",
-        favorite_icecream: "choklad",
-        img: "aowkdoawd.png",
-        people_in_queue: 2,
-    };
+    const { strapi, user } = useStrapi();
 
     useEffect(() => {
         //TODO: BYT TILL RIKTIG API SAMT HÄMTA SYSSNARE
-        axios
-            .get("http://localhost:1337/api/events")
+
+        strapi
+            ?.find("events", {
+                populate: "deep",
+            })
             .then((res) => {
-                const temp_allEvents: Event[] = res.data.data.map((ev) => {
+                console.log("EVENTS", res);
+                const temp_allEvents: Event[] = res.data.map((ev) => {
                     const event: Event = {
+                        id: ev.id,
                         title: ev.attributes.title,
                         text: ev.attributes.text,
                         when: ev.attributes.when,
                         whole_day: ev.attributes.whole_day,
-                        syssnare: example_syssnare,
+                        // syssnare: populateSyssnare(ev),
                     };
                     if (
                         !event.whole_day &&
