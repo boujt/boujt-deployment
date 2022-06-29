@@ -56,18 +56,19 @@ export const UpdateForumPost: React.FC<UpdateForumPostProps> = ({
     const toast = useToast();
 
     const handleSubmit = () => {
-        //TODO: Submit post from auth user
+        if (
+            formData.title.trim() === "" ||
+            formData.text.trim() === "" ||
+            user?.id !== post.syssnare.id
+        )
+            return;
 
-        if (formData.title.trim() === "" || formData.text.trim() === "") return;
-        const ID_SYS = 1;
         setIsSubmitting(true);
-        //TODO : CHANGE TO STRAPI SDK
-        axios
-            .put(`http://localhost:1337/api/forums/${post.id}`, {
-                data: {
-                    title: formData.title,
-                    text: formData.text,
-                },
+
+        strapi
+            ?.update("forums", post.id, {
+                title: formData.title,
+                text: formData.text,
             })
             .then((res) => {
                 toast({

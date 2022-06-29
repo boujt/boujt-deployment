@@ -25,7 +25,18 @@ const ViewEvents: React.FC = () => {
     const [doCalendarView, setDoCalendarView] = useState(false);
     const [date, setDate] = useState(new Date());
 
+    const example_syssnare: Syssnare = {
+        id: 2,
+        name: "Jakob",
+        status: "online",
+        favorite_animal: "figatt",
+        favorite_icecream: "choklad",
+        img: "aowkdoawd.png",
+        people_in_queue: 2,
+    };
+
     useEffect(() => {
+        //TODO: BYT TILL RIKTIG API SAMT HÄMTA SYSSNARE
         axios
             .get("http://localhost:1337/api/events")
             .then((res) => {
@@ -35,6 +46,7 @@ const ViewEvents: React.FC = () => {
                         text: ev.attributes.text,
                         when: ev.attributes.when,
                         whole_day: ev.attributes.whole_day,
+                        syssnare: example_syssnare,
                     };
                     if (
                         !event.whole_day &&

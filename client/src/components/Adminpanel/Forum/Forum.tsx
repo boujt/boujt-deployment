@@ -48,23 +48,15 @@ export const Forum: React.FC<ForumProps> = ({}) => {
     const [openCreatePost, setOpenCreatePost] = useState<boolean>(false);
     const [allPosts, setAllPosts] = useState<ForumPost[]>([]);
 
-    const example_syssnare: Syssnare = {
-        id: 2,
-        name: "Jakob",
-        status: "online",
-        favorite_animal: "figatt",
-        favorite_icecream: "choklad",
-        img: "aowkdoawd.png",
-        people_in_queue: 2,
-    };
-    console.log(allPosts);
     const getAllPosts = () => {
-        axios
-            .get(
-                "http://localhost:1337/api/forums?_sort=createdAt:ASC&populate=*"
-            )
+        strapi
+            ?.find("forums", {
+                sort: "createdAt:desc",
+
+                populate: "deep",
+            })
             .then((res) => {
-                const posts = res.data.data;
+                const posts = res.data;
                 console.log(posts);
                 setAllPosts(
                     posts.map((post) => {
@@ -73,7 +65,24 @@ export const Forum: React.FC<ForumProps> = ({}) => {
                             title: post.attributes.title,
                             text: post.attributes.text,
                             created_at: post.attributes.createdAt,
-                            syssnare: example_syssnare,
+                            syssnare: {
+                                id: post.attributes.syssnare.data.id,
+                                name: post.attributes.syssnare.data.attributes
+                                    .name,
+                                status: post.attributes.syssnare.data.attributes
+                                    .status,
+                                favorite_animal:
+                                    post.attributes.syssnare.data.attributes
+                                        .favorite_animal,
+                                favorite_icecream:
+                                    post.attributes.syssnare.data.attributes
+                                        .favorite_icecream,
+                                img: post.attributes.syssnare.data.attributes
+                                    .profile_img,
+                                people_in_queue:
+                                    post.attributes.syssnare.data.attributes
+                                        .people_in_queue,
+                            },
                             comments: post.attributes.comments.data.map(
                                 (comment) => {
                                     return {
@@ -81,7 +90,26 @@ export const Forum: React.FC<ForumProps> = ({}) => {
                                         text: comment.attributes.text,
                                         created_at:
                                             comment.attributes.createdAt,
-                                        syssnare: example_syssnare,
+                                        syssnare: {
+                                            id: comment.attributes.syssnare.data
+                                                .id,
+                                            name: comment.attributes.syssnare
+                                                .data.attributes.name,
+                                            status: comment.attributes.syssnare
+                                                .data.attributes.status,
+                                            favorite_animal:
+                                                comment.attributes.syssnare.data
+                                                    .attributes.favorite_animal,
+                                            favorite_icecream:
+                                                comment.attributes.syssnare.data
+                                                    .attributes
+                                                    .favorite_icecream,
+                                            img: comment.attributes.syssnare
+                                                .data.attributes.profile_img,
+                                            // people_in_queue:
+                                            //     comment.attributes.syssnare.data
+                                            //         .attributes.people_in_queue,
+                                        },
                                     };
                                 }
                             ),

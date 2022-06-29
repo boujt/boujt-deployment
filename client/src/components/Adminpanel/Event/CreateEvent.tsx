@@ -27,17 +27,17 @@ import { useData } from "../../../../utils/fetchData";
 import { Event } from "../../../../utils/types";
 import { useStrapi } from "../../../auth/auth";
 type Props = {
-	open: boolean;
-	onClose: () => void;
-	onSubmit: () => void;
+    open: boolean;
+    onClose: () => void;
+    onSubmit: () => void;
 };
 
 type FormData = {
-	start_time: string;
-	end_time: string;
-	whole_day: boolean;
-	title: string;
-	description: string;
+    start_time: string;
+    end_time: string;
+    whole_day: boolean;
+    title: string;
+    description: string;
 };
 type FormDataError = {
     time?: string;
@@ -47,7 +47,7 @@ type FormDataError = {
 };
 
 const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
-	if (!open) return null;
+    if (!open) return null;
 
     const { strapi, user } = useStrapi();
     const [date, setDate] = useState(new Date());
@@ -56,46 +56,46 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
     const [eventsTheSameDay, setEventsTheSameDay] = useState<Event[]>([]);
     const toast = useToast();
 
-	const [formData, setFormData] = useState<FormData>({
-		start_time: "",
-		end_time: "",
-		title: "",
-		description: "",
-		whole_day: false,
-	});
+    const [formData, setFormData] = useState<FormData>({
+        start_time: "",
+        end_time: "",
+        title: "",
+        description: "",
+        whole_day: false,
+    });
 
-	useEffect(() => {
-		axios.get("http://localhost:1337/api/events").then((res) => {
-			const temp: Event[] = [];
-			const allEvents = res.data.data;
-			allEvents.map((ev: any) => {
-				if (
-					new Date(ev.attributes.when).toLocaleDateString() ===
-					date.toLocaleDateString()
-				) {
-					const newEvent: Event = {
-						title: ev.attributes.title,
-						text: ev.attributes.text,
-						when: ev.attributes.when,
-						whole_day: ev.attributes.whole_day,
-					};
-					if (!newEvent.whole_day) {
-						newEvent.start = ev.attributes.start;
-						newEvent.end = ev.attributes.end;
-					}
-					temp.push(newEvent);
-				}
-			});
-			setEventsTheSameDay(temp);
-		});
-	}, [date]);
+    useEffect(() => {
+        axios.get("http://localhost:1337/api/events").then((res) => {
+            const temp: Event[] = [];
+            const allEvents = res.data.data;
+            allEvents.map((ev: any) => {
+                if (
+                    new Date(ev.attributes.when).toLocaleDateString() ===
+                    date.toLocaleDateString()
+                ) {
+                    const newEvent: Event = {
+                        title: ev.attributes.title,
+                        text: ev.attributes.text,
+                        when: ev.attributes.when,
+                        whole_day: ev.attributes.whole_day,
+                    };
+                    if (!newEvent.whole_day) {
+                        newEvent.start = ev.attributes.start;
+                        newEvent.end = ev.attributes.end;
+                    }
+                    temp.push(newEvent);
+                }
+            });
+            setEventsTheSameDay(temp);
+        });
+    }, [date]);
 
-	// console.log(eventsTheSameDay);
+    // console.log(eventsTheSameDay);
 
     const validateTime = (val: string) => {
         if (!val.includes(":")) return [false, 0, 0];
 
-		const split = val.split(":");
+        const split = val.split(":");
 
         if (split.length !== 2) return [false, 0, 0];
 
@@ -152,11 +152,11 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
             }
         }
 
-		if (Object.keys(errors).length !== 0) {
-			setError(errors);
-			setIsSubmitting(false);
-			return;
-		}
+        if (Object.keys(errors).length !== 0) {
+            setError(errors);
+            setIsSubmitting(false);
+            return;
+        }
 
         //TODO: SWAP TO REAL API ROUTE WITH AUTH
         const data: any = {
@@ -170,9 +170,10 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
             data.start = formData.start_time + seconds;
             data.end = formData.end_time + seconds;
         }
-        axios
-            .post("http://localhost:1337/api/events", {
-                data: data,
+
+        strapi
+            ?.create("events", {
+                ...data,
             })
             .then((res) => {
                 toast({
@@ -191,28 +192,28 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
             });
     };
 
-	const changeEndTime = (val: string) => {
-		setFormData((prev) => {
-			return { ...prev, end_time: val };
-		});
-	};
-	const changeStartTime = (val: string) => {
-		setFormData((prev) => {
-			return { ...prev, start_time: val };
-		});
-	};
+    const changeEndTime = (val: string) => {
+        setFormData((prev) => {
+            return { ...prev, end_time: val };
+        });
+    };
+    const changeStartTime = (val: string) => {
+        setFormData((prev) => {
+            return { ...prev, start_time: val };
+        });
+    };
 
-	return (
-		<Modal size={"3xl"} isOpen={true} onClose={() => onClose()}>
-			<ModalOverlay />
+    return (
+        <Modal size={"3xl"} isOpen={true} onClose={() => onClose()}>
+            <ModalOverlay />
 
-			<ModalContent width={"100%"}>
-				<ModalCloseButton />
-				<ModalBody borderRadius={8} backgroundColor={"white"} py={5}>
-					<Flex flexDirection={"column"} gap={5}>
-						<Text fontSize={25} fontWeight={800}>
-							Skapa nytt event
-						</Text>
+            <ModalContent width={"100%"}>
+                <ModalCloseButton />
+                <ModalBody borderRadius={8} backgroundColor={"white"} py={5}>
+                    <Flex flexDirection={"column"} gap={5}>
+                        <Text fontSize={25} fontWeight={800}>
+                            Skapa nytt event
+                        </Text>
 
                         <Flex gap={10}>
                             <Flex
@@ -306,62 +307,62 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
                                     </Text>
                                 )}
 
-								<Checkbox
-									checked={formData.whole_day}
-									onChange={(t) =>
-										setFormData((prev) => {
-											return {
-												...prev,
-												whole_day: t.target.checked,
-											};
-										})
-									}
-								>
-									Heldag
-								</Checkbox>
-							</Flex>
-							<Flex
-								width={"50%"}
-								gap={5}
-								flexDirection={"column"}
-							>
-								<Calendar
-									locale="sv-SE"
-									onChange={setDate}
-									value={date}
-								/>
-							</Flex>
-						</Flex>
-						<Flex justifyContent={"center"}>
-							{eventsTheSameDay.length === 0 && (
-								<Text textAlign={"center"}>
-									Hittade inga andra event under denna dag
-								</Text>
-							)}
-							{eventsTheSameDay.length !== 0 && (
-								<Box width={"100%"}>
-									<Text textAlign={"center"}>
-										Det finns {eventsTheSameDay.length}{" "}
-										event under denna dag
-									</Text>
-									{eventsTheSameDay.map((ev) => {
-										return <Text>ett event här</Text>;
-									})}
-								</Box>
-							)}
-						</Flex>
-						<Button
-							disabled={isSubmitting}
-							onClick={submitEvent}
-							variant={"adminPrimary"}
-						>
-							{isSubmitting ? <Spinner /> : "Skapa event"}
-						</Button>
-					</Flex>
-				</ModalBody>
-			</ModalContent>
-		</Modal>
-	);
+                                <Checkbox
+                                    checked={formData.whole_day}
+                                    onChange={(t) =>
+                                        setFormData((prev) => {
+                                            return {
+                                                ...prev,
+                                                whole_day: t.target.checked,
+                                            };
+                                        })
+                                    }
+                                >
+                                    Heldag
+                                </Checkbox>
+                            </Flex>
+                            <Flex
+                                width={"50%"}
+                                gap={5}
+                                flexDirection={"column"}
+                            >
+                                <Calendar
+                                    locale="sv-SE"
+                                    onChange={setDate}
+                                    value={date}
+                                />
+                            </Flex>
+                        </Flex>
+                        <Flex justifyContent={"center"}>
+                            {eventsTheSameDay.length === 0 && (
+                                <Text textAlign={"center"}>
+                                    Hittade inga andra event under denna dag
+                                </Text>
+                            )}
+                            {eventsTheSameDay.length !== 0 && (
+                                <Box width={"100%"}>
+                                    <Text textAlign={"center"}>
+                                        Det finns {eventsTheSameDay.length}{" "}
+                                        event under denna dag
+                                    </Text>
+                                    {eventsTheSameDay.map((ev) => {
+                                        return <Text>ett event här</Text>;
+                                    })}
+                                </Box>
+                            )}
+                        </Flex>
+                        <Button
+                            disabled={isSubmitting}
+                            onClick={submitEvent}
+                            variant={"adminPrimary"}
+                        >
+                            {isSubmitting ? <Spinner /> : "Skapa event"}
+                        </Button>
+                    </Flex>
+                </ModalBody>
+            </ModalContent>
+        </Modal>
+    );
 };
 
 export default CreateEvent;

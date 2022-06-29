@@ -52,7 +52,7 @@ function useProvideAuth() {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<ErrorStrapiUser>({});
     const strapi = new Strapi({
-        url: "https://shark-app-md2sm.ondigitalocean.app/",
+        url: "https://boujt-app-6a3vb.ondigitalocean.app/",
         prefix: "/api",
         store: {
             key: "strapi_jwt",

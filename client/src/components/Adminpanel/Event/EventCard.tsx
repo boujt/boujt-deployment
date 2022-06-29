@@ -1,8 +1,25 @@
-import { Box, Flex, Heading, Text } from "@chakra-ui/react";
+import {
+    Box,
+    Button,
+    Flex,
+    Heading,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuList,
+    Text,
+} from "@chakra-ui/react";
 import React from "react";
-import { FaCalendarAlt, FaClock } from "react-icons/fa";
+import {
+    FaCalendarAlt,
+    FaClock,
+    FaEdit,
+    FaEllipsisV,
+    FaTrash,
+} from "react-icons/fa";
 import { INTEGER_TO_MONTH } from "../../../../utils/constants";
 import { Event } from "../../../../utils/types";
+import { useConfirmationDialog } from "../../../hooks/useConfirm";
 import { box_shadow_dark } from "../../../theme";
 
 type Props = {
@@ -14,8 +31,18 @@ export default function EventCard({ event }: Props) {
     const month_literal: string = INTEGER_TO_MONTH.get(month_integer) || "NaN";
     const date = event.when.substring(event.when.lastIndexOf("-") + 1);
 
+    const { getConfirmation } = useConfirmationDialog();
+
+    const deleteEvent = async () => {
+        const confirmed = await getConfirmation({
+            title: "Attention!",
+            message: "OMG are you sure?",
+        });
+    };
+
     return (
         <Flex
+            bg="white"
             boxShadow={box_shadow_dark}
             padding={"20px"}
             gap={"20px"}
@@ -58,6 +85,21 @@ export default function EventCard({ event }: Props) {
                     </Text>
                 </Flex>
             </Flex>
+
+            <Menu>
+                <MenuButton as={Button}>
+                    <FaEllipsisV />
+                </MenuButton>
+                <MenuList>
+                    <MenuItem
+                        onClick={() => deleteEvent()}
+                        icon={<FaTrash color="red" />}
+                    >
+                        Ta bort
+                    </MenuItem>
+                    {/* <MenuItem onClick={() => onSelectEdit(event)} icon={<FaEdit />}>Redigera</MenuItem> */}
+                </MenuList>
+            </Menu>
         </Flex>
     );
 }
