@@ -1,4 +1,4 @@
-module.exports = [
+module.exports = ({ env }) => [
   'strapi::errors',
   {
     name: "strapi::security",
@@ -11,15 +11,19 @@ module.exports = [
             "'self'",
             "data:",
             "blob:",
-            "*.digitaloceanspaces.com"
+            `${env("DO_SPACE_BUCKET")}.${env("DO_SPACE_ENDPOINT")}`,
           ],
-          "media-src": ["'self'", "data:", "blob:"],
+          "media-src": [
+            "'self'",
+            "data:",
+            "blob:",
+            `${env("DO_SPACE_BUCKET")}.${env("DO_SPACE_ENDPOINT")}`,
+          ],
           upgradeInsecureRequests: null,
-        },
-      },
-    },
+        }
+      }
+    }
   },
-  'strapi::security',
   'strapi::cors',
   'strapi::poweredBy',
   'strapi::logger',
