@@ -7,8 +7,18 @@ module.exports = ({ env }) => [
         useDefaults: true,
         directives: {
           "connect-src": ["'self'", "https:"],
-          "img-src": ["'self'", "data:", "blob:", 'dl.airtable.com', `${env("DO_SPACE_CDN")}`],
-          "media-src": ["'self'", "data:", "blob:", 'dl.airtable.com', `${env("DO_SPACE_CDN")}`],
+          "img-src": [
+            "'self'",
+            "data:",
+            "blob:",
+            `${env("DO_SPACE_BUCKET")}.${env("DO_SPACE_ENDPOINT")}`,
+          ],
+          "media-src": [
+            "'self'",
+            "data:",
+            "blob:",
+            `${env("DO_SPACE_BUCKET")}.${env("DO_SPACE_ENDPOINT")}`,
+          ],
           upgradeInsecureRequests: null,
         }
       }
