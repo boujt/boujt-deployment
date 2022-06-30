@@ -9,7 +9,8 @@ const PanicButton: React.FC = () => {
     return shouldHide ? null : (
         <img
             onClick={() =>
-                (window.location.href = "https://www.filmstaden.se/")
+                (window.location.href =
+                    "https://www.google.com/search?q=youtube&ei=ePS9YuCXA_69xc8PxteyuAQ&ved=0ahUKEwjgs7Pc79X4AhX-XvEDHcarDEcQ4dUDCA4&uact=5&oq=youtube&gs_lcp=Cgdnd3Mtd2l6EAMyEQguEIAEELEDEIMBEMcBENEDMggIABCABBCxAzIFCAAQgAQyCAgAEIAEELEDMggIABCABBCxAzIICAAQgAQQsQMyCAgAEIAEELEDMggIABCABBCxAzIICAAQgAQQsQMyCwgAEIAEELEDEIMBOgcIABBHELADOgcIABCwAxBDOgoIABDkAhCwAxgBOhIILhDHARCvARDIAxCwAxBDGAI6BQguEIAEOgsILhCABBDHARCvAToICC4QgAQQsQM6CwguEIAEELEDEIMBOggILhCABBDUAjoOCC4QgAQQsQMQxwEQrwFKBAhBGABKBAhGGAFQqQVYkgpg8gpoAXABeACAAUmIAZADkgEBN5gBAKABAcgBE8ABAdoBBggBEAEYCdoBBggCEAEYCA&sclient=gws-wiz")
             }
             style={{
                 position: "fixed",
