@@ -41,6 +41,7 @@ import ListOfSyssnare from "./ListOfSyssnare";
 import { doGetAllSyssnare } from "../../../utils/service";
 import { Syssnare } from "../../../utils/types";
 import { ADMIN_ROUTES } from "../../../utils/constants";
+import { ProfileSettings } from "./ProfileSettings";
 
 interface LinkItemProps {
     name: string;
@@ -113,6 +114,7 @@ const SidebarContent = ({
     const { strapi, user, setSyssnareStatus, logout } = useStrapi();
 
     const [syssnare, setSyssnare] = useState<Syssnare[]>([]);
+    const [openSettings, setOpenSettings] = useState<boolean>(false);
 
     useEffect(() => {
         doGetAllSyssnare()
@@ -135,6 +137,9 @@ const SidebarContent = ({
             h="full"
             {...rest}
         >
+            {openSettings && (
+                <ProfileSettings onClose={() => setOpenSettings(false)} />
+            )}
             <Flex
                 h="20"
                 alignItems="center"
@@ -213,6 +218,14 @@ const SidebarContent = ({
                     onClick={() => logout()}
                 >
                     Logga ut
+                </NavItem>
+                <NavItem
+                    _hover={{ backgroundColor: "gray", color: "white" }}
+                    color="gray"
+                    icon={FiSettings}
+                    onClick={() => setOpenSettings(true)}
+                >
+                    Inställningar
                 </NavItem>
             </Box>
             <Divider />

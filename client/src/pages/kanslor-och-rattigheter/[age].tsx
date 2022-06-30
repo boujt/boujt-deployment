@@ -12,7 +12,7 @@ import { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { CSSProperties, useEffect, useRef } from "react";
+import { CSSProperties, useContext, useEffect, useRef } from "react";
 import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
 import { FaStar, FaTv } from "react-icons/fa";
 import fist from "../../../public/images/fist.png";
@@ -30,6 +30,7 @@ import ImageCard from "../../components/ImageCard";
 import ResponsiveVideoPlayer from "../../components/ResponsiveVideoPlayer";
 import Starfield from "../../components/Starfield";
 import StarfieldButton from "../../components/StarfieldButton";
+import { QuizContext } from "../../context/QuizContext";
 
 type scrollVisibilityApiType = React.ContextType<typeof VisibilityContext>;
 
@@ -77,6 +78,8 @@ const syssnareVideoList = [
 const MainContent: React.FC = () => {
 	const { data, error, isLoading } =
 		useData<SyssnareTipsarData[]>("syssnare-tipsar");
+
+	const { setupQuiz, resetQuizForUser, quizData } = useContext(QuizContext);
 
 	useEffect(() => {
 		console.log("ERROR: ", error);
@@ -184,7 +187,19 @@ const MainContent: React.FC = () => {
 	}, [starfieldButtonsContainer, quizButtonContainer]);
 
 	// Navigate to the quiz page
-	const onQuiz = () => {
+	const onStarQuiz = () => {
+		if (!quizData) return;
+		// Set the corret quiz
+		resetQuizForUser();
+		setupQuiz("star");
+		router.push("/quiz");
+	};
+
+	const onJusticeQuiz = () => {
+		if (!quizData) return;
+		// Set the correct quiz
+		resetQuizForUser();
+		setupQuiz("justice");
 		router.push("/quiz");
 	};
 
@@ -256,7 +271,7 @@ const MainContent: React.FC = () => {
 					flexWrap={"wrap"}
 				>
 					<StarfieldButton
-						onClicked={onQuiz}
+						onClicked={onStarQuiz}
 						width={starfieldButtonWidth}
 						text={"Stjärnquizet"}
 						icon={FaStar}
@@ -281,6 +296,8 @@ const MainContent: React.FC = () => {
 					alignItems={"center"}
 					justifyContent={"center"}
 					gap={"50px"}
+					cursor={"pointer"}
+					onClick={onJusticeQuiz}
 				>
 					<Heading color={"white"}>Rättighetsquizet</Heading>
 					<Flex>

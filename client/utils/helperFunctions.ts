@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Syssnare } from "./types";
+import { Syssnare, UserInfo } from "./types";
 import fileDownload from "js-file-download";
 
 const rand = function () {
@@ -87,4 +87,16 @@ export const uploadFile = async (file: File, token: string) => {
     } else {
         return -1;
     }
+};
+
+export const doUpdateUserInfo = (info: UserInfo, token: string, id: number) => {
+    return axios.put(
+        "https://boujt-app-6a3vb.ondigitalocean.app/api/users/" + id,
+        { ...info },
+        {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+    );
 };

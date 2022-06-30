@@ -173,7 +173,7 @@ export const UpdateForumPost: React.FC<UpdateForumPostProps> = ({
                             onClick={() => handleSubmit()}
                             disabled={isSubmitting}
                         >
-                            {!isSubmitting ? "Uppdatera" : <Spinner />}
+                            {!isSubmitting ? "Spara" : <Spinner />}
                         </Button>
                     </Flex>
                 </ModalBody>

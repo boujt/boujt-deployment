@@ -12,6 +12,7 @@ import { Userdata } from "../components/LoginForm";
 import { ErrorStrapiUser } from "../../utils/types";
 import { SYSSNARE_STATUS } from "../../utils/constants";
 import { doSetStatusSyssnare } from "../../utils/service";
+import axios from "axios";
 
 interface StrapiContext {
     strapi: Strapi | null;
@@ -21,6 +22,7 @@ interface StrapiContext {
     logout: () => void;
     error: ErrorStrapiUser;
     setSyssnareStatus: Function;
+    updateUser: () => void;
 }
 
 const defaultSettings: StrapiContext = {
@@ -28,8 +30,9 @@ const defaultSettings: StrapiContext = {
     user: null,
     loading: false,
     login: () => false,
-    logout: () => console.log("first"),
+    logout: () => {},
     setSyssnareStatus: () => console.error("Strapi not initiated"),
+    updateUser: () => {},
     error: {},
 };
 
@@ -54,6 +57,7 @@ function useProvideAuth() {
     const strapi = new Strapi({
         url: "https://boujt-app-6a3vb.ondigitalocean.app/",
         prefix: "/api",
+
         store: {
             key: "strapi_jwt",
             useLocalStorage: false,
@@ -67,9 +71,22 @@ function useProvideAuth() {
     const setSyssnareStatus = (status: typeof SYSSNARE_STATUS) => {
         doSetStatusSyssnare(status, user.id).then((res) => {
             const updated_user = res.data;
-            delete updated_user.role;
-            setUser(updated_user);
+            updateUser();
         });
+    };
+
+    const updateUser = async (inUser?: any) => {
+        const url_user = inUser ? inUser : user;
+        console.log(inUser);
+        const res = await axios.get(
+            `https://boujt-app-6a3vb.ondigitalocean.app/api/users/${url_user.id}?populate=*`,
+            {
+                headers: {
+                    Authorization: `Bearer ${strapi.getToken()}`,
+                },
+            }
+        );
+        setUser(res.data);
     };
 
     const login = async (data: Userdata) => {
@@ -81,10 +98,10 @@ function useProvideAuth() {
             ?.login({ identifier: data.uid, password: data.pw })
             .then((res) => {
                 doSetStatusSyssnare(SYSSNARE_STATUS.ONLINE, strapi.user.id)
-                    .then((res) => {
+                    .then(async (res) => {
                         const updated_user = res.data;
                         delete updated_user.role;
-                        setUser(updated_user);
+                        await updateUser(updated_user);
                         setLoading(false);
                     })
                     .catch((er) => {
@@ -115,9 +132,9 @@ function useProvideAuth() {
         setLoading(true);
         strapi
             .fetchUser()
-            .then((res) => {
+            .then(async (res) => {
+                await updateUser(res);
                 setLoading(false);
-                setUser(res);
             })
             .catch((er) => {
                 setLoading(false);
@@ -133,5 +150,6 @@ function useProvideAuth() {
         logout,
         setSyssnareStatus,
         error,
+        updateUser,
     };
 }

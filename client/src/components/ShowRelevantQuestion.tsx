@@ -21,7 +21,7 @@ const selected_shadow = "0 0 25px #d3d3d3";
 const ShowRelevantQuestion: React.FC = () => {
 	const {
 		currentQuestionIdx,
-		quizData,
+		questions,
 		setAnswersMap,
 		answersMap,
 		setCurrentQuestionIdx,
@@ -30,7 +30,7 @@ const ShowRelevantQuestion: React.FC = () => {
 
 	const [pickIdx, setPickIdx] = useState(-1);
 
-	const currentQuestion = quizData!.questions[currentQuestionIdx];
+	const currentQuestion = questions[currentQuestionIdx];
 
 	const onAnswer = () => {
 		// Save the option to the user answers
@@ -46,7 +46,7 @@ const ShowRelevantQuestion: React.FC = () => {
 
 	useEffect(() => {
 		// Are we on the last question?
-		if (currentQuestionIdx == quizData?.questions.length) {
+		if (currentQuestionIdx == questions.length) {
 			setDoneWithQuiz(true);
 		}
 	}, [currentQuestionIdx]);

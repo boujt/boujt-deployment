@@ -155,6 +155,13 @@ export type MovieData = {
     video_link_sign_language: string;
 };
 
+export type UserInfo = {
+    name?: string;
+    profile_image?: string;
+    favorite_icecream?: string;
+    favorite_animal?: string;
+};
+
 export type Event = {
     id: number;
     title: string;
@@ -176,6 +183,7 @@ export type EventData = {
 /*  TYPES */
 export type QuizData = {
     questions: Question[];
+    justice_questions: Question[];
 };
 
 export type Question = {
