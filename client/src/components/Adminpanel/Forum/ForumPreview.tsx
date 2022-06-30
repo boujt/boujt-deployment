@@ -17,6 +17,7 @@ import {
     FaComment,
     FaEdit,
     FaEllipsisV,
+    FaPaperclip,
     FaTrash,
     FaUser,
 } from "react-icons/fa";
@@ -65,7 +66,11 @@ const ForumPreview: React.FC<ForumPreviewProps> = ({
         >
             <Flex flexDirection={"column"} onClick={() => onSelect(post)}>
                 <Box>
-                    <Text fontWeight={800}>{post.title}</Text>
+                    <Flex gap={2} alignItems={"center"}>
+                        <Text fontWeight={800}>{post.title}</Text>
+                        {post.files && <FaPaperclip />}
+                    </Flex>
+
                     <Text maxWidth={"90%"}>
                         {post.text.slice(0, 70)}{" "}
                         {post.text.length > 70 && "..."}
