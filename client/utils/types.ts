@@ -164,6 +164,7 @@ export type Event = {
     end?: string;
     whole_day: boolean;
     syssnare: Syssnare;
+    files?: any[];
 };
 
 // Response from API

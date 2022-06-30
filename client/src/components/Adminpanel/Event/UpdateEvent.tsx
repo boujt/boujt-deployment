@@ -168,7 +168,10 @@ const UpdateEvent: React.FC<Props> = ({ open, onClose, onSubmit, event }) => {
             title: formData.title,
             text: formData.description,
             whole_day: formData.whole_day,
-            when: addDays(date, 1),
+            when:
+                date.getDate() === new Date(event.when).getDate()
+                    ? event.when
+                    : addDays(date, 1),
         };
         const seconds = ":00.000";
         if (!formData.whole_day) {

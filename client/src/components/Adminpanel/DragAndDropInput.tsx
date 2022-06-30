@@ -31,24 +31,22 @@ import { SyssnareStatus } from "./SyssnareStatus";
 
 interface DragAndDropInputProps {
     onChange: Function;
+    file: File | null;
 }
 
 export const DragAndDropInput: React.FC<DragAndDropInputProps> = ({
     onChange,
+    file,
 }) => {
-    const [isOpen, setIsOpen] = useState<boolean>(false);
-    const { strapi, user, logout } = useStrapi();
-    const [file, setFiles] = useState<File | null>(null);
-
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files?.length > 0) {
-            setFiles(event.target.files[0]);
-            console.log(event.target.files[0]);
             onChange(event.target.files[0]);
         } else {
             onChange(null);
         }
     };
+
+    console.log(file);
 
     return (
         <>
@@ -86,7 +84,6 @@ export const DragAndDropInput: React.FC<DragAndDropInputProps> = ({
                             left="0"
                             opacity="0"
                             aria-hidden="true"
-                            accept="image/*"
                             // onDragEnter={startAnimation}
                             // onDragLeave={stopAnimation}
                             onChange={(
@@ -103,7 +100,6 @@ export const DragAndDropInput: React.FC<DragAndDropInputProps> = ({
                         variant={"ghost"}
                         color="red"
                         onClick={() => {
-                            setFiles(null);
                             onChange(null);
                         }}
                     >
