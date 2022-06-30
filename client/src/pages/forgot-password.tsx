@@ -50,9 +50,12 @@ const ForgotPassword = () => {
         setLoading(LOADING_STATE.FETCHING);
 
         axios
-            .post("http://localhost:1337/api/auth/forgot-password", {
-                email: "jakobkarlstrand@gmail.com", // user's email
-            })
+            .post(
+                "https://boujt-app-6a3vb.ondigitalocean.app/api/auth/forgot-password",
+                {
+                    email: "jakobkarlstrand@gmail.com", // user's email
+                }
+            )
             .then((response) => {
                 toast({
                     title: "Snyggt!",

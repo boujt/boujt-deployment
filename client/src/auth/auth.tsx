@@ -130,6 +130,7 @@ function useProvideAuth() {
 
     useEffect(() => {
         setLoading(true);
+
         strapi
             .fetchUser()
             .then(async (res) => {

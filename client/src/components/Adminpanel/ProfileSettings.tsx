@@ -26,7 +26,7 @@ import { useStrapi } from "../../auth/auth";
 import { doUpdateUserInfo, uploadFile } from "../../../utils/helperFunctions";
 import axios from "axios";
 import { UserInfo } from "../../../utils/types";
-import { FaPen } from "react-icons/fa";
+import { FaCheck, FaLock, FaPaperPlane, FaPen } from "react-icons/fa";
 
 interface ProfileSettingsProps extends FlexProps {
     onClose: () => void;
@@ -43,10 +43,11 @@ export const ProfileSettings = ({ onClose }: ProfileSettingsProps) => {
     const { user, strapi, updateUser } = useStrapi();
     const [newImage, setNewImage] = useState<File | null>(null);
     const [submitting, setSubmitting] = useState<boolean>(false);
-    const [openPassword, setOpenPassword] = useState<boolean>(false);
+
     const [passwords, setPasswords] = useState<[first: string, second: string]>(
         ["", ""]
     );
+    const [sendingLink, setSendingLink] = useState<string>("no");
     const [submittingPasswords, setSubmittingPasswords] =
         useState<boolean>(false);
 
@@ -81,6 +82,28 @@ export const ProfileSettings = ({ onClose }: ProfileSettingsProps) => {
     };
 
     console.log("USER", user);
+
+    const sendPasswordLink = () => {
+        setSendingLink("yes");
+
+        if (!user?.email) return;
+
+        axios
+            .post(
+                "https://boujt-app-6a3vb.ondigitalocean.app/api/auth/forgot-password",
+                {
+                    email: user?.email, // user's email
+                }
+            )
+            .then((response) => {
+                setSendingLink("done");
+            })
+            .catch((error) => {
+                console.log("An error occurred:", error.response);
+
+                setSendingLink("no");
+            });
+    };
 
     const getImage = () => {
         if (newImage) {
@@ -155,6 +178,27 @@ export const ProfileSettings = ({ onClose }: ProfileSettingsProps) => {
                             </Text>
                             <Text marginTop={-3} fontSize={15}>
                                 {user.email}
+                            </Text>
+                            <Button
+                                disabled={sendingLink !== "no"}
+                                _disabled={{ color: "black", cursor: " unset" }}
+                                onClick={() => sendPasswordLink()}
+                                leftIcon={
+                                    sendingLink === "no" ? (
+                                        <FaLock />
+                                    ) : sendingLink === "done" ? (
+                                        <FaCheck />
+                                    ) : (
+                                        <Spinner size={"sm"} />
+                                    )
+                                }
+                            >
+                                {sendingLink === "no" && "Byt lösenord"}
+                                {sendingLink === "yes" && "Skickar länk"}
+                                {sendingLink === "done" && "Länk skickad!"}
+                            </Button>
+                            <Text fontSize={12} textAlign={"center"} maxW={40}>
+                                En återställningslänk skickas till din email
                             </Text>
                         </Flex>
 

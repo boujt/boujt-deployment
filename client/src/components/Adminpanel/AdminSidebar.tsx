@@ -221,7 +221,7 @@ const SidebarContent = ({
                 </NavItem>
                 <NavItem
                     _hover={{ backgroundColor: "gray", color: "white" }}
-                    color="gray"
+                    color="black"
                     icon={FiSettings}
                     onClick={() => setOpenSettings(true)}
                 >

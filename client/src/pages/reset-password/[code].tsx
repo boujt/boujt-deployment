@@ -59,11 +59,14 @@ const ResetPassword = () => {
             });
         }
         axios
-            .post("http://localhost:1337/api/auth/reset-password", {
-                code: code,
-                password: passwords.pw,
-                passwordConfirmation: passwords.pwConfirm,
-            })
+            .post(
+                "https://boujt-app-6a3vb.ondigitalocean.app/api/auth/reset-password",
+                {
+                    code: code,
+                    password: passwords.pw,
+                    passwordConfirmation: passwords.pwConfirm,
+                }
+            )
             .then((response) => {
                 // Handle success.
                 console.log("Your user's password has been changed.");
