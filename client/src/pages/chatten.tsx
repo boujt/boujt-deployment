@@ -19,6 +19,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { FaComment, FaVideo } from "react-icons/fa";
 import { PuffLoader } from "react-spinners";
@@ -59,6 +60,7 @@ export default function Chat() {
 
     const [syssnare, setSyssnare] = useState<Syssnare[]>([]);
     const [error, setError] = useState<string>("");
+
     const myInterval2 = () =>
         setInterval(function () {
             setTitle((prev) =>
