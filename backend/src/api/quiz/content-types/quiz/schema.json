@@ -4,7 +4,8 @@
   "info": {
     "singularName": "quiz",
     "pluralName": "quizzes",
-    "displayName": "Quiz"
+    "displayName": "Quiz",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -15,6 +16,12 @@
       "type": "component",
       "repeatable": true,
       "component": "quiz.question"
+    },
+    "justice_questions": {
+      "type": "component",
+      "repeatable": true,
+      "component": "quiz.question",
+      "required": true
     }
   }
 }

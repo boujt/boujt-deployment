@@ -15,6 +15,7 @@ const Quiz: NextPage = () => {
 		setCurrentQuestionIdx,
 		quizData,
 		doneWithQuiz,
+		quizMeta,
 	} = useContext(QuizContext);
 
 	const toast = useToast();
@@ -52,16 +53,14 @@ const Quiz: NextPage = () => {
 						flex={1}
 					>
 						<Heading bgGradient={chakra_gradient} bgClip={"text"}>
-							Stjärnquizet
+							{quizMeta.title}
 						</Heading>
 						<Text
 							fontSize={"xl"}
 							fontWeight={"bold"}
 							textAlign={"justify"}
 						>
-							Vill du testa hur mycket du vet om BOUJT? Genomför
-							vårt roliga stjärnquiz tillsammans med syssnaren
-							Madeleine!
+							{quizMeta.description}
 						</Text>
 						<Button
 							width={"150px"}
@@ -72,9 +71,11 @@ const Quiz: NextPage = () => {
 						</Button>
 					</Flex>
 					<Box>
-						<ResponsiveVideoPlayer
-							url={"https://youtu.be/Z3plzp0fuQM"}
-						/>
+						{quizMeta.introduction_video_url && (
+							<ResponsiveVideoPlayer
+								url={quizMeta.introduction_video_url}
+							/>
+						)}
 					</Box>
 				</>
 			) : (
