@@ -212,20 +212,20 @@ const SidebarContent = ({
                     Content Manager
                 </NavItem>
                 <NavItem
-                    _hover={{ backgroundColor: "red", color: "white" }}
-                    color="red"
-                    icon={FiLogOut}
-                    onClick={() => logout()}
-                >
-                    Logga ut
-                </NavItem>
-                <NavItem
                     _hover={{ backgroundColor: "gray", color: "white" }}
                     color="black"
                     icon={FiSettings}
                     onClick={() => setOpenSettings(true)}
                 >
                     Inställningar
+                </NavItem>
+                <NavItem
+                    _hover={{ backgroundColor: "red", color: "white" }}
+                    color="red"
+                    icon={FiLogOut}
+                    onClick={() => logout()}
+                >
+                    Logga ut
                 </NavItem>
             </Box>
             <Divider />
