@@ -45,7 +45,7 @@ const VideoCard: React.FC<Props> = ({ video, backgroundColor }) => {
 				{/* LEFT SIDE */}
 				<Flex
 					flexDir={"column"}
-					justifyContent={"center"}
+					justifyContent={"flex-start"}
 					gap={"25px"}
 					flex={1}
 				>
@@ -68,8 +68,25 @@ const VideoCard: React.FC<Props> = ({ video, backgroundColor }) => {
 						<MyCustomMarkDown>{video.text}</MyCustomMarkDown>
 					)}
 				</Flex>
-				<Flex justifyContent={"center"} flex={1} maxH={"220px"}>
-					<ResponsiveVideoPlayer url={video.video_link} />
+				<Flex flexDir={"column"} flex={1} gap={"25px"}>
+					<Flex
+						flexDir={"column"}
+						justifyContent={"center"}
+						flex={1}
+						maxH={"220px"}
+					>
+						<ResponsiveVideoPlayer url={video.video_link} />
+					</Flex>
+					<Flex
+						flexDir={"column"}
+						justifyContent={"center"}
+						flex={1}
+						maxH={"220px"}
+					>
+						<ResponsiveVideoPlayer
+							url={video.video_link_sign_language}
+						/>
+					</Flex>
 				</Flex>
 			</Flex>
 			{showMore && (

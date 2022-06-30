@@ -2,7 +2,7 @@
 const nextConfig = {
     reactStrictMode: true,
     images: {
-        domains: ["www.unizonjourer.se"],
+        domains: ["www.unizonjourer.se", "boujt-space.fra1.digitaloceanspaces.com"],
     },
 };
 
