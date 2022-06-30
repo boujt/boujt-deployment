@@ -234,6 +234,7 @@ const MainContent: React.FC = () => {
                 <ImageCard
                     image={orangeCardImage}
                     text={orangeCardText}
+                    onClick={onVaraFilmerClick}
                     boxProps={{
                         backgroundColor: "orange",
                     }}
@@ -251,6 +252,7 @@ const MainContent: React.FC = () => {
                 <ImageCard
                     image={redCardImage}
                     text={redCardText}
+                    onClick={onRedCard}
                     boxProps={{
                         backgroundColor: "red",
                     }}
