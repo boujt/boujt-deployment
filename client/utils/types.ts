@@ -127,7 +127,7 @@ export type Worker = {
     name: string;
     email: string;
     role: string;
-    imageUrl: string;
+    image: string;
 };
 
 export type Faq = {
@@ -152,6 +152,7 @@ export type MovieData = {
     title: string;
     text: string;
     video_link: string;
+    video_link_sign_language: string;
 };
 
 export type UserInfo = {
