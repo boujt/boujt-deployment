@@ -1,14 +1,16 @@
 
 ![Logo We Know IT](https://code.weknowit.se/logo.png)
 
-# Projektnamn
-*Kort beskrivning av projektet. T.ex.: "YOO.SE är en mobilapplikation utvecklad av We Know IT på uppdrag av Joachim von Rost på IT'S A WRAP AB."*
+# BOUJT
+BOUJT är en ny hemsida åt Barn och Ungdoms Jour på Teckenspråk. Hemsidan innehåller mycket content och har stöd för video/textchat mellan barn och jouren. På sidan finns även aktiviteter som olika quiz. 
+
+Sidan byggdes sommaren 2022 och hostas med hjälp av Strapi CMS. Deployment sker genom Vercel och Digital Ocean.
 
 |||
 | --- | --- |
-| **Projekttyp** | App/Hemsida/Bemanning |
-| **Kund** | Företagsnamn |
-| **Kontaktperson** | Namn Namn |
+| **Projekttyp** | Hemsida |
+| **Kund** | BOUJT |
+| **Kontaktperson** | Olivia Renner Balkstam |
 
 ### Projektidentitet
 | Roll | Namn | Kontakt |
