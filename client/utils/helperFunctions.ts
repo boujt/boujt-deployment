@@ -1,4 +1,6 @@
+import axios from "axios";
 import { Syssnare } from "./types";
+import fileDownload from "js-file-download";
 
 const rand = function () {
     return Math.random().toString(36).substr(2); // remove `0.`
@@ -40,3 +42,49 @@ export function addDays(date: Date, days: number) {
     result.setDate(result.getDate() + days);
     return result;
 }
+
+export function downloadFile(url: string, filename: string) {
+    axios
+        .get(url, {
+            responseType: "blob",
+        })
+        .then((res) => {
+            fileDownload(res.data, filename);
+        });
+}
+
+export async function getFileFromUrl(
+    url: string,
+    name: string,
+    defaultType = "image/jpeg"
+) {
+    const response = await fetch(url);
+    const data = await response.blob();
+    return new File([data], name, {
+        type: data.type || defaultType,
+    });
+}
+
+export const uploadFile = async (file: File, token: string) => {
+    if (!file) {
+        return;
+    }
+    const fileData = new FormData();
+    fileData.append("files", file);
+
+    const res = await axios.post(
+        "https://boujt-app-6a3vb.ondigitalocean.app/api/upload",
+        fileData,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+    );
+
+    if (res.data) {
+        return res.data[0].id;
+    } else {
+        return -1;
+    }
+};

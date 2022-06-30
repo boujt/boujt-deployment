@@ -25,6 +25,7 @@ import { Event } from "../../../../utils/types";
 import { useStrapi } from "../../../auth/auth";
 
 import { box_shadow_dark } from "../../../theme";
+import FilePreview from "../FilePreview";
 
 type Props = {
     event: Event;
@@ -35,6 +36,7 @@ export default function EventModal({ event }: Props) {
     const month_literal: string = INTEGER_TO_MONTH.get(month_integer) || "NaN";
     const date = event.when.substring(event.when.lastIndexOf("-") + 1);
     const { user } = useStrapi();
+    console.log(event);
     return (
         <Flex backgroundColor={"white"} padding={6} overflowY="scroll">
             <Flex
@@ -97,6 +99,8 @@ export default function EventModal({ event }: Props) {
                         </Flex>
                     </Box>
                 </Flex>
+                {event.files && <FilePreview file={event.files[0]} />}
+
                 <Text my={10}>{event.text}</Text>
                 <Flex flexDirection={"column"}></Flex>
             </Flex>

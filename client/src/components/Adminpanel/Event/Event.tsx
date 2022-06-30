@@ -14,7 +14,8 @@ import { useEffect, useState } from "react";
 import { populateSyssnare } from "../../../../utils/helperFunctions";
 import { Event } from "../../../../utils/types";
 import { useStrapi } from "../../../auth/auth";
-import CreateEvent from "./CreateEvent";
+import CreateAndEditEvent from "./CreateEvent";
+
 import EventModal from "./EventModal";
 import UpdateEvent from "./UpdateEvent";
 import ViewEvents from "./ViewEvents";
@@ -44,6 +45,9 @@ export const EventRoot: React.FC = () => {
                         whole_day: ev.attributes.whole_day,
                         syssnare: populateSyssnare(ev),
                     };
+                    if (ev.attributes.files) {
+                        event.files = ev.attributes.files.data;
+                    }
                     if (
                         !event.whole_day &&
                         ev.attributes.start &&
@@ -90,7 +94,7 @@ export const EventRoot: React.FC = () => {
             </Flex>
 
             {openCreateEvent && (
-                <CreateEvent
+                <CreateAndEditEvent
                     open={openCreateEvent}
                     onClose={() => setOpenCreateEvent(false)}
                     onSubmit={() => {

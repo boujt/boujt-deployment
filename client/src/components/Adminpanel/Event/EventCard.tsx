@@ -15,6 +15,7 @@ import {
     FaClock,
     FaEdit,
     FaEllipsisV,
+    FaPaperclip,
     FaTrash,
 } from "react-icons/fa";
 import { INTEGER_TO_MONTH } from "../../../../utils/constants";
@@ -76,6 +77,7 @@ export default function EventCard({
                 </Flex>
                 {/* Text part */}
                 <Flex width="50%" flexDir={"column"} justifyContent={"center"}>
+                    {event.files && <FaPaperclip />}
                     <Text fontWeight={"bold"}>{event.title}</Text>
                     <Text>{event.text}</Text>
                 </Flex>

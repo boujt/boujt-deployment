@@ -34,6 +34,7 @@ import {
     FaPlus,
     FaUser,
 } from "react-icons/fa";
+import { uploadFile } from "../../../../utils/helperFunctions";
 
 import { ChatRoom, ForumPost, Syssnare } from "../../../../utils/types";
 import { useStrapi } from "../../../auth/auth";
@@ -67,31 +68,6 @@ export const CreateForumPost: React.FC<CreateForumPostProps> = ({
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const toast = useToast();
 
-    const uploadFile = async () => {
-        console.log(formData);
-        if (!formData.file) {
-            return;
-        }
-        const fileData = new FormData();
-        fileData.append("files", formData.file);
-        const token = strapi?.getToken();
-        const res = await axios.post(
-            "https://boujt-app-6a3vb.ondigitalocean.app/api/upload",
-            fileData,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            }
-        );
-        console.log(res);
-        if (res.data) {
-            return res.data[0].id;
-        } else {
-            return -1;
-        }
-    };
-
     const handleSubmit = async () => {
         if (
             formData.title.trim() === "" ||
@@ -106,8 +82,7 @@ export const CreateForumPost: React.FC<CreateForumPostProps> = ({
             syssnare: user.id,
         };
         if (formData.file) {
-            const fileID = await uploadFile();
-            console.log(fileID);
+            const fileID = await uploadFile(formData.file, strapi?.getToken());
 
             if (fileID !== -1) {
                 payload.files = fileID;
@@ -176,6 +151,7 @@ export const CreateForumPost: React.FC<CreateForumPostProps> = ({
                         />
 
                         <DragAndDropInput
+                            file={formData.file ?? null}
                             onChange={(file: File) => {
                                 setFormData((prev) => {
                                     return { ...prev, file: file };
@@ -188,9 +164,6 @@ export const CreateForumPost: React.FC<CreateForumPostProps> = ({
                             disabled={isSubmitting}
                         >
                             {!isSubmitting ? "Publicera" : <Spinner />}
-                        </Button>
-                        <Button onClick={() => uploadFile()}>
-                            Upload file test
                         </Button>
                     </Flex>
                 </ModalBody>
