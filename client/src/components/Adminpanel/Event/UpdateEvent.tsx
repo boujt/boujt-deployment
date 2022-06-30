@@ -24,9 +24,15 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { ERRORS } from "../../../../utils/constants";
 import { useData } from "../../../../utils/fetchData";
-import { addDays, populateSyssnare } from "../../../../utils/helperFunctions";
+import {
+    addDays,
+    getFileFromUrl,
+    populateSyssnare,
+    uploadFile,
+} from "../../../../utils/helperFunctions";
 import { Event } from "../../../../utils/types";
 import { useStrapi } from "../../../auth/auth";
+import { DragAndDropInput } from "../DragAndDropInput";
 type Props = {
     open: boolean;
     onClose: () => void;
@@ -40,6 +46,7 @@ type FormData = {
     whole_day: boolean;
     title: string;
     description: string;
+    file?: File;
 };
 type FormDataError = {
     time?: string;
@@ -55,6 +62,7 @@ const UpdateEvent: React.FC<Props> = ({ open, onClose, onSubmit, event }) => {
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const [eventsTheSameDay, setEventsTheSameDay] = useState<Event[]>([]);
     const toast = useToast();
+    const [fileChanged, setFileChanged] = useState<boolean>(false);
 
     const [formData, setFormData] = useState<FormData>({
         start_time: event.start ? event.start.slice(0, 5) : "",
@@ -64,7 +72,22 @@ const UpdateEvent: React.FC<Props> = ({ open, onClose, onSubmit, event }) => {
         whole_day: event.whole_day,
     });
 
-    console.log(event);
+    const getFile = async () => {
+        if (event.files) {
+            const f = await getFileFromUrl(
+                event.files[0].attributes.url,
+                event.files[0].attributes.name,
+                event.files[0].attributes.mime
+            );
+            setFormData((prev) => {
+                return { ...prev, file: f };
+            });
+        }
+    };
+
+    useEffect(() => {
+        getFile();
+    }, []);
 
     useEffect(() => {
         strapi
@@ -126,7 +149,7 @@ const UpdateEvent: React.FC<Props> = ({ open, onClose, onSubmit, event }) => {
         return [false, 0, 0];
     };
 
-    const submitEvent = () => {
+    const submitEvent = async () => {
         setError({});
         const errors: FormDataError = {};
         setIsSubmitting(true);
@@ -173,6 +196,14 @@ const UpdateEvent: React.FC<Props> = ({ open, onClose, onSubmit, event }) => {
                     ? event.when
                     : addDays(date, 1),
         };
+        if (fileChanged && formData.file) {
+            const fileID = await uploadFile(formData.file, strapi?.getToken());
+
+            if (fileID !== -1) {
+                data.files = fileID;
+            }
+        }
+
         const seconds = ":00.000";
         if (!formData.whole_day) {
             data.start = formData.start_time + seconds;
@@ -344,6 +375,15 @@ const UpdateEvent: React.FC<Props> = ({ open, onClose, onSubmit, event }) => {
                                 />
                             </Flex>
                         </Flex>
+                        <DragAndDropInput
+                            onChange={(file: File) => {
+                                setFileChanged(true);
+                                setFormData((prev) => {
+                                    return { ...prev, file: file };
+                                });
+                            }}
+                            file={formData.file ?? null}
+                        />
                         <Flex justifyContent={"center"}>
                             {eventsTheSameDay.length === 0 && (
                                 <Text textAlign={"center"}>
@@ -371,7 +411,7 @@ const UpdateEvent: React.FC<Props> = ({ open, onClose, onSubmit, event }) => {
                             onClick={submitEvent}
                             variant={"adminPrimary"}
                         >
-                            {isSubmitting ? <Spinner /> : "Uppdatera event"}
+                            {isSubmitting ? <Spinner /> : "Spara"}
                         </Button>
                     </Flex>
                 </ModalBody>

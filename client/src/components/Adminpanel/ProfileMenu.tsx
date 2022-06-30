@@ -38,7 +38,10 @@ export const ProfileMenu: React.FC<ProfileMenuProps> = ({ name }) => {
         <Flex flexDirection={"column"} minWidth={180} px={4}>
             {/*TODO: Lägg till Avatar*/}
             <Flex>
-                <Avatar name={user?.name} src={user?.profile_image}>
+                <Avatar
+                    name={user?.name}
+                    src={user?.profile_image ? user.profile_image.url : ""}
+                >
                     <AvatarBadge boxSize="1.25em" bg="green.500" />
                 </Avatar>
                 <Flex marginLeft={2} flexDirection={"column"}>

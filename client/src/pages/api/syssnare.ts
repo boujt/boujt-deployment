@@ -34,9 +34,7 @@ export default async function handler(
     );
 
     const filtered_data = syssnare_data.data.map((el) => {
-        const img = el.profile_image
-            ? process.env.STRAPI_API_BASE_URL + el.profile_image.url
-            : null;
+        const img = el.profile_image ? el.profile_image.url : null;
 
         const in_queue = request_chats_data.data.data.filter((cr) => {
             return cr.attributes.syssnare.data.id === el.id;

@@ -154,6 +154,13 @@ export type MovieData = {
     video_link: string;
 };
 
+export type UserInfo = {
+    name?: string;
+    profile_image?: string;
+    favorite_icecream?: string;
+    favorite_animal?: string;
+};
+
 export type Event = {
     id: number;
     title: string;

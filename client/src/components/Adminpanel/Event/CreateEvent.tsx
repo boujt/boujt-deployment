@@ -24,9 +24,14 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { ERRORS } from "../../../../utils/constants";
 import { useData } from "../../../../utils/fetchData";
-import { addDays, populateSyssnare } from "../../../../utils/helperFunctions";
+import {
+    addDays,
+    populateSyssnare,
+    uploadFile,
+} from "../../../../utils/helperFunctions";
 import { Event } from "../../../../utils/types";
 import { useStrapi } from "../../../auth/auth";
+import { DragAndDropInput } from "../DragAndDropInput";
 import EventCard from "./EventCard";
 type Props = {
     open: boolean;
@@ -40,6 +45,7 @@ type FormData = {
     whole_day: boolean;
     title: string;
     description: string;
+    file?: File;
 };
 type FormDataError = {
     time?: string;
@@ -126,7 +132,7 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
         return [false, 0, 0];
     };
 
-    const submitEvent = () => {
+    const submitEvent = async () => {
         setError({});
         const errors: FormDataError = {};
         setIsSubmitting(true);
@@ -171,7 +177,14 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
             when: addDays(date, 1),
             syssnare: user?.id,
         };
-        console.log("DATE", date);
+
+        if (formData.file) {
+            const fileID = await uploadFile(formData.file, strapi?.getToken());
+
+            if (fileID !== -1) {
+                data.files = fileID;
+            }
+        }
         const seconds = ":00.000";
         if (!formData.whole_day) {
             data.start = formData.start_time + seconds;
@@ -342,6 +355,14 @@ const CreateEvent: React.FC<Props> = ({ open, onClose, onSubmit }) => {
                                 />
                             </Flex>
                         </Flex>
+                        <DragAndDropInput
+                            file={formData.file ?? null}
+                            onChange={(file: File) => {
+                                setFormData((prev) => {
+                                    return { ...prev, file: file };
+                                });
+                            }}
+                        />
                         <Flex justifyContent={"center"}>
                             {eventsTheSameDay.length === 0 && (
                                 <Text textAlign={"center"}>
