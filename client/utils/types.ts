@@ -183,6 +183,7 @@ export type EventData = {
 /*  TYPES */
 export type QuizData = {
     questions: Question[];
+    justice_questions: Question[];
 };
 
 export type Question = {

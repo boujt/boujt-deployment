@@ -27,7 +27,8 @@ const background: CSSProperties = {
 };
 
 const QuizResults: React.FC = () => {
-	const { quizData, answersMap, resetQuizForUser } = useContext(QuizContext);
+	const { questions, answersMap, resetQuizForUser, quizMeta } =
+		useContext(QuizContext);
 	const [breakFlex] = useMediaQuery("(max-width: 900px)");
 	const router = useRouter();
 
@@ -44,7 +45,7 @@ const QuizResults: React.FC = () => {
 	};
 
 	let numberOfCorrectAnswers = 0;
-	quizData!.questions.forEach((question) => {
+	questions.forEach((question) => {
 		numberOfCorrectAnswers += isAnswerCorrect(question) ? 1 : 0;
 	});
 
@@ -70,8 +71,8 @@ const QuizResults: React.FC = () => {
 						Poäng
 					</Heading>
 					<Text fontSize={"xl"} fontWeight={"bold"}>
-						Du fick {numberOfCorrectAnswers} av{" "}
-						{quizData!.questions.length} poäng
+						Du fick {numberOfCorrectAnswers} av {questions.length}{" "}
+						poäng
 					</Text>
 					<Text>
 						Tack för att du gjorde testet och bra jobbat! Glöm inte
@@ -79,7 +80,11 @@ const QuizResults: React.FC = () => {
 						chatta, mejla eller ställa en fråga i frågelådan! Kramar
 						från BOUJT!
 					</Text>
-					<ResponsiveVideoPlayer url="https://youtu.be/Ow4Dt2XRWEc" />
+					{quizMeta.solution_video_url && (
+						<ResponsiveVideoPlayer
+							url={quizMeta.solution_video_url}
+						/>
+					)}
 				</Flex>
 				{/* RIGHT */}
 				<Flex
@@ -95,7 +100,7 @@ const QuizResults: React.FC = () => {
 						Dina svar
 					</Heading>
 					{/* Map over each question and show answer */}
-					{quizData?.questions.map((question, idx) => {
+					{questions.map((question, idx) => {
 						return (
 							<Flex justifyContent={"center"} key={idx}>
 								<Flex alignSelf={"center"}>
