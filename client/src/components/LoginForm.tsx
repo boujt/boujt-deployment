@@ -17,11 +17,13 @@ import {
     Spinner,
     Alert,
     AlertIcon,
+    Text,
 } from "@chakra-ui/react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import { useStrapi } from "../auth/auth";
 import { useAnimationFrame } from "framer-motion";
 import { box_shadow_light } from "../theme";
+import { useRouter } from "next/router";
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
@@ -37,6 +39,7 @@ const LoginForm = () => {
     const { strapi, user, login, logout, loading, error } = useStrapi();
     const usernameRef = useRef(null);
     const passwordRef = useRef(null);
+    const router = useRouter();
     const handleShowClick = () => setShowPassword(!showPassword);
 
     const handleLogin = (e: any) => {
@@ -72,7 +75,9 @@ const LoginForm = () => {
                 justifyContent="center"
                 alignItems="center"
             >
-                <Heading color="teal.400">Logga in som Syssnare</Heading>
+                <Heading marginBottom={5} color="turquoise">
+                    Logga in som Syssnare
+                </Heading>
                 <Box minW={{ base: "90%", md: "468px" }}>
                     <form onSubmit={(e) => handleLogin(e)}>
                         <Stack
@@ -123,8 +128,7 @@ const LoginForm = () => {
                             <Button
                                 borderRadius={0}
                                 type="submit"
-                                variant="solid"
-                                colorScheme="teal"
+                                variant={"adminPrimary"}
                                 width="full"
                             >
                                 {loading ? <Spinner /> : "Login"}
@@ -139,7 +143,15 @@ const LoginForm = () => {
                     </form>
                 </Box>
             </Stack>
-            <Box>
+            <Text
+                onClick={() => router.push("/forgot-password")}
+                cursor={"pointer"}
+                color="turquoise"
+                as="a"
+            >
+                Glömt ditt lösenord?
+            </Text>
+            <Box my={5}>
                 Kontakta administratören om du behöver tillgång till ett konto
             </Box>
         </Flex>

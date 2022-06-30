@@ -1,4 +1,4 @@
-import { Button, Flex, Text } from "@chakra-ui/react";
+import { Button, Center, Flex, Text } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import { FaBan, FaWifi } from "react-icons/fa";
 import { DAILY_MEETING_BASE_URL } from "../../../utils/constants";
@@ -11,82 +11,81 @@ import { SyssnareStatus } from "./SyssnareStatus";
 import { SYSSNARE_STATUS } from "../../../utils/constants";
 import { doGetAllSyssnare } from "../../../utils/service";
 import ListOfSyssnare from "./ListOfSyssnare";
+import AdminSidebar from "./AdminSidebar";
 
 export const AdminPanel: React.FC = () => {
-  const { strapi, user, setSyssnareStatus } = useStrapi();
-  console.log(user);
-  const [activeRoom, setActiveRoom] = useState<ChatRoom | null>(null);
-  const [openChat, setOpenChat] = useState<boolean>(false);
+    const { strapi, user, setSyssnareStatus } = useStrapi();
 
-  const goActive = () => {
-    //TODO Ändra i databasen
-    setSyssnareStatus(SYSSNARE_STATUS.AVAILABLE);
-  };
-  const goInactive = () => {
-    //TODO: Ändra i databasen
-    setSyssnareStatus(SYSSNARE_STATUS.ONLINE);
-  };
+    const [activeRoom, setActiveRoom] = useState<ChatRoom | null>(null);
+    const [openChat, setOpenChat] = useState<boolean>(false);
 
-  return (
-    <div>
-      <Flex justifyContent={"center"} bgColor={"#ebebeb"} padding="1rem 0">
-        <Text align={"center"} fontWeight={900} fontSize={30}>
-          Adminpanel
-        </Text>
-      </Flex>
-      <Flex
-        flexDirection={"row"}
-        justifyContent={"space-between"}
-        paddingRight={100}
-        paddingLeft={100}
-        paddingTop={10}
-      >
-        <Flex
-          justifyContent={"center"}
-          alignItems="center"
-          flexDirection={"column"}
-          width="100%"
-        >
-          <Flex
-            width={"100%"}
-            justifyContent="center"
-            alignItems={"center"}
-            paddingTop="50"
-          >
-            {!openChat && (
-              <ChatRoomController
-                activeRoom={activeRoom}
-                onChatEnter={() => setOpenChat(true)}
-                setActiveRoom={(room: ChatRoom) => setActiveRoom(room)}
-              />
-            )}
-          </Flex>
-          {!activeRoom && (
-            <Flex marginTop={20} height={300} justifyContent="center">
-              {user.status === SYSSNARE_STATUS.AVAILABLE ? (
-                <Button
-                  onClick={() => goInactive()}
-                  leftIcon={<FaBan />}
-                  color="red"
+    const goActive = () => {
+        setSyssnareStatus(SYSSNARE_STATUS.AVAILABLE);
+    };
+    const goInactive = () => {
+        setSyssnareStatus(SYSSNARE_STATUS.ONLINE);
+    };
+
+    return (
+        <Center height={"100%"}>
+            <Flex
+                flexDirection={"row"}
+                justifyContent={"space-between"}
+                paddingRight={100}
+                paddingLeft={100}
+                paddingTop={10}
+            >
+                <Flex
+                    justifyContent={"center"}
+                    alignItems="center"
+                    flexDirection={"column"}
+                    width="100%"
                 >
-                  Gå offline
-                </Button>
-              ) : (
-                <Button
-                  onClick={() => goActive()}
-                  leftIcon={<FaWifi />}
-                  color="green"
-                >
-                  Gå online
-                </Button>
-              )}
+                    <Flex
+                        width={"100%"}
+                        justifyContent="center"
+                        alignItems={"center"}
+                        paddingTop="50"
+                    >
+                        {!openChat && (
+                            <ChatRoomController
+                                activeRoom={activeRoom}
+                                onChatEnter={() => setOpenChat(true)}
+                                setActiveRoom={(room: ChatRoom) =>
+                                    setActiveRoom(room)
+                                }
+                            />
+                        )}
+                    </Flex>
+                    {!activeRoom && (
+                        <Flex
+                            marginTop={20}
+                            height={300}
+                            justifyContent="center"
+                        >
+                            {user.status === SYSSNARE_STATUS.AVAILABLE ? (
+                                <Button
+                                    onClick={() => goInactive()}
+                                    leftIcon={<FaBan />}
+                                    backgroundColor="red"
+                                    color="white"
+                                >
+                                    Gå offline
+                                </Button>
+                            ) : (
+                                <Button
+                                    onClick={() => goActive()}
+                                    leftIcon={<FaWifi />}
+                                    colorScheme="green"
+                                    variant={"solid"}
+                                >
+                                    Gå online
+                                </Button>
+                            )}
+                        </Flex>
+                    )}
+                </Flex>
             </Flex>
-          )}
-        </Flex>
-        <Flex maxWidth={200} flexDirection={"column"}>
-          <ProfileMenu name={user?.name || user?.usernamee} />
-        </Flex>
-      </Flex>
-    </div>
-  );
+        </Center>
+    );
 };

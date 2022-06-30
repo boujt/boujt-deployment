@@ -13,6 +13,7 @@ import {
     useMediaQuery,
 } from "@chakra-ui/react";
 import { NextPage } from "next";
+import Head from "next/head";
 import { IconType } from "react-icons";
 import { FaChrome, FaEdge, FaFirefoxBrowser, FaSafari } from "react-icons/fa";
 import BoujtTemplate from "../components/BoujtTemplate";
@@ -128,6 +129,13 @@ const BrowserView: React.FC<{ browser: Browser; url: string }> = ({
 const HideYourVisist: NextPage = () => {
     return (
         <BoujtTemplate>
+            <Head>
+                <title>Göm ditt besök</title>
+                <meta
+                    name="viewport"
+                    content="initial-scale=1.0, width=device-width"
+                />
+            </Head>
             {/* MAIN CONTENT */}
             <Flex pt={"100px"} alignItems={"center"} flexDir={"column"}>
                 <Heading

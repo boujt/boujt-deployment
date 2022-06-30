@@ -58,9 +58,10 @@ const NavbarItem: NextPage<NavbarItemProps> = (props: NavbarItemProps) => {
                     noOfLines={1}
                     marginTop={"auto"}
                     marginBottom={"auto"}
-                    variant="link"
-                    fontSize={{ base: "10px", md: "13px", lg: "17px" }}
+                    color="white"
+                    fontSize={{ base: "14px", md: "16px", lg: "17px" }}
                     padding={3}
+                    fontWeight={600}
                     overflow={"visible"}
                 >
                     {props.text}

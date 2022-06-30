@@ -5,8 +5,10 @@ import {
     FaFacebookSquare,
     FaInstagramSquare,
     FaLock,
+    FaLockOpen,
     FaSnapchatSquare,
 } from "react-icons/fa";
+import { useStrapi } from "../auth/auth";
 
 /* 
 Let's define the social icons svg at the top
@@ -41,6 +43,8 @@ const Footer: React.FC = () => {
     const openLink = (link: string) => {
         window.open(link, "_blank");
     };
+
+    const { user } = useStrapi();
 
     return (
         <Center
@@ -87,9 +91,14 @@ const Footer: React.FC = () => {
             </Text>
             <Link href="/admin">
                 <Flex marginTop={5} alignItems={"center"} gap={2}>
-                    <FaLock color="yellow" />
+                    {user ? (
+                        <FaLockOpen color="yellow" />
+                    ) : (
+                        <FaLock color="yellow" />
+                    )}
+
                     <Text cursor={"pointer"} color="yellow">
-                        Logga in som syssnare
+                        {user ? "Till adminpanelen" : "Logga in som syssnare"}
                     </Text>
                 </Flex>
             </Link>

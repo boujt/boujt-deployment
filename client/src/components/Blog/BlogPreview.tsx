@@ -33,13 +33,14 @@ const BlogPreview: React.FC<Props> = ({ post }) => {
                     justifyContent="center"
                     h={"210px"}
                     bg={"gray.100"}
-                    py={6}
-                    px={6}
-                    mb={6}
                     pos={"relative"}
                 >
                     <img
-                        style={{ maxHeight: "100%", maxWidth: "100%" }}
+                        style={{
+                            height: "auto",
+                            maxWidth: "100%",
+                            objectFit: "contain",
+                        }}
                         src={
                             post?.cover_image ||
                             "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Temp_plate.svg/1280px-Temp_plate.svg.png"

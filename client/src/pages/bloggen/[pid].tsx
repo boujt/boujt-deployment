@@ -9,6 +9,7 @@ import {
     Text,
 } from "@chakra-ui/react";
 import { NextPage } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { SyntheticEvent, useState } from "react";
 import { FaEye } from "react-icons/fa";
@@ -35,6 +36,13 @@ const Blog: NextPage = () => {
     const post = useData<BlogPost>(`posts/${pid}`);
     return (
         <BoujtTemplate strict={false}>
+            <Head>
+                <title>Bloggen | {post.data?.title}</title>
+                <meta
+                    name="viewport"
+                    content="initial-scale=1.0, width=device-width"
+                />
+            </Head>
             {!post.isLoading && (
                 <>
                     <Flex

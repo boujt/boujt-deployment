@@ -9,7 +9,7 @@ const sgMail = require("@sendgrid/mail");
 
 var fs = require("fs");
 
-import html_template from './fragelada_template';
+import html_template from "./fragelada_template";
 
 export default async function handler(
     req: NextApiRequest,
@@ -24,7 +24,7 @@ export default async function handler(
             encodeValuesOnly: true,
         }
     );
-    console.log(query);
+
     if (req.method === "GET") {
         const { data } = await axios.get(
             `${process.env.STRAPI_API_BASE_URL}/api/frageladas?${query}&populate=*`,

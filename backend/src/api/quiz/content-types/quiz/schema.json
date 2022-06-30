@@ -1,21 +1,27 @@
 {
-  "kind": "collectionType",
+  "kind": "singleType",
   "collectionName": "quizzes",
   "info": {
     "singularName": "quiz",
     "pluralName": "quizzes",
-    "displayName": "Quiz"
+    "displayName": "Quiz",
+    "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
     "questions": {
-      "displayName": "Question",
       "type": "component",
       "repeatable": true,
       "component": "quiz.question"
+    },
+    "justice_questions": {
+      "type": "component",
+      "repeatable": true,
+      "component": "quiz.question",
+      "required": true
     }
   }
 }

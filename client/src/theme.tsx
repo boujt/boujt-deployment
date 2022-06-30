@@ -47,15 +47,25 @@ const theme = extendTheme({
 					backgroundColor: "yellow",
 					color: "black",
 					borderRadius: "100px",
+					_hover: {
+						backgroundColor: "#fff07a",
+					},
 				},
 				adminPrimary: {
 					backgroundColor: "turquoise",
 					color: "white",
+					borderRadius: "4px",
+					_hover: {
+						backgroundColor: "#8FE4F5",
+					},
 				},
 				information: {
 					backgroundColor: "white",
 					color: "black",
 					borderRadius: "100px",
+					_hover: {
+						backgroundColor: "#FFE",
+					},
 				},
 			},
 		},

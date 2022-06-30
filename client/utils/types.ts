@@ -32,6 +32,32 @@ export type ErrorStrapiUser = {
     invalid_credentials?: boolean;
 };
 
+export type ConfirmHook = {
+    prompt: string;
+    isOpen: boolean;
+    proceed: Function | null;
+    cancel: Function | null;
+};
+
+export type DialogWidthType = "xl" | "lg" | "md" | "sm";
+
+export type OpenDialogType = (args: {
+    component: React.ReactNode;
+    title: string;
+    okCallback: () => void;
+    cancelCallback?: () => void;
+    width?: DialogWidthType;
+    okText?: string;
+    cancelText?: string;
+}) => void;
+
+export interface DialogPropTypes {
+    openDialog: OpenDialogType;
+    closeDialog: EmptyFunctionType;
+}
+
+export type EmptyFunctionType = () => void;
+
 export type ChatRoom = {
     room_url: string;
     syssnare: number;
@@ -46,6 +72,24 @@ export type Syssnare = {
     favorite_animal: string;
     favorite_icecream: string;
     img: string;
+    people_in_queue: number; // NOT IN THE COLLECTION. Is calculated at API endpoint
+};
+
+export type ForumComment = {
+    id: number;
+    syssnare: Syssnare;
+    text: string;
+    created_at: string;
+};
+
+export type ForumPost = {
+    id: number;
+    title: string;
+    text: string;
+    created_at: string;
+    syssnare: Syssnare;
+    comments: ForumComment[];
+    files?: any[];
 };
 
 export type BlogPost = {
@@ -83,7 +127,7 @@ export type Worker = {
     name: string;
     email: string;
     role: string;
-    imageUrl: string;
+    image: string;
 };
 
 export type Faq = {
@@ -108,17 +152,64 @@ export type MovieData = {
     title: string;
     text: string;
     video_link: string;
-}
+    video_link_sign_language: string;
+};
+
+export type UserInfo = {
+    name?: string;
+    profile_image?: string;
+    favorite_icecream?: string;
+    favorite_animal?: string;
+};
+
+export type Event = {
+    id: number;
+    title: string;
+    text: string;
+    when: string;
+    start?: string;
+    end?: string;
+    whole_day: boolean;
+    syssnare: Syssnare;
+    files?: any[];
+};
+
+// Response from API
+export type EventData = {
+    events: Event[];
+};
+
+/*  QUIZ  */
+/*  TYPES */
+export type QuizData = {
+    questions: Question[];
+    justice_questions: Question[];
+};
+
+export type Question = {
+    prompt: string;
+    options: Option[];
+    video_link?: string;
+};
+
+export type Option = {
+    prompt: string;
+    is_correct: boolean;
+};
 
 export type ExternalLink = {
-	imageUrl: string;
-	link: string;
-	text: string;
+    imageUrl: string;
+    link: string;
+    text: string;
 };
 
 export type FaStodData = {
-    externalLinks: ExternalLink[]
-}
+    externalLinks: ExternalLink[];
+};
+
+export type SyssnareTipsarData = {
+    video_link: string;
+};
 
 export type FetchDataResponse<T> = {
     data: T | undefined;

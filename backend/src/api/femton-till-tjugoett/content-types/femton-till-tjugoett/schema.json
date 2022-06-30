@@ -21,6 +21,10 @@
     "video_link": {
       "type": "string",
       "required": true
+    },
+    "video_link_sign_language": {
+      "type": "string",
+      "required": true
     }
   }
 }

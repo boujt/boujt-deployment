@@ -14,6 +14,7 @@ import {
     useToast,
 } from "@chakra-ui/react";
 import { NextPage } from "next";
+import Head from "next/head";
 import { CSSProperties, useState } from "react";
 import { useData } from "../../utils/fetchData";
 import { doSubmitQuestionToFragelada } from "../../utils/service";
@@ -87,6 +88,13 @@ const Fragelada: NextPage = () => {
 
     return (
         <BoujtTemplate gap={100}>
+            <Head>
+                <title>Frågelådan</title>
+                <meta
+                    name="viewport"
+                    content="initial-scale=1.0, width=device-width"
+                />
+            </Head>
             <Heading>Frågelåda</Heading>
             <Flex gap={20} flexDirection={shouldBreak ? "row" : "column"}>
                 <Box
@@ -96,8 +104,18 @@ const Fragelada: NextPage = () => {
                     justifyContent={"space-between"}
                 >
                     <Text>
-                        Här kan du maila oss om du har en fråga. Bla bla . Maila
-                        gärna oss när du har en fråga
+                        Har du en fråga men vill vara anonym? <br />
+                        Du kan du använda frågelådan! Skriv in din fråga i
+                        formuläret, så svarar vi på den så fort vi kan! Håll
+                        utkik efter vårt svar nedanför. Du kan också maila oss
+                        på{" "}
+                        <a
+                            style={{ color: "blue" }}
+                            href="mailto:fraga@boujt.se"
+                        >
+                            fraga@boujt.se
+                        </a>{" "}
+                        men glöm inte att du då inte längre är anonym!
                     </Text>
                     <Flex flex={2} flexDir={"column"} gap={"20px"}>
                         <ResponsiveVideoPlayer url="https://youtu.be/f5E3kJ0C1hY" />

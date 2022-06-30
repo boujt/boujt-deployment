@@ -3,11 +3,13 @@ import { DailyProvider } from "@daily-co/daily-react-hooks";
 import DailyIframe from "@daily-co/daily-js";
 import { useEffect, useState } from "react";
 import { AuthProvider } from "../auth/auth";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import { theme } from "../theme";
 import "../style/videotooltip.scss";
 import "../style/global.scss";
 import PanicButton from "../components/PanicButton";
+import { QuizProvider } from "../context/QuizContext";
+import "../style/events.scss";
 
 function MyApp({ Component, pageProps }: AppProps) {
     const [co, setCo] = useState();
@@ -26,7 +28,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <ChakraProvider theme={theme}>
             <AuthProvider>
                 <DailyProvider callObject={co}>
-                    <Component {...pageProps} />
+                    <QuizProvider>
+                        <Component {...pageProps} />
+                    </QuizProvider>
                 </DailyProvider>
             </AuthProvider>
         </ChakraProvider>

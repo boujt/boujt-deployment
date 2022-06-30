@@ -7,6 +7,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<FaStodData>) => 
     // Get external links
     const {data} = await axios.get(
         `${process.env.STRAPI_API_BASE_URL}/api/externa-laenkars?populate=*`
+
     );
 
     // Convert
