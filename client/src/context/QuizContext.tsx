@@ -89,6 +89,7 @@ const QuizProvider: React.FC<PropsWithChildren> = (props) => {
 				title: "Rättighetsquizet",
 				description:
 					"Testa vårat rättighetsquiz och ta reda på hur mycket du kan om dina rättigheter!",
+				solution_video_url: "https://youtu.be/wJ64kp65m0c",
 			});
 		}
 	};
