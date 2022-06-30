@@ -71,4 +71,7 @@ Ingen riktig standard har blivit satt, koden lutar sig hårt på ChakraUI biblio
 
 Försök även hålla allting type safe, se existerande API endpoints och hooks för hur vi hanterat types mellan server och backend. 
 
+## Komma in Strapi
+Logga in med Superadmin kontot boujt.videos@gmail.com. Lösenordet ligger i projektmappen på drive. 
+
 ___
