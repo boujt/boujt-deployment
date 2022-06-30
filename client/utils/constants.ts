@@ -58,6 +58,7 @@ export const ROUTES = {
     CHATTEN: "/chatten",
     BLOGGEN: "/bloggen",
     STARTSIDA: "/",
+    GABRIELLA: "/gabriella-pa-polisen",
     CHATROOM: (token: string) => `/chatt/${token}`,
 };
 
@@ -68,16 +69,16 @@ export const ADMIN_ROUTES = {
 };
 
 export const INTEGER_TO_MONTH = new Map<number, string>([
-    [1,   'Jan'],
-    [2,   'Feb'],
-    [3,   'Mar'],
-    [4,   'Apr'],
-    [5,   'May'],
-    [6,   'Jun'],
-    [7,   'Jul'],
-    [8,   'Aug'],
-    [9,   'Sep'],
-    [10,  'Oct'],
-    [11,  'Nov'],
-    [12,  'Dec']
+    [1, "Jan"],
+    [2, "Feb"],
+    [3, "Mar"],
+    [4, "Apr"],
+    [5, "May"],
+    [6, "Jun"],
+    [7, "Jul"],
+    [8, "Aug"],
+    [9, "Sep"],
+    [10, "Oct"],
+    [11, "Nov"],
+    [12, "Dec"],
 ]);
