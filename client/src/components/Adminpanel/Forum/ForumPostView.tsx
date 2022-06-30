@@ -15,6 +15,7 @@ import {
     FaCalendar,
     FaComment,
     FaDownload,
+    FaEye,
     FaPaperclip,
     FaTrash,
     FaUser,
@@ -22,6 +23,8 @@ import {
 import { ForumComment, ForumPost } from "../../../../utils/types";
 import { useStrapi } from "../../../auth/auth";
 import { FileIcon, defaultStyles } from "react-file-icon";
+import { downloadFile } from "../../../../utils/helperFunctions";
+import FilePreview from "../FilePreview";
 interface ForumPostProps {
     post: ForumPost;
     onPostComment: Function;
@@ -75,6 +78,7 @@ const ForumPostView: React.FC<ForumPostProps> = ({ post, onPostComment }) => {
                 onPostComment();
             });
     };
+
     return (
         <Flex backgroundColor={"white"} padding={6} overflowY="scroll">
             <Flex flexDirection={"column"} width="100%">
@@ -102,44 +106,7 @@ const ForumPostView: React.FC<ForumPostProps> = ({ post, onPostComment }) => {
                     </Flex>
                 </Box>
                 <Divider marginTop={5}></Divider>
-                {post.files && (
-                    <Flex flexDirection="column" marginTop={4} gap={2}>
-                        <Flex alignItems={"center"} gap={4}>
-                            <Box
-                                width={50}
-                                as="a"
-                                target="_blank"
-                                href={post.files[0].attributes.url}
-                            >
-                                <FileIcon
-                                    color="#14CFEF"
-                                    fold
-                                    {...defaultStyles[
-                                        post.files[0].attributes.ext.substring(
-                                            1
-                                        )
-                                    ]}
-                                    extension={post.files[0].attributes.ext}
-                                />
-                            </Box>
-                            <a
-                                target="_blank"
-                                rel="noreferrer"
-                                href={post.files[0].attributes.url}
-                                download={
-                                    post.files[0].attributes.hash +
-                                    post.files[0].attributes.ext
-                                }
-                            >
-                                <FaDownload fontSize={20} />
-                            </a>
-                        </Flex>
-
-                        <Text>{post.files[0].attributes.name}</Text>
-
-                        <Divider></Divider>
-                    </Flex>
-                )}
+                {post.files && <FilePreview file={post.files[0]} />}
                 <Text my={10}>{post.text}</Text>
 
                 <Flex flexDirection={"column"}>
