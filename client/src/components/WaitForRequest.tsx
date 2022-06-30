@@ -60,6 +60,12 @@ export const WaitForRequest: React.FC<WaitForRequestProps> = ({
             if (url !== "") {
                 clearInterval(myInterval);
             }
+            if (
+                currentStatus === SYSSNARE_STATUS.OFFLINE ||
+                currentStatus === SYSSNARE_STATUS.ONLINE
+            ) {
+                setRequestDenied(true);
+            }
             axios
                 .get(`/api/chat-request/${token}`)
                 .then((res) => {
