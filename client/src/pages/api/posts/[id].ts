@@ -28,8 +28,7 @@ export default async function handler(req, res) {
         text: data.data.attributes.text,
         views: data.data.attributes.views,
         cover_image: data.data.attributes.omslagsbild.data
-            ? process.env.STRAPI_API_BASE_URL +
-              data.data.attributes.omslagsbild.data.attributes.url
+            ? data.data.attributes.omslagsbild.data.attributes.url
             : null,
         images: [],
         videos: [],
