@@ -31,6 +31,7 @@ import {
     FaEyeSlash,
     FaHamburger,
     FaHeart,
+    FaInfoCircle,
     FaQuestionCircle,
     FaStar,
 } from "react-icons/fa";
@@ -189,7 +190,7 @@ const Navbar: NextPage<Props> = ({ transparent }) => {
                                 <VideoTooltip src={Kontakt.src}>
                                     <NavbarItemMobile
                                         icon={
-                                            <FaEnvelope
+                                            <FaInfoCircle
                                                 size={"2rem"}
                                                 color="yellow"
                                             />
@@ -271,8 +272,8 @@ const Navbar: NextPage<Props> = ({ transparent }) => {
 
                 <VideoTooltip src={Kontakt.src}>
                     <NavbarItem
-                        icon={<FaEnvelope size={"2rem"} color="yellow" />}
-                        text="Kontakta oss"
+                        icon={<FaInfoCircle size={"2rem"} color="yellow" />}
+                        text="Kontakt"
                         route={ROUTES.KONTAKTA_OSS}
                     />
                 </VideoTooltip>
