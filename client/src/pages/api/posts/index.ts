@@ -42,8 +42,7 @@ export default async function handler(
             text: post.attributes.text,
             views: post.attributes.views,
             cover_image: post.attributes.omslagsbild.data
-                ? process.env.STRAPI_API_BASE_URL +
-                  post.attributes.omslagsbild.data.attributes.url
+                ? post.attributes.omslagsbild.data.attributes.url
                 : null,
             images: [],
             videos: [],
