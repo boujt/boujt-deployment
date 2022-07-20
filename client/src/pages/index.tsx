@@ -65,7 +65,7 @@ const Home: NextPage = () => {
                             padding={"0 20px 0 20px"}
                             boxShadow={"5px 5px 15px -5px #000000"}
                         >
-                            <Text color="white" fontSize={"22"}>
+                            <Text color="black" fontSize={"22"}>
                                 Måndagar, tisdagar och torsdagar😁
                             </Text>
                         </Flex>
@@ -83,7 +83,7 @@ const Home: NextPage = () => {
                             padding={"0 20px 0 20px"}
                             boxShadow={"5px 5px 15px -5px #000000"}
                         >
-                            <Text color="white" fontSize={"22"}>
+                            <Text color="black" fontSize={"22"}>
                                 Mellan klockan 18:30 till 20:30👍
                             </Text>
                         </Flex>

@@ -48,7 +48,11 @@ const Filmer: NextPage = () => {
                             <VideoCard
                                 video={video}
                                 backgroundColor={
-                                    idx % 2 == 0 ? "red" : "orange"
+                                    idx % 3 == 0
+                                        ? "red"
+                                        : idx % 2 == 0
+                                        ? "#36569B"
+                                        : "#181818"
                                 }
                                 key={idx}
                             />

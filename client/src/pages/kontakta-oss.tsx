@@ -70,12 +70,13 @@ const KontaktaOss: NextPage = () => {
             {/* FIRST CARD WITH EMAIL FORM */}
             <Flex flexDir={"column"} gap={"25px"}>
                 <Heading
-                    textAlign={"center"}
+                    textAlign={"left"}
                     bgGradient={chakra_gradient}
                     bgClip={"text"}
                 >
                     Maila oss
                 </Heading>
+
                 <Flex
                     position={"relative"}
                     gap={"20px"}

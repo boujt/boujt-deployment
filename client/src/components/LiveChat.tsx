@@ -66,7 +66,7 @@ const ChatMessage: React.FC<MessageProps> = ({
                 <Flex
                     borderRadius={"4"}
                     bg={senderIsMe ? "#00CCEE" : "#e3f4ff"}
-                    color={senderIsMe ? "white" : "black"}
+                    color={"black"}
                     minW="100px"
                     maxW="350px"
                     my="1"
