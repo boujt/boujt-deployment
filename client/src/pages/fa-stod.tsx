@@ -20,6 +20,7 @@ import BoujtTemplate from "../components/BoujtTemplate";
 import ResponsiveVideoPlayer from "../components/ResponsiveVideoPlayer";
 import Starfield from "../components/Starfield";
 import Video from "../components/Video";
+import GetSupportAlternatives from "../components/GetSupportAlternatives";
 
 const background: CSSProperties = {
     position: "absolute",
@@ -55,9 +56,9 @@ const ExternalLinkView: React.FC<{ externalLink: ExternalLink }> = ({
     return (
         <Flex
             boxShadow={"0 0 15px #d3d3d3"}
-            borderRadius={"20px"}
+            borderRadius={"10px"}
             border={"none"}
-            padding={"10px"}
+            padding={"20px"}
         >
             {/* IMAGE */}
             {/* <AspectRatio
@@ -71,7 +72,7 @@ const ExternalLinkView: React.FC<{ externalLink: ExternalLink }> = ({
       </AspectRatio> */}
             {/* STYLED TEXT */}
             <Text>
-                <span style={{ color: "turquoise" }}>
+                <span style={{ color: "#34569B" }}>
                     {externalLink.link + " "}
                 </span>
                 -{" " + externalLink.text}
@@ -112,6 +113,7 @@ const FaStod: NextPage = () => {
                 Här på Boujt finns det flera sätt du kan få stöd av oss!
             </Heading>
             {/* Card with video and text */}
+            <GetSupportAlternatives />
             <Flex
                 color={"white"}
                 position={"relative"}

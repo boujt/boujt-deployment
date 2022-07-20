@@ -161,18 +161,6 @@ const Navbar: NextPage<Props> = ({ transparent }) => {
                                     />
                                 </VideoTooltip>
 
-                                <VideoTooltip src={Frageladan.src}>
-                                    <NavbarItemMobile
-                                        icon={
-                                            <FaQuestionCircle
-                                                size={"2rem"}
-                                                color="yellow"
-                                            />
-                                        }
-                                        text="Frågelådan"
-                                        route={ROUTES.FRAGELADA}
-                                    />
-                                </VideoTooltip>
                                 <VideoTooltip src={Stod.src}>
                                     <NavbarItemMobile
                                         icon={
@@ -266,13 +254,6 @@ const Navbar: NextPage<Props> = ({ transparent }) => {
                     />
                 </VideoTooltip>
 
-                <VideoTooltip src={Frageladan.src}>
-                    <NavbarItem
-                        icon={<FaQuestionCircle size={"2rem"} color="yellow" />}
-                        text="Frågelådan"
-                        route={ROUTES.FRAGELADA}
-                    />
-                </VideoTooltip>
                 <VideoTooltip src={Stod.src}>
                     <NavbarItem
                         icon={<FaHeart size={"2rem"} color="yellow" />}
