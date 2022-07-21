@@ -56,9 +56,7 @@ const BlogPreview: React.FC<Props> = ({ post }) => {
                     >
                         Nyheter
                     </Text>
-                    <Flex marginTop={"0.5rem"} alignItems={"center"} gap={2}>
-                        <FaEye /> <Text>{0}</Text>
-                    </Flex>
+
                     <Heading fontSize={"2xl"} fontFamily={"body"}>
                         {post.title}
                     </Heading>

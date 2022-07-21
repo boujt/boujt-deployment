@@ -55,49 +55,14 @@ const KontaktaOss: NextPage = () => {
                 />
             </Head>
             <Heading
-                textAlign={"center"}
+                textAlign={"left"}
                 bgGradient={chakra_gradient}
                 bgClip={"text"}
             >
                 Kontakta oss
             </Heading>
-            <Flex flexDir={"column"} alignItems={"center"} gap={"50px"}>
-                <Heading>Letar du efter chatten?</Heading>
-                <Button width={"150px"} variant={"default"}>
-                    <Text>Ta mig dit</Text>
-                </Button>
-            </Flex>
+
             {/* FIRST CARD WITH EMAIL FORM */}
-            <Flex flexDir={"column"} gap={"25px"}>
-                <Heading
-                    textAlign={"left"}
-                    bgGradient={chakra_gradient}
-                    bgClip={"text"}
-                >
-                    Maila oss
-                </Heading>
-
-                <Flex
-                    position={"relative"}
-                    gap={"20px"}
-                    flexDirection={shouldBreak ? "column" : "row"}
-                    padding={"20px"}
-                >
-                    <Flex flex={1} flexDirection="column" gap={4}>
-                        <ResponsiveVideoPlayer url="https://youtu.be/DDjEmdmHUjQ" />
-                    </Flex>
-                    <Flex flex={1} flexDirection="column">
-                        <ContactForm />
-                    </Flex>
-
-                    <Box sx={background}>
-                        <Starfield
-                            boxProps={{ borderRadius: "12px" }}
-                            sx={{ borderRadius: "12px" }}
-                        />
-                    </Box>
-                </Flex>
-            </Flex>
 
             <Flex
                 position={"relative"}
@@ -179,6 +144,37 @@ const KontaktaOss: NextPage = () => {
                     />
                 )}
             </Box>
+
+            <Flex flexDir={"column"} gap={"25px"}>
+                <Heading
+                    textAlign={"left"}
+                    bgGradient={chakra_gradient}
+                    bgClip={"text"}
+                >
+                    Maila oss
+                </Heading>
+
+                <Flex
+                    position={"relative"}
+                    gap={"20px"}
+                    flexDirection={shouldBreak ? "column" : "row"}
+                    padding={"20px"}
+                >
+                    <Flex flex={1} flexDirection="column" gap={4}>
+                        <ResponsiveVideoPlayer url="https://youtu.be/DDjEmdmHUjQ" />
+                    </Flex>
+                    <Flex flex={1} flexDirection="column">
+                        <ContactForm />
+                    </Flex>
+
+                    <Box sx={background}>
+                        <Starfield
+                            boxProps={{ borderRadius: "12px" }}
+                            sx={{ borderRadius: "12px" }}
+                        />
+                    </Box>
+                </Flex>
+            </Flex>
         </BoujtTemplate>
     );
 };

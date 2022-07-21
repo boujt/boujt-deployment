@@ -149,19 +149,6 @@ const Navbar: NextPage<Props> = ({ transparent }) => {
 
                         <DrawerBody>
                             <Flex flexDirection={"column"} fontSize={20}>
-                                <VideoTooltip src={Kroppen.src}>
-                                    <NavbarItemMobile
-                                        icon={
-                                            <FaBalanceScale
-                                                size={"2rem"}
-                                                color="yellow"
-                                            />
-                                        }
-                                        text="Känslor och rättigheter"
-                                        route="/kanslor-och-rattigheter"
-                                    />
-                                </VideoTooltip>
-
                                 <VideoTooltip src={Stod.src}>
                                     <NavbarItemMobile
                                         icon={
@@ -172,6 +159,18 @@ const Navbar: NextPage<Props> = ({ transparent }) => {
                                         }
                                         text="Få stöd"
                                         route={ROUTES.FA_STOD}
+                                    />
+                                </VideoTooltip>
+                                <VideoTooltip src={Kroppen.src}>
+                                    <NavbarItemMobile
+                                        icon={
+                                            <FaBalanceScale
+                                                size={"2rem"}
+                                                color="yellow"
+                                            />
+                                        }
+                                        text="Känslor och rättigheter"
+                                        route="/kanslor-och-rattigheter"
                                     />
                                 </VideoTooltip>
                                 <VideoTooltip src={OmOss.src}>
@@ -245,8 +244,15 @@ const Navbar: NextPage<Props> = ({ transparent }) => {
                 alignItems={"center"}
                 justifyContent="center"
                 width={"70%"}
-                gap={3}
+                gap={10}
             >
+                <VideoTooltip src={Stod.src}>
+                    <NavbarItem
+                        icon={<FaHeart size={"2rem"} color="yellow" />}
+                        text="Få stöd"
+                        route={ROUTES.FA_STOD}
+                    />
+                </VideoTooltip>
                 <VideoTooltip src={Kroppen.src}>
                     <NavbarItem
                         icon={<FaBalanceScale size={"2rem"} color="yellow" />}
@@ -255,13 +261,6 @@ const Navbar: NextPage<Props> = ({ transparent }) => {
                     />
                 </VideoTooltip>
 
-                <VideoTooltip src={Stod.src}>
-                    <NavbarItem
-                        icon={<FaHeart size={"2rem"} color="yellow" />}
-                        text="Få stöd"
-                        route={ROUTES.FA_STOD}
-                    />
-                </VideoTooltip>
                 <VideoTooltip src={OmOss.src}>
                     <NavbarItem
                         icon={<FaAddressCard size={"2rem"} color="yellow" />}

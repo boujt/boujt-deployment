@@ -74,8 +74,8 @@ const Fragelada: NextPage = () => {
         if (searchString !== "") {
             new_arr = new_arr.filter(
                 (qa) =>
-                    qa.answer.includes(searchString) ||
-                    qa.question.includes(searchString)
+                    qa.answer.toLowerCase().includes(searchString) ||
+                    qa.question.toLowerCase().includes(searchString)
             );
         }
         if (selectedCategory !== "") {
@@ -218,9 +218,7 @@ const Fragelada: NextPage = () => {
                     filterQuestions(questionsAndAnswers.data).length === 0 && (
                         <Text align="center">
                             Vi kan tyvärr inte hitta några frågor som matchar{" "}
-                            <Text fontStyle={"italic"}>
-                                `&apos`{searchString}`&apos`
-                            </Text>
+                            <Text fontStyle={"italic"}>`{searchString}`</Text>
                         </Text>
                     )}
             </Flex>

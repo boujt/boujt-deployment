@@ -7,6 +7,7 @@ import {
     Heading,
     Select,
     Text,
+    useMediaQuery,
 } from "@chakra-ui/react";
 import { NextPage } from "next";
 import Head from "next/head";
@@ -18,11 +19,13 @@ import { useData } from "../../../utils/fetchData";
 import { BlogPost } from "../../../utils/types";
 import BlogPreview from "../../components/Blog/BlogPreview";
 import BoujtTemplate from "../../components/BoujtTemplate";
+import ResponsiveVideoPlayer from "../../components/ResponsiveVideoPlayer";
 import { chakra_gradient, css_gradient } from "../../theme";
 
 const Blog: NextPage = () => {
     const router = useRouter();
     const { pid } = router.query;
+    const [shouldBreak] = useMediaQuery("(min-width: 800px)");
 
     const cleanMarkDown = (text: string | undefined) => {
         if (text === undefined) return "";
@@ -34,6 +37,8 @@ const Blog: NextPage = () => {
     };
 
     const post = useData<BlogPost>(`posts/${pid}`);
+
+    console.log(post);
     return (
         <BoujtTemplate strict={false}>
             <Head>
@@ -49,8 +54,9 @@ const Blog: NextPage = () => {
                         background={css_gradient}
                         justifyContent="center"
                         alignItems={"center"}
-                        gap={100}
-                        height="50vh"
+                        gap={!shouldBreak ? 10 : 20}
+                        flexDirection={shouldBreak ? "row" : "column"}
+                        padding={shouldBreak ? "10rem 0" : "2rem 0"}
                     >
                         <Flex flex={0}>
                             <img
@@ -77,22 +83,10 @@ const Blog: NextPage = () => {
                                 borderRadius={4}
                                 marginTop="1rem"
                             >
-                                <Text
-                                    color="white"
-                                    fontSize={17}
-                                    padding="0 1rem"
-                                >
+                                <Text fontSize={17} padding="0 1rem">
                                     {post.data?.published_at.slice(0, 10)}
                                 </Text>
                             </Box>
-                            <Flex
-                                marginTop={"0.5rem"}
-                                alignItems={"center"}
-                                gap={2}
-                            >
-                                <FaEye color="white" />{" "}
-                                <Text color="white">{post.data?.views}</Text>
-                            </Flex>
                         </Box>
                     </Flex>
                     <Container
@@ -100,15 +94,48 @@ const Blog: NextPage = () => {
                         gap={20}
                         maxW={"4xl"}
                         display="flex"
-                        flexDirection="row"
+                        flexDirection={shouldBreak ? "row" : "column"}
                     >
-                        <Flex flexDirection={"column"}>
+                        <Flex
+                            flexDirection={"column"}
+                            width={!shouldBreak ? "100%" : "70%"}
+                            gap={5}
+                        >
                             <ReactMarkdown>
                                 {cleanMarkDown(post.data?.text)}
                             </ReactMarkdown>
+                            {post.data?.videos.map((video) => {
+                                return (
+                                    <ResponsiveVideoPlayer
+                                        key={video.id}
+                                        url={video.attributes.url}
+                                    />
+                                );
+                            })}
                         </Flex>
-                        <Flex>
-                            <Heading>INSERT VIDEOS HERE</Heading>
+                        <Flex
+                            width={!shouldBreak ? "100%" : "30%"}
+                            flexDir="column"
+                            gap={5}
+                            alignItems="center"
+                        >
+                            {post.data?.images.map((image) => {
+                                return (
+                                    <img
+                                        style={{
+                                            display: "block",
+                                            width: "auto",
+                                            height: "auto",
+                                            maxWidth: shouldBreak
+                                                ? "200px"
+                                                : "400px",
+                                            maxHeight: "100%",
+                                        }}
+                                        key={image.id}
+                                        src={image.attributes.url}
+                                    ></img>
+                                );
+                            })}
                         </Flex>
                     </Container>
                 </>
