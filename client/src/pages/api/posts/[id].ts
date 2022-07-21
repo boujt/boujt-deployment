@@ -30,8 +30,12 @@ export default async function handler(req, res) {
         cover_image: data.data.attributes.omslagsbild.data
             ? data.data.attributes.omslagsbild.data.attributes.url
             : null,
-        images: [],
-        videos: [],
+        images: data.data.attributes.bilder.data
+            ? data.data.attributes.bilder.data
+            : [],
+        videos: data.data.attributes.videos.data
+            ? data.data.attributes.videos.data
+            : [],
     };
 
     res.status(200).json(post);
