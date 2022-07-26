@@ -72,9 +72,14 @@ const ExternalLinkView: React.FC<{ externalLink: ExternalLink }> = ({
       </AspectRatio> */}
             {/* STYLED TEXT */}
             <Text>
-                <span style={{ color: "#34569B" }}>
-                    {externalLink.link + " "}
-                </span>
+                <a
+                    href={externalLink.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{ fontWeight: "bold" }}
+                >
+                    {externalLink.link}
+                </a>
                 -{" " + externalLink.text}
             </Text>
         </Flex>

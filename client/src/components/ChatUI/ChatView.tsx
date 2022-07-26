@@ -212,7 +212,7 @@ export const ChatView: React.FC<ChatViewProps> = ({ room, displayName }) => {
         if (sentRequestToChange === MESSAGE_REQUEST.SENT) {
             return <Spinner />;
         }
-        if (room.is_video) return <FaComment />;
+        if (showVideo) return <FaComment />;
 
         return <FaVideo />;
     };
