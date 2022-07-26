@@ -255,9 +255,9 @@ const Home: NextPage = () => {
                                 width="163px"
                                 height="45px"
                                 variant={"information"}
-                                onClick={() => router.push(ROUTES.OM_OSS)}
+                                onClick={() => router.push(ROUTES.FA_STOD)}
                             >
-                                <Text>Om oss</Text>
+                                <Text>Få stöd</Text>
                             </Button>
                         </Flex>
                     </Flex>
