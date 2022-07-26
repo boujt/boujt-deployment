@@ -1,7 +1,14 @@
 import React from "react";
 
 import PropTypes from "prop-types";
-import { Flex, Text, Tooltip, useClipboard, useToast } from "@chakra-ui/react";
+import {
+    Flex,
+    Text,
+    Tooltip,
+    useClipboard,
+    useMediaQuery,
+    useToast,
+} from "@chakra-ui/react";
 import { redirect } from "next/dist/server/api-utils";
 import { FaComment, FaEnvelope, FaQuestion, FaVideo } from "react-icons/fa";
 import { Router, useRouter } from "next/router";
@@ -15,7 +22,7 @@ const GetSupportAlternatives: React.FC<SupportProps> = ({ onClose }) => {
     const toast = useToast();
     const { hasCopied, onCopy } = useClipboard("fraga@boujt.se");
     const router = useRouter();
-
+    const [shouldBreak] = useMediaQuery("(min-width: 650px)");
     const closeModal = () => {
         if (onClose) {
             onClose();
@@ -31,7 +38,13 @@ const GetSupportAlternatives: React.FC<SupportProps> = ({ onClose }) => {
                 frågelådan eller skicka ett mail till oss på{" "}
                 <a href="mailto:fraga@boujt.se">fraga@boujt.se</a>
             </Text>
-            <Flex marginTop={5} gap={4}>
+            <Flex
+                marginTop={5}
+                gap={4}
+                flexDirection={shouldBreak ? "row" : "column"}
+                justifyContent={shouldBreak ? "center" : "unset"}
+                alignItems={shouldBreak ? "center" : "unset"}
+            >
                 <Flex
                     flexDirection={"column"}
                     padding="2rem 1rem"

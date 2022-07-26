@@ -87,7 +87,7 @@ const Footer: React.FC = () => {
                 />
             </Flex>
             <Text paddingTop={"30px"} color={"white"} fontWeight={"thin"}>
-                © BOUJT 2020 All rights reserved
+                © BOUJT 2022 All rights reserved
             </Text>
             <Link href="/admin">
                 <Flex marginTop={5} alignItems={"center"} gap={2}>
