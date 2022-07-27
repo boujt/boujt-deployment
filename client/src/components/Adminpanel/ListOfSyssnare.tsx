@@ -23,6 +23,11 @@ import {
     Text,
     Badge,
     Divider,
+    Accordion,
+    AccordionItem,
+    AccordionButton,
+    AccordionIcon,
+    AccordionPanel,
 } from "@chakra-ui/react";
 import { FaUserAlt, FaLock, FaCheck } from "react-icons/fa";
 
@@ -55,35 +60,97 @@ const ListOfSyssnare: React.FC<ListOfSyssnareProps> = ({ syssnare }) => {
                         return null;
                     return (
                         <>
-                            <ListItem key={sys.id}>
-                                <Text fontWeight={700}>{sys.name}</Text>
-                                <Badge color={getColorFromStatus(sys.status)}>
-                                    {getTextFromStatus(sys.status)}
-                                </Badge>
-                                <Text></Text>
+                            <ListItem
+                                key={sys.id}
+                                display={"flex"}
+                                flexDirection="row"
+                                alignItems={"center"}
+                                gap={2}
+                            >
+                                <Box>
+                                    <Avatar
+                                        size={"sm"}
+                                        src={sys.img}
+                                        name={sys.name}
+                                    />
+                                </Box>
+                                <Box>
+                                    <Text fontWeight={700}>{sys.name}</Text>
+                                    <Badge
+                                        color={getColorFromStatus(sys.status)}
+                                    >
+                                        {getTextFromStatus(sys.status)}
+                                    </Badge>
+                                </Box>
                             </ListItem>
                             <Divider />
                         </>
                     );
                 })}
 
-                {syssnare.map((sys) => {
-                    if (sys.status !== SYSSNARE_STATUS.OFFLINE) return null;
-                    return (
-                        <>
-                            <ListItem key={sys.id}>
-                                <Text color="gray" fontWeight={700}>
-                                    {sys.name}
+                <Accordion defaultIndex={[0]} allowMultiple>
+                    <AccordionItem>
+                        <AccordionButton>
+                            <Box flex="1" textAlign="left">
+                                <Text>
+                                    Offline (
+                                    {
+                                        syssnare.filter(
+                                            (sys) =>
+                                                sys.status ===
+                                                SYSSNARE_STATUS.OFFLINE
+                                        ).length
+                                    }
+                                    )
                                 </Text>
-                                <Badge color={getColorFromStatus(sys.status)}>
-                                    {getTextFromStatus(sys.status)}
-                                </Badge>
-                                <Text></Text>
-                            </ListItem>
-                            <Divider />
-                        </>
-                    );
-                })}
+                            </Box>
+                            <AccordionIcon />
+                        </AccordionButton>
+                        <AccordionPanel>
+                            {syssnare.map((sys) => {
+                                if (sys.status !== SYSSNARE_STATUS.OFFLINE)
+                                    return null;
+                                return (
+                                    <>
+                                        <ListItem
+                                            display={"flex"}
+                                            flexDirection="row"
+                                            alignItems={"center"}
+                                            gap={2}
+                                            key={sys.id}
+                                        >
+                                            <Box>
+                                                <Avatar
+                                                    size={"sm"}
+                                                    src={sys.img}
+                                                    name={sys.name}
+                                                />
+                                            </Box>
+                                            <Box>
+                                                <Text
+                                                    color="gray"
+                                                    fontWeight={700}
+                                                >
+                                                    {sys.name}
+                                                </Text>
+                                                <Badge
+                                                    color={getColorFromStatus(
+                                                        sys.status
+                                                    )}
+                                                >
+                                                    {getTextFromStatus(
+                                                        sys.status
+                                                    )}
+                                                </Badge>
+                                            </Box>
+                                        </ListItem>
+                                        <Divider />
+                                    </>
+                                );
+                            })}
+                        </AccordionPanel>
+                    </AccordionItem>
+                </Accordion>
             </List>
         </Flex>
     );
