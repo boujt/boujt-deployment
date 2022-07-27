@@ -33,23 +33,25 @@ export default async function handler(
         }
     );
 
-    const filtered_data = syssnare_data.data.map((el) => {
-        const img = el.profile_image ? el.profile_image.url : null;
+    const filtered_data = syssnare_data.data
+        .filter((e) => e.confirmed)
+        .map((el) => {
+            const img = el.profile_image ? el.profile_image.url : null;
 
-        const in_queue = request_chats_data.data.data.filter((cr) => {
-            return cr.attributes.syssnare.data.id === el.id;
-        }).length;
+            const in_queue = request_chats_data.data.data.filter((cr) => {
+                return cr.attributes.syssnare.data.id === el.id;
+            }).length;
 
-        return {
-            id: el.id,
-            name: el.name,
-            status: el.status,
-            favorite_animal: el.favorite_animal,
-            favorite_icecream: el.favorite_icecream,
-            img: img,
-            people_in_queue: in_queue,
-        };
-    });
+            return {
+                id: el.id,
+                name: el.name,
+                status: el.status,
+                favorite_animal: el.favorite_animal,
+                favorite_icecream: el.favorite_icecream,
+                img: img,
+                people_in_queue: in_queue,
+            };
+        });
 
     res.status(200).json(filtered_data);
 }

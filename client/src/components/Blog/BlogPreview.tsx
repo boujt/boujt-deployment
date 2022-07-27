@@ -39,7 +39,7 @@ const BlogPreview: React.FC<Props> = ({ post }) => {
                         style={{
                             height: "auto",
                             maxWidth: "100%",
-                            objectFit: "contain",
+                            objectFit: "cover",
                         }}
                         src={
                             post?.cover_image ||

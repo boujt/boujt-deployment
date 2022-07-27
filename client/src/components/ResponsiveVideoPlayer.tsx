@@ -18,8 +18,7 @@ const ResponsiveVideoPlayer: React.FC<Props> = ({ url }) => {
             }}
         >
             <ReactPlayer
-                light
-                playing
+                controls
                 playIcon={
                     <div
                         style={{

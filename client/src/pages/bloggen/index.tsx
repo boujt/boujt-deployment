@@ -58,7 +58,7 @@ const Blog: NextPage = () => {
                 >
                     Bloggen
                 </Heading>
-                <Flex
+                {/* <Flex
                     flexWrap={"wrap"}
                     alignItems={"center"}
                     justifyContent={"center"}
@@ -80,7 +80,7 @@ const Blog: NextPage = () => {
                             </option>
                         ))}
                     </Select>
-                </Flex>
+                </Flex> */}
             </Flex>
 
             {/* LIST BLOG POSTS */}
