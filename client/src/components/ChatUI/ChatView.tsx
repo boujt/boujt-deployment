@@ -76,6 +76,7 @@ export const ChatView: React.FC<ChatViewProps> = ({ room, displayName }) => {
             da.on("app-message", handleAppMessage);
             da.on("participant-joined", handleParticipantJoined);
             da.on("participant-left", handleParticipantLeft);
+            da.setPlayNewParticipantSound(false);
         }
 
         return () => {
@@ -164,6 +165,7 @@ export const ChatView: React.FC<ChatViewProps> = ({ room, displayName }) => {
                 })
             );
         }
+
         if (!hasJoined) {
             da?.join({
                 url: room.room_url,

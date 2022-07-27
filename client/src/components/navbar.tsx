@@ -30,6 +30,7 @@ import {
     FaEnvelope,
     FaEyeSlash,
     FaHamburger,
+    FaHandHoldingHeart,
     FaHeart,
     FaInfoCircle,
     FaQuestionCircle,
@@ -211,6 +212,16 @@ const Navbar: NextPage<Props> = ({ transparent }) => {
                                         route={ROUTES.GOM_BESOK}
                                     />
                                 </VideoTooltip>
+                                <NavbarItem
+                                    icon={
+                                        <FaHandHoldingHeart
+                                            size={"2rem"}
+                                            color="yellow"
+                                        />
+                                    }
+                                    text="Bli syssnare"
+                                    route={ROUTES.BLI_SYSSNARE}
+                                />
                             </Flex>
                         </DrawerBody>
                     </DrawerContent>
@@ -284,6 +295,11 @@ const Navbar: NextPage<Props> = ({ transparent }) => {
                         route={ROUTES.GOM_BESOK}
                     />
                 </VideoTooltip>
+                <NavbarItem
+                    icon={<FaHandHoldingHeart size={"2rem"} color="yellow" />}
+                    text="Bli syssnare"
+                    route={ROUTES.BLI_SYSSNARE}
+                />
             </Flex>
         </Flex>
     );

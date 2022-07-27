@@ -27,7 +27,7 @@ export default async function handler(
 
     if (req.method === "GET") {
         const { data } = await axios.get(
-            `${process.env.STRAPI_API_BASE_URL}/api/frageladas?${query}&populate=*`,
+            `${process.env.STRAPI_API_BASE_URL}/api/frageladas?${query}&populate=*&pagination[start]=0&pagination[limit]=2000`,
             {
                 headers: {
                     Authorization: `Bearer ${process.env.STRAPI_SERVICE_ACCOUNT_JWT}`,
@@ -53,6 +53,7 @@ export default async function handler(
                 categories: category,
             };
         });
+        console.log(fragor.length);
 
         res.status(200).json(fragor.filter((fraga) => fraga.visible));
         return;

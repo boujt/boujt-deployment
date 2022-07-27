@@ -33,6 +33,8 @@ const Fragelada: NextPage = () => {
     const [shouldBreak] = useMediaQuery("(min-width: 700px)");
     const questionsAndAnswers = useData<Fragelada[]>("fragelada");
 
+    console.log(questionsAndAnswers.data?.length);
+
     const toast = useToast();
 
     const getCategories = () => {
@@ -84,6 +86,50 @@ const Fragelada: NextPage = () => {
             );
         }
         return new_arr;
+    };
+
+    const getFilteredQuestions = (data: Fragelada[]) => {
+        const filt = filterQuestions(data);
+
+        if (filt.length <= 0) {
+            return (
+                <Text align="center">
+                    Vi kan tyvärr inte hitta några frågor som matchar{" "}
+                    <Text fontStyle={"italic"}>`{searchString}`</Text>
+                </Text>
+            );
+        }
+
+        const halfIdx = Math.floor(filt.length / 2);
+        const first = filt.slice(0, halfIdx + 1).map((qa) => {
+            return (
+                <Box key={qa.id}>
+                    <QuestionAnswer fragelada={qa} />
+                </Box>
+            );
+        });
+        const second = filt.slice(halfIdx, filt.length - 1).map((qa) => {
+            return (
+                <Box key={qa.id}>
+                    <QuestionAnswer fragelada={qa} />
+                </Box>
+            );
+        });
+
+        return (
+            <Flex
+                gap={2}
+                justifyContent={"space-around"}
+                flexDirection={shouldBreak ? "row" : "column"}
+            >
+                <Flex gap={2} flexDirection={"column"} minWidth="300px">
+                    {first}
+                </Flex>
+                <Flex minWidth="300px" gap={2} flexDirection={"column"}>
+                    {second}
+                </Flex>
+            </Flex>
+        );
     };
 
     return (
@@ -201,26 +247,8 @@ const Fragelada: NextPage = () => {
                     />
                 </Flex>
 
-                <Grid
-                    templateColumns="repeat(auto-fill, minmax(300px,1fr))"
-                    gap={5}
-                >
-                    {questionsAndAnswers.data &&
-                        filterQuestions(questionsAndAnswers.data).map((qa) => {
-                            return (
-                                <GridItem key={qa.id}>
-                                    <QuestionAnswer fragelada={qa} />
-                                </GridItem>
-                            );
-                        })}
-                </Grid>
                 {questionsAndAnswers.data &&
-                    filterQuestions(questionsAndAnswers.data).length === 0 && (
-                        <Text align="center">
-                            Vi kan tyvärr inte hitta några frågor som matchar{" "}
-                            <Text fontStyle={"italic"}>`{searchString}`</Text>
-                        </Text>
-                    )}
+                    getFilteredQuestions(questionsAndAnswers.data)}
             </Flex>
         </BoujtTemplate>
     );

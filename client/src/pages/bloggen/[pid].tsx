@@ -52,43 +52,52 @@ const Blog: NextPage = () => {
                 <>
                     <Flex
                         background={css_gradient}
-                        justifyContent="center"
-                        alignItems={"center"}
                         gap={!shouldBreak ? 10 : 20}
-                        flexDirection={shouldBreak ? "row" : "column"}
+                        flexDirection={"column"}
                         padding={shouldBreak ? "10rem 0" : "2rem 0"}
                     >
-                        <Flex flex={0}>
-                            <img
-                                style={{
-                                    maxWidth: "400px",
-                                    maxHeight: "200px",
-                                    aspectRatio: "auto",
-                                }}
-                                src={
-                                    post.data?.cover_image ||
-                                    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Temp_plate.svg/1280px-Temp_plate.svg.png"
-                                }
-                            />
-                        </Flex>
-                        <Box gap={4}>
-                            <Heading color="white">{post.data?.title}</Heading>
-                            <Text fontSize={25} color="white">
-                                Nyheter
-                            </Text>
-                            <Box
-                                display={"inline-block"}
-                                fontSize={15}
-                                backgroundColor="turquoise"
-                                borderRadius={4}
-                                marginTop="1rem"
-                            >
-                                <Text fontSize={17} padding="0 1rem">
-                                    {post.data?.published_at.slice(0, 10)}
+                        <Container
+                            my="3rem"
+                            gap={20}
+                            maxW={"4xl"}
+                            display="flex"
+                            flexDirection={shouldBreak ? "row" : "column"}
+                        >
+                            <Flex flex={0}>
+                                <img
+                                    style={{
+                                        maxWidth: "400px",
+                                        maxHeight: "200px",
+                                        aspectRatio: "auto",
+                                    }}
+                                    src={
+                                        post.data?.cover_image ||
+                                        "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Temp_plate.svg/1280px-Temp_plate.svg.png"
+                                    }
+                                />
+                            </Flex>
+                            <Box gap={4}>
+                                <Heading color="white">
+                                    {post.data?.title}
+                                </Heading>
+                                <Text fontSize={25} color="white">
+                                    Nyheter
                                 </Text>
+                                <Box
+                                    display={"inline-block"}
+                                    fontSize={15}
+                                    backgroundColor="turquoise"
+                                    borderRadius={4}
+                                    marginTop="1rem"
+                                >
+                                    <Text fontSize={17} padding="0 1rem">
+                                        {post.data?.published_at.slice(0, 10)}
+                                    </Text>
+                                </Box>
                             </Box>
-                        </Box>
+                        </Container>
                     </Flex>
+
                     <Container
                         my="3rem"
                         gap={20}
@@ -104,11 +113,27 @@ const Blog: NextPage = () => {
                             <ReactMarkdown>
                                 {cleanMarkDown(post.data?.text)}
                             </ReactMarkdown>
-                            {post.data?.videos.map((video) => {
+                            {post.data?.videos.map((video, id) => {
+                                console.log(video.attributes.url);
+                                // return (
+                                //     <video controls width="100%">
+                                //         <source
+                                //             src={video.attributes.url}
+                                //             type="video/mp4"
+                                //         />
+                                //         Sorry, your browser doesn't support
+                                //         embedded videos.
+                                //     </video>
+                                // );
+                                const url = video.attributes.url.includes(
+                                    "https"
+                                )
+                                    ? video.attributes.url
+                                    : "https://" + video.attributes.url;
                                 return (
                                     <ResponsiveVideoPlayer
                                         key={video.id}
-                                        url={video.attributes.url}
+                                        url={url}
                                     />
                                 );
                             })}

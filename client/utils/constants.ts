@@ -62,6 +62,7 @@ export const ROUTES = {
     BLOGGEN: "/bloggen",
     STARTSIDA: "/",
     GABRIELLA: "/gabriella-pa-polisen",
+    BLI_SYSSNARE: "/bli-syssnare",
     CHATROOM: (token: string) => `/chatt/${token}`,
 };
 
